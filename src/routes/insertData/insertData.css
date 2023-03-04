@@ -1,0 +1,140 @@
+@import "./fonts/Cairo/Cairo.css";
+@import "./lib/font-awesome/5.15.3/css/all.min.css";
+
+body,
+html {
+    padding: 0;
+    margin: 0;
+    font-family: 'Cairo';
+}
+
+header {
+    padding: 10px 20px;
+    background: #039d8f;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    direction: rtl;
+}
+
+.header-title {
+    text-align: center;
+    padding: 0 20px;
+}
+
+.icons-container {
+    display: flex;
+    align-items: center;
+}
+
+.icon-holder {
+    font-size: 4.5vmin;
+    margin: 0 20px;
+    cursor: pointer;
+}
+
+.icon-holder:hover {
+    color: #ddd;
+}
+
+.sections-title,
+.textarea-header {
+    text-align: center;
+    padding: 10px 20px;
+    display: table;
+    margin: 0 auto;
+    border: 0;
+    border-style: solid;
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(to right, #fff, #000 50%, #fff) 10;
+}
+
+.textarea-header {
+    border: 0;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+}
+
+.select-container {
+    min-width: 35%;
+    max-width: 50%;
+    display: table;
+    margin: 10px auto;
+}
+
+select {
+    min-width: 35%;
+    padding: 15px;
+    font-family: 'Cairo';
+    direction: rtl;
+    border: 0;
+    outline: 0;
+    background: #eee;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+}
+
+.option {
+    cursor: pointer !important;
+    padding: 10px 20px !important;
+}
+
+select:before {
+    content: '';
+    padding: 20px;
+    background-color: red;
+    position: absolute;
+}
+
+.text-field {
+    min-width: 35%;
+    padding: 15px;
+    font-family: 'Cairo';
+    direction: rtl;
+    border: 0;
+    background: #eee;
+    outline: 0;
+}
+
+.sections-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sections-container section {
+    width: 40%;
+    margin: 20px;
+}
+
+textarea {
+    font-family: 'Cairo';
+    padding: 20px;
+    border: 0;
+    background: #eee;
+    direction: rtl;
+    width: 100%;
+    min-height: 20vh;
+}
+
+.btn {
+    padding: 10px 20px;
+    color: #fff;
+    border: 0;
+    outline: 0;
+    font-family: 'Cairo';
+    margin: 10px auto;
+    display: table;
+    min-width: 25%;
+    background: #039d8f;
+}
+
+.submit-btn:hover {
+    background-color: dodgerblue;
+    cursor: pointer;
+}

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="description" content="Free Web tutorials">
+  <meta name="keywords" content="تحضير,تحضير بلس,تحضير بيانات الدروس,دخول">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="./fonts/Cairo/Cairo.css">
+  <link rel="stylesheet" type="text/css" href="./lib/font-awesome/5.15.3/css/all.min.css">
+  <style type="text/css">
+    body,
+    html {
+      padding: 0;
+      margin: 0;
+      font-family: 'Cairo';
+    }
+
+    header {
+      padding: 10px 20px;
+      background: #039d8f;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      direction: rtl;
+    }
+
+    .header-title {
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .icons-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .icon-holder {
+      font-size: 4.5vmin;
+      margin: 0 20px;
+      cursor: pointer;
+    }
+
+    .icon-holder:hover {
+      color: #ddd;
+    }
+
+    .sections-title,
+    .textarea-header {
+      text-align: center;
+      padding: 10px 20px;
+      display: table;
+      margin: 0 auto;
+      border: 0;
+      border-style: solid;
+      border-bottom: 2px solid transparent;
+      border-image: linear-gradient(to right, #fff, #000 50%, #fff) 10;
+    }
+
+    .textarea-header {
+      border: 0;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+    }
+    .select-container {
+      min-width: 35%;
+      max-width: 50%;
+      display: table;
+      margin: 10px auto;
+    }
+    select {
+      min-width: 35%;
+      padding: 15px;
+      font-family: 'Cairo';
+      direction: rtl;
+      border: 0;
+      outline: 0;
+      background: #eee;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      -ms-appearance: none;
+    }
+    .option {
+      cursor: pointer !important;
+      padding: 10px 20px !important;
+    }
+    select:before {
+      content: '';
+      padding: 20px;
+      background-color: red;
+      position: absolute;
+    }
+
+    .text-field {
+      min-width: 35%;
+      padding: 15px;
+      font-family: 'Cairo';
+      direction: rtl;
+      border: 0;
+      background: #eee;
+      outline: 0;
+    }
+
+    .sections-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sections-container section {
+      width: 40%;
+      margin: 20px;
+    }
+
+    textarea {
+      font-family: 'Cairo';
+      padding: 20px;
+      border: 0;
+      background: #eee;
+      direction: rtl;
+      width: 100%;
+      min-height: 20vh;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      color: #fff;
+      border: 0;
+      outline: 0;
+      font-family: 'Cairo';
+      margin: 10px auto;
+      display: table;
+      min-width: 25%;
+      background: #039d8f;
+    }
+
+    .submit-btn:hover {
+      background-color: dodgerblue;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="icons-container">
+      <div class="icon-holder" id="menu">
+        <i class="fas fa-bars"></i>
+      </div>
+      <div class="icon-holder" id="admin-login">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="icon-holder" id="admin-login">
+        <i class="fas fa-edit"></i>
+      </div>
+    </div>
+    <h1 class="header-title">
+      تحضير بلس+
+    </h1>
+  </header>
+  <form action="/" method="post">
+    <section class="section-body">
+      <div>
+        <h1 class="sections-title">
+          اختار الدرس الذى تريده
+        </h1>
+      </div>
+      <div class="container">
+       <div class="select-container">
+        <select id="choose-select" name="lesson_name">
+          <option value="0">اختر الدرس....</option>
+        </select>
+       </div>
+      </div>
+    </section>
+    <section class="section-body">
+      <div>
+        <h1 class="sections-title">
+          اختار نوع السؤال
+        </h1>
+      </div>
+      <div class="container">
+        <select value="0" id="choose-select1" name="lesson_name">
+          <option value="0">اختر الدرس....</option>
+          <option value="1">صح او خطا</option>
+          <option value="2">اختيار من متعدد</option>
+        </select>
+      </div>
+    </section>
+    <section class="section-body">
+      <div>
+        <h1 class="sections-title">
+          السؤال الخاص بالدرس
+        </h1>
+      </div>
+      <div class="container">
+        <input type="text" name="lesson_question" class="text-field" placeholder="اكتب السؤال هنا...">
+      </div>
+    </section>
+    <section class="section-body">
+      <div>
+        <h1 class="sections-title">
+          اختار الاجاية الصحيحة
+        </h1>
+      </div>
+      <div class="container">
+        <input type="radio" name="lesson_question" class="text-field" placeholder="اكتب السؤال هنا...">
+        <label>صح</label>
+        <input type="radio" name="lesson_question" class="text-field" placeholder="اكتب السؤال هنا...">
+        <label>خطا</label>
+      </div>
+    </section>
+    <section class="section-body">
+      <div>
+        <h1 class="sections-title">
+          اختار من متعدد
+        </h1>
+      </div>
+      <div class="container">
+        <input type="radio" name="lesson_question" class="text-field" placeholder="اكتب السؤال هنا...">
+        <input type="text" name="lesson_question" class="text-field" placeholder="اكتب السؤال هنا...">
+        <input type="radio" name="lesson_question" class="text-field" placeholder="اكتب السؤال هنا...">
+        <input type="text" name="lesson_question" class="text-field" placeholder="اكتب السؤال هنا...">
+        <input type="radio" name="lesson_question" class="text-field" placeholder="اكتب السؤال هنا...">
+        <input type="text" name="lesson_question" class="text-field" placeholder="اكتب السؤال هنا...">
+        <input type="radio" name="lesson_question" class="text-field" placeholder="اكتب السؤال هنا...">
+        <input type="text" name="lesson_question" class="text-field" placeholder="اكتب السؤال هنا...">
+      </div>
+    </section>
+    <div class="sections-container">
+      <section class="section-body">
+        <div class="container">
+          <h1 class="textarea-header">مفردات الدرس</h1>
+          <textarea placeholder="مفردات الدرس......"></textarea>
+        </div>
+      </section>
+      <section class="section-body">
+        <div class="container">
+          <h1 class="textarea-header">تهيئة الدرس</h1>
+          <textarea placeholder="تهيئة الدرس..."></textarea>
+        </div>
+      </section>
+    </div>
+    <div class="sections-container">
+      <section class="section-body">
+        <div class="container">
+          <h1 class="textarea-header">إغلاق الدرس</h1>
+          <textarea placeholder="اكتب إغلاق الدرس هنا......"></textarea>
+        </div>
+      </section>
+      <section class="section-body">
+        <div class="container">
+          <h1 class="textarea-header">تعليمات المعلم</h1>
+          <textarea placeholder="اكتب تعليمات المعلم هنا..."></textarea>
+        </div>
+      </section>
+    </div>
+
+    <section class="section-body">
+      <button type="submit" class="submit-btn btn">حفظ</button>
+    </section>
+  </form>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
+    integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css"
+    integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+  <script type="text/javascript">
+    let cs = document.getElementById('choose-select');
+    $('#choose-select').change(function () {
+      console.log(this.value)
+    })
+    $('#choose-select').selectize({
+      sortField: 'text',
+      create: false,
+      diacritics: false,
+      onFocus: function () {     // <-
+        this.clear(false);  // <-
+      }
+    });
+    //let lessons = await
+    fetch("/get-lesson")
+      .then(e => e.json())
+      .then(lessons => {
+        let t = ''
+        for (let i of lessons) {
+          t = i.learningType + ' - ' + i.level + ' - ' + i.subject + ' - ' + i.unit + ' - ' + i.lesson;
+          let opt = document.createElement("option");
+          opt.textContent = t;
+          cs.selectize.addOption({ value: i._id, text: t }); //option can be created manually or loaded using Ajax
+          cs.selectize.addItem(13);
+          $(cs).trigger('change');
+          //cs.append(opt)
+          //document.body.append(opt)
+        }
+        console.log(lessons)
+      })
+    //lessons = await lessons.json()
+
+    function myFunction() {
+      // Declare variables
+      var input, filter, ul, li, a, i, txtValue;
+      input = this;
+      filter = input.value.toUpperCase();
+      ul = document.body;
+      li = ul.getElementsByTagName('option');
+
+      // Loop through all list items, and hide those who don't match the search query
+      for (i = 0; i < li.length; i++) {
+        //a = li[i].getElementsByTagName("a")[0];
+        //txtValue = a.textContent || a.innerText;
+        //console.log(li[i])
+        if (li[i].textContent.toUpperCase().indexOf(filter) > -1) {
+          li[i].style.display = "";
+        } else {
+          li[i].style.display = "none";
+        }
+      }
+    }
+    let lesson_question = document.getElementsByName("lesson_question")[0];
+    lesson_question.addEventListener("keyup", myFunction)
+
+  </script>
+</body>
+
+</html>
