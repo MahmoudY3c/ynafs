@@ -14,7 +14,7 @@ function ChooseLesson(props) {
   );
   const [QuestionType, setQuestionType] = useState(null)
   useEffect(() => {
-    fetch("/get-lesson",)
+    fetch("/get-lesson")
       .then(e => e.json())
       .then(lessons => {
         let t = '', arr = [...children]

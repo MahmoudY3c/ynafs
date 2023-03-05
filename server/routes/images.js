@@ -1,18 +1,25 @@
 const express = require("express")
 const router = express.Router();
-const images = require("../db/models/images.js");
+const Images = require("../db/models/images.js");
 const multer = require("multer");
 
-const upload = multer({
-  limits: {
-    fileSize: 20000000,
-  },
-});
+const upload = multer();
 fileUpload = upload.fields([
-  { name: "filename", maxCount: 1 },
+  { name: "file", maxCount: 1 },
 ]);
+(async () => {
+  console.log(await Images.find({}, {buffer: 0}))
+})()
 
-router.post("/api/images", fileUpload, function(req, res) {
-  console.log(req.file, req.body)
+router.all("/api/images", fileUpload, async function (req, res) {
+  try {
+    const pic = req.files.file[0], { uid } = req.body
+    const image = new Images(pic)
+    image.uid = uid
+    //await image.save()
+    res.json({ fileId: image._id.toString() })
+  } catch (err) {
+    res.json(err)
+  }
 })
 module.exports = router

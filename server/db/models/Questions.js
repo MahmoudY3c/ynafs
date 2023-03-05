@@ -1,17 +1,16 @@
 const { Schema, ObjectId } = mongoose = require("mongoose");
 const QuestionsSchema = new Schema({
-	//Number of the input value
-	answerValue: {
+	image: {
+		type: Schema.Types.ObjectId, ref: 'Images'
+	},
+	lesson: {
+		type: mongoose.Types.ObjectId, ref: 'Lessons'
+	},
+	//======================= start question =================================
+	//answer index
+	answer: {
 		type: Number
 	},
-	answer: {
-		type: String
-	},
-	lessons: [{
-		id: {
-			type: mongoose.Types.ObjectId
-		},
-	}],
 	question: {
 		type: String
 	},
@@ -20,22 +19,34 @@ const QuestionsSchema = new Schema({
 		type: Number
 	},
 	choices: [{
-		value: {
-			type: Number
+		id: {
+			type: Number,
+			default: 0
 		},
-		text: {
-			type: String
+		title: {
+			type: String,
 		},
-		check: {
-			type: Boolean
-		}
-	}]
-}, {timestamps: true});
+		isTrue: {
+			type: Boolean,
+		},
+	}],
+	//======================= end of question =================================
 
-QuestionsSchema.pre("save", async function (next) {
-  return this._id
-  next();
-});
+	//======================= start of addtionals ==========================
+	LessonVocabulary: {
+		type: String
+	},
+	LessonPrepare: {
+		type: String
+	},
+	TeacherInstructions: {
+		type: String
+	},
+	LessonClose: {
+		type: String
+	},
+	//====================== end of addtionals ===========================
+}, {timestamps: true});
 
 module.exports = mongoose.model("Questions", QuestionsSchema);;
 

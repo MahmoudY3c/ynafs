@@ -90,6 +90,12 @@ const UsersSchema = new Schema({
 	role: {
 	  type: String,
 	},
+	lessons: [{
+		id: {
+			type: Schema.Types.ObjectId,
+			ref: "Lessons"
+		}
+	}]
 });
 //console.log(UsersSchema);
 UsersSchema.methods.toJSON = function () {

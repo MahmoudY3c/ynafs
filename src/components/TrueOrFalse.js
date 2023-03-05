@@ -14,13 +14,13 @@ function TrueOrFalse(props) {
       </h1>
       <div className="container-flex">
         <Form.Item
-          name="true_or_false"
+          name="answer"
           hasFeedback
           rules={[{ required: true, message: '' }]}
         >
           <Radio.Group value={checked} onChange={onChange} >
             <div className="options-container">
-              <Radio name="true" value="true">صح</Radio>
+              <Radio name="true" value="true">صواب</Radio>
             </div>
             <div className="options-container">
               <Radio name="false" value="false">خطأ</Radio>

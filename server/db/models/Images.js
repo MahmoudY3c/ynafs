@@ -1,9 +1,10 @@
 const { Schema, ObjectId } = mongoose = require("mongoose");
 const ImagesSchema = new Schema({
-	document: {
-    name: String,
-    buffer: Buffer,
-    type: String,
-  },
-}, {timestamps: true});
-module.exports = mongoose.model("Images", ImagesSchema);;
+  buffer: Buffer,
+  originalname: String,
+  encoding: String,
+  mimetype: String,
+  size: Number,
+  uid: String
+}, { timestamps: true });
+module.exports = mongoose.model("Images", ImagesSchema);;//project.document = req.files.document[0]

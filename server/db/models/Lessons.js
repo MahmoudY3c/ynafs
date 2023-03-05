@@ -44,19 +44,9 @@ const LessonsSchema = new Schema({
 	},
 	Questions: [{
 		id: {
-			type: mongoose.Types.ObjectId
+			type: mongoose.Types.ObjectId,
+			ref: "Questions"
 		},
-	}]
-	// einURLS: {
-	// 	parents: {
-	// 		type: String,
-	// 	},
-	// 	tree: {
-	// 		type: String,
-	// 	},
-	// 	children: {
-	// 		type: String,
-	// 	}
-	// }
+	}],
 }, {timestamps: true});
 module.exports = mongoose.model("Lessons", LessonsSchema);;

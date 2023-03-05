@@ -117,7 +117,7 @@ function Multiple(props) {
           +
         </Button>
         <Form.Item
-          name="choosed_answer"
+          name="answer"
           hasFeedback
           rules={[{ required: true, message: '' }]}
         >
