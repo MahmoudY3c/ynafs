@@ -2,27 +2,29 @@ import React, { useState, useEffect } from 'react';
 import { Select, Form } from "antd";
 import SelectBox from './SelectBox.js'
 import ChooseQuestionType from './ChooseQuestionType'
+import request from '../API/api.js';
 const { Option } = Select;
 
 function ChooseLesson(props) {
-  const [children, setChildren] = useState(
-    [
+  const [children, setChildren] = useState([
       <Option key={0} value="">
         اختار الدرس....
       </Option>
-    ]
-  );
+    ]);
   const [QuestionType, setQuestionType] = useState(null)
   useEffect(() => {
-    fetch("/get-lesson")
-      .then(e => e.json())
+    request("/get-lesson")
       .then(lessons => {
+        console.log(lessons)
         let t = '', arr = [...children]
+        console.log(arr, 'arrarrarrarr')
         for (let i of lessons) {
           t = i.learningType + ' - ' + i.level + ' - ' + i.subject + ' - ' + i.unit + ' - ' + i.lesson;
+          console.log(t, 'tttttttttttttttt')
           children.push(<Option key={'"' + t + '"'} value={i._id}>{t}</Option>);
         }
         setChildren(arr)
+        console.log(children, 'childrenchildrenchildrenchildrenchildrenchildrenchildrenchildrenchildrenchildren')
       })
   }, [])
 
@@ -45,7 +47,10 @@ function ChooseLesson(props) {
           filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
           name="lesson"
         >
-          {children}
+          {children.map(e => {
+            console.log(e, 'eeeeeeeeeeeeeeeeeeeeee');
+            return e
+          })}
         </SelectBox>
       {QuestionType}
     </>

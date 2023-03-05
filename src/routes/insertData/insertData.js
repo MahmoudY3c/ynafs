@@ -5,6 +5,7 @@ import TextArea from '../../components/TextArea.js'
 import { Form, Alert } from "antd";
 import { useState } from 'react';
 import LoadingModal from "../../components/LoadingModal";
+import request from "../../API/api";
 
 function PageForm(props) {
   const [openModal, setOpenModal] = useState(false);
@@ -69,14 +70,13 @@ function PageForm(props) {
     values.image = values.image.uid
     console.log('Received values of form: ', values, choices);
     setOpenModal(true);
-    fetch('/add-question', {
+    request('/add-question', {
       method: "POST",
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       },
       body: JSON.stringify(values)
     })
-    .then(e => e.json())
     .then(json => {
       console.log(json)
       if(json.err) setAlert({display: "flex", type: "error", message:json.err.message ? json.err.message : "حدث خطا اثناء حفظ السؤال برجاء المحاولة مره اخرى"}) 

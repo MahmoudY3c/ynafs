@@ -116,12 +116,12 @@ UsersSchema.statics.findByCredentials = async (email, password) => {
   return user;
 };
 
-// UsersSchema.pre("save", async function (next) {
-//   //this is refering to the user object
-//   if (this.isModified("password")) {
-//     this.password = await bcrypt.hash(this.password, 8);
-//   }
-//   next();
-// });
+UsersSchema.pre("save", async function (next) {
+  //this is refering to the user object
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 8);
+  }
+  next();
+});
 
 module.exports = mongoose.model("Users", UsersSchema);;

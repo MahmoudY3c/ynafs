@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Input, Form, Upload, Space, Button } from "antd"
 import { UploadOutlined } from '@ant-design/icons';
+import request from '../API/api';
 
 const UploadBtn = ({ setTextField }) => {
   const handleChange = function (e) {
@@ -17,11 +18,9 @@ const UploadBtn = ({ setTextField }) => {
     data.append('file', e.file)
     data.append('uid', e.file.uid)
     //e.onProgress()
-    fetch('/images', {
+    request('/images', {
       method: "POST",
       body: data
-    }).then((e) => {
-      return e.json()
     })
    .then(t => {
     //  console.log(t.fileId)

@@ -14,6 +14,7 @@ const usersRoute = require("./routes/users.js")
 const questionsRoute = require("./routes/questions.js")
 const lessonsRoute = require("./routes/lessons.js")
 const images = require("./routes/images.js")
+const extension = require("./routes/extension.js")
 
 
 //middleaware
@@ -28,20 +29,14 @@ app.use(usersRoute)
 app.use(questionsRoute)
 app.use(lessonsRoute)
 app.use(images)
+app.use(extension)
 
 // (async() => {
 // 	await User.find({})
 // })()
 //routes
-app.get('/status', function(req, res) {
-	res.setHeader("Content-Type", "text/html");
-	res.json({status: false})
-})
-app.get('/ext/o.js', async function(req, res) {
-	const o = await fs.readFileSync("./ext/o.js")
-	res.setHeader("Content-Type", "text/html");
-	res.status(200).send(o)
-})
+
+//404 page
 app.get('*', async (req, res) => {
 	const _404 = await fs.readFileSync("./public/404/404.html")
 	res.setHeader("Content-Type", "text/html");
@@ -57,10 +52,10 @@ Object.keys(nets).forEach(net => {
 		}
 	})
 })
-//console.log(addresses)
-// app.listen(PORT, addresses[0], function() {
-// 	console.log(`app running on http://${addresses[0]}:${PORT}`)
-// })
-app.listen(PORT, 'localhost', function() {
-	console.log(`app running on http://localhost:${PORT}`)
+console.log(addresses)
+app.listen(PORT, addresses[0], function() {
+	console.log(`app running on http://${addresses[0]}:${PORT}`)
 })
+// app.listen(PORT, 'localhost', function() {
+// 	console.log(`app running on http://localhost:${PORT}`)
+// })
