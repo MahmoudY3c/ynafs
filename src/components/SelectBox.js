@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import '../css/antd/antd.min.css'
 import { Form, Select } from "antd";
 const { Option } = Select;
@@ -21,8 +21,6 @@ function SelectBox(props) {
             <Select
               style={{ width: '100%' }}
               {...props}
-              // onClick={() => {setTimeout(() => {debugger}, 300)}}
-            //defaultValue={['اختار الدرس...']}
             >
               {props.children}
             </Select>

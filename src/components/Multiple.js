@@ -106,7 +106,7 @@ function Multiple(props) {
     )
     setOptions(opts)
   }
-  console.log(Archieve.getAll)
+  // console.log(Archieve.getAll)
   return (
     <section className="section-body">
       <h1 className="sections-title">

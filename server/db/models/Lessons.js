@@ -43,7 +43,7 @@ const LessonsSchema = new Schema({
 		type: Number
 	},
 	Questions: [{
-		id: {
+		QuestionId: {
 			type: mongoose.Types.ObjectId,
 			ref: "Questions"
 		},

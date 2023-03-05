@@ -3,15 +3,14 @@ import ChooseLesson from '../../components/ChooseLesson.js'
 import Nav from '../../components/Nav.js'
 import TextArea from '../../components/TextArea.js'
 import { Form, Alert } from "antd";
-import Raect, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import LoadingModal from "../../components/LoadingModal";
 
 function PageForm(props) {
   const [openModal, setOpenModal] = useState(false);
   const [alert, setAlert] = useState({display: "none"});
-  //const [fileId, setFileId] = useState("")
+  const [fileId, setFileId] = useState("")
   const [form] = Form.useForm()
-  const image = Form.useWatch("image") 
   const handleSubmit = e => {
     e.preventDefault();
     props.form?.validateFields((err, values) => {
@@ -21,7 +20,7 @@ function PageForm(props) {
   const handleClick = () => {
     //
   }
-  const handleFinish = (values: any) => {
+  const handleFinish = (values) => {
     //processing the data
     const choices = []
     if(values.questionType === "true-or-false") {
@@ -66,7 +65,8 @@ function PageForm(props) {
       })
       //console.log(multpleChoices, 'multpleChoices')
     }
-    values.choices = choices
+    values.choices = choices;
+    values.image = values.image.uid
     console.log('Received values of form: ', values, choices);
     setOpenModal(true);
     fetch('/add-question', {
@@ -79,7 +79,7 @@ function PageForm(props) {
     .then(e => e.json())
     .then(json => {
       console.log(json)
-      if(json.err) setAlert({display: "flex", type: "error", message:"حدث خطا اثناء حفظ السؤال برجاء المحاولة مره اخرى"}) 
+      if(json.err) setAlert({display: "flex", type: "error", message:json.err.message ? json.err.message : "حدث خطا اثناء حفظ السؤال برجاء المحاولة مره اخرى"}) 
       else if(json.success) setAlert({display: "flex", type: "success", message:"تم الحفظ بنجاح"})
       
       setTimeout(() => {
@@ -91,7 +91,6 @@ function PageForm(props) {
       alert("حدث خطا اثناء حفظ السؤال برجاء المحاولة مره اخرى")
     })
   }
-  
   return (
     <div className="App">
       <header>
@@ -118,7 +117,6 @@ function PageForm(props) {
       <LoadingModal state={openModal} />
 
       <Form
-        form={form}
         onFinish={handleFinish}
         onSubmit={handleSubmit}
         style={{

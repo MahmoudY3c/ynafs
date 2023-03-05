@@ -1,10 +1,10 @@
 const { Schema, ObjectId } = mongoose = require("mongoose");
 const QuestionsSchema = new Schema({
 	image: {
-		type: Schema.Types.ObjectId, ref: 'Images'
+		type: Schema.Types.ObjectId, ref: 'Images' 
 	},
 	lesson: {
-		type: mongoose.Types.ObjectId, ref: 'Lessons'
+		type: Schema.Types.ObjectId, ref: 'Lessons' 
 	},
 	//======================= start question =================================
 	//answer index
@@ -16,7 +16,7 @@ const QuestionsSchema = new Schema({
 	},
 	//Number of the option value
 	questionType: {
-		type: Number
+		type: String
 	},
 	choices: [{
 		id: {

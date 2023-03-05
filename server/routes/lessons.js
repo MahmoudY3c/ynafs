@@ -12,6 +12,14 @@ router.get('/api/get-lesson', async function(req, res) {
 	res.status(200).json(l)
 })
 
+router.get('/api/get/lessonsId', async function(req, res) {
+	let l = await Lessons.find({}, {_id: 1});
+    console.log("visited")
+    res.setHeader("Access-Control-Allow-Origin", "*")
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.status(200).json(l)
+})
+
 
 
 

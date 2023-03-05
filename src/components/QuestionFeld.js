@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Input, Form, Upload, Space, Button } from "antd"
 import { UploadOutlined } from '@ant-design/icons';
 
-const UploadBtn = ({ setTextField, setVal, val }) => {
-  const handleChange = function(e) {
-    //console.log(e, 'change');
+const UploadBtn = ({ setTextField }) => {
+  const handleChange = function (e) {
     setTextField(null)
   }
-  const uploader = function(e) {
+  // console.log(fileList)
+  const normFile = (e) => {
+    console.log("Upload event:", e);
+    return e.file
+  };
+  const uploader = function (e) {
     console.log(e);
     const data = new FormData()
     data.append('file', e.file)
@@ -19,13 +23,10 @@ const UploadBtn = ({ setTextField, setVal, val }) => {
     }).then((e) => {
       return e.json()
     })
-    .then(t => {
-      console.log(t.fileId)
-      e.onSuccess()
-      normFile(t)
-      setVal(e => t.fileId)
-      console.log(val)
-    })
+   .then(t => {
+    //  console.log(t.fileId)
+     e.onSuccess()
+   })
   }
   return (
     <Space
@@ -35,30 +36,24 @@ const UploadBtn = ({ setTextField, setVal, val }) => {
       }}
       size="large"
     >
-      <Upload
-        listType="picture"
-        maxCount={1}
-        onChange={handleChange}
-        //action="/images"thumbUrl
-        customRequest={uploader}
-        value={val}
-        //name="image"
-      >
-        <Button style={{ margin: '10px' }} icon={<UploadOutlined />} >قم برفع صورة</Button>
-      </Upload>
+
+      <Form.Item name="image" getValueFromEvent={normFile}  >
+        <Upload
+          listType="picture"
+          maxCount={1}
+          onChange={handleChange}
+          customRequest={uploader}
+        >
+          <Button style={{ margin: '10px' }} icon={<UploadOutlined />} >قم برفع صورة</Button>
+        </Upload>
+      </Form.Item>
     </Space>
   );
 }
-const normFile = (e) => {
-  console.log("Upload event:", e);
-  return e 
-};
+
 function QuestionFeld(props) {
-  let [v, setVl] = useState("fileList");
-  useEffect(() => setVl(value => value), [v]);
-  console.log(v, 'kmmmmmmmmmmmmmmmmmm')
   const [textField, setTextField] = useState(
-    <Form.Item 
+    <Form.Item
       name="question"
       hasFeedback
       rules={[{ required: true, message: '' }]}
@@ -76,9 +71,7 @@ function QuestionFeld(props) {
       </div>
       <div className="container">
         {textField}
-        <Form.Item name="image" valuePropName='fileId' label={v} getValueFromEvent={normFile} >
-          <UploadBtn setTextField={setTextField} setVal={setVl} val={v} />
-        </Form.Item>
+        <UploadBtn setTextField={setTextField} />
       </div>
     </section>
   );

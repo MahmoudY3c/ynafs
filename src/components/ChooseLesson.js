@@ -32,15 +32,10 @@ function ChooseLesson(props) {
     } else if (!value.length) {
       setQuestionType(null)
     }
-    console.log(`selected ${value.length}, ${value}`);
+    // console.log(`selected ${value.length}, ${value}`);
   }
   return (
     <>
-      {/* <Form.Item
-        name="lesson"
-        hasFeedback
-        rules={[{ required: true, message: '' }]}
-      > */}
         <SelectBox
           title="اختار الدرس الذى تريده"
           placeholder="اختار الدرس...."
@@ -52,20 +47,6 @@ function ChooseLesson(props) {
         >
           {children}
         </SelectBox>
-      {/* </Form.Item> */}
-      {/* <Form.Item rules={[{ required: true }]}>
-        <SelectBox
-          title="اختار الدرس الذى تريده"
-          placeholder="اختار الدرس...."
-          onChange={handleChange}
-          showSearch
-          optionFilterProp="children"
-          filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-          required
-        >
-          {children}
-        </SelectBox>
-      </Form.Item> */}
       {QuestionType}
     </>
   );
