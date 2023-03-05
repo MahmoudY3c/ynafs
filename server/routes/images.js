@@ -13,6 +13,7 @@ fileUpload = upload.fields([
 // })()
 
 router.all("/api/images", fileUpload, async function (req, res) {
+  console.log('there is a request')
   try {
     const pic = req.files.file[0], 
     { uid } = req.body;
@@ -24,9 +25,11 @@ router.all("/api/images", fileUpload, async function (req, res) {
     image.uid = uid
     // console.log(req.files)
     await image.save()
-    res.json({ fileId: image._id.toString() })
+    res.status(200).json({ fileId: image._id.toString() })
   } catch (err) {
-    res.json(err)
+    res.status(500).json({
+      err: err
+    })
   }
 })
 module.exports = router

@@ -20,10 +20,11 @@ const UploadBtn = ({ setTextField }) => {
     //e.onProgress()
     request('/images', {
       method: "POST",
-      body: data
+      body: data,
+      cors: "no-cors",
     })
    .then(t => {
-    //  console.log(t.fileId)
+     console.log(t.fileId)
      e.onSuccess()
    })
   }

@@ -22,10 +22,7 @@ function SelectBox(props) {
               style={{ width: '100%' }}
               {...props}
             >
-              {props.children.map(e => {
-                console.log(e, 'selectBox');
-                return e
-              })}
+              {props.children}
             </Select>
           </Form.Item>
         </div>
