@@ -67,7 +67,7 @@ function PageForm(props) {
       //console.log(multpleChoices, 'multpleChoices')
     }
     values.choices = choices;
-    values.image = values.image.uid
+    if(values.image) values.image = values.image.uid
     console.log('Received values of form: ', values, choices);
     setOpenModal(true);
     request('/add-question', {

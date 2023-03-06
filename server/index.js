@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require('cors')
 const fs = require("fs");
 const dbConnection = require("./db/mongoose");
 const path = require("path")
@@ -15,11 +16,13 @@ const questionsRoute = require("./routes/questions.js")
 const lessonsRoute = require("./routes/lessons.js")
 const images = require("./routes/images.js")
 const extension = require("./routes/extension.js")
+const any = require("./routes/any.js")
 
 
 //middleaware
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+app.use(cors({origin:true}))
 app.use('/', express.static(path.join(__dirname, 'public')))
 app.use('/', express.static(path.join(__dirname, 'ext')))
 

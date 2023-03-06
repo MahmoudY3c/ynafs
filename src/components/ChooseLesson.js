@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Select, Form } from "antd";
+import { Select, Spin } from "antd";
 import SelectBox from './SelectBox.js'
 import ChooseQuestionType from './ChooseQuestionType'
 import request from '../API/api.js';
@@ -18,12 +18,8 @@ function ChooseLesson(props) {
 
 
   React.useEffect(() => {
-    fetch('http://ynafs.com:5000/api/get-lesson').then(res => {
-      if (!res.ok) {
-        throw Error('no response ')
-      }
-      return res.json()
-    }).then(data => {
+    request('/get-lesson')
+    .then(data => {
       setChildren(data)
     }).catch(err => {
       console.log('====================================');
@@ -81,14 +77,15 @@ function ChooseLesson(props) {
         filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
         name="lesson"
       >
-        {children?.map((i)=>{
-          let t = i.learningType + ' - ' + i.level + ' - ' + i.subject + ' - ' + i.unit + ' - ' + i.lesson;
+        {!children ? <Option style={{textAlign: "center"}} value=""><Spin style={{ margin: "auto" }} size="large" /></Option> : children?.map((i)=>{
+          let tree = i.tree ? ' - ' + i.tree : ''
+          let lesson = i.lesson ? ' - ' + i.lesson : '';
+          let level = i.level ? ' - ' + i.level : '';
+          let t = i.learningType + level + ' - ' + i.subject + ' - ' + i.unit + lesson + tree;
           return <Option key={'"' + t + '"'} value={i._id}>{t}</Option>
         }) }
       </SelectBox>
-
       {QuestionType}
-  
     </>
   );
 }

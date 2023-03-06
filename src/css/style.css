@@ -86,21 +86,9 @@ nav {
 
 .container-flex-multiple {
   padding: 5px 0;
-  width: 30%;
+  width: 90%;
   margin: 0 auto;
   direction: rtl;
-}
-
-@media screen and (max-width: 950px) {
-  .container-flex-multiple {
-    width: 60%;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .container-flex-multiple {
-    width: 80%;
-  }
 }
 
 .options-container {
@@ -128,6 +116,7 @@ nav {
 .ant-select-selector {
   display: table !important;
 }
+
 .ant-select-selection-item,
 .ant-select-selector {
   text-overflow: inherit !important;
@@ -231,4 +220,26 @@ form {
 .submit-btn:hover {
   background-color: dodgerblue;
   cursor: pointer;
+}
+
+@media screen and (max-width: 950px) {
+  .container-flex-multiple {
+    width: 60%;
+  }
+
+  .select-container {
+    min-width: 35%;
+    max-width: 90%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .container-flex-multiple {
+    width: 80%;
+  }
+
+  .select-container {
+    min-width: 35%;
+    max-width: 100%;
+  }
 }

@@ -1,46 +1,130 @@
 const { Schema, ObjectId } = mongoose = require("mongoose");
 const LessonsSchema = new Schema({
-	learningType: {
+	// learningType: {
+	// 	type: String
+	// },
+	// learningTypeId: {
+	// 	type: Number
+	// },
+	// level: {
+	// 	type: String
+	// },
+	// levelId: {
+	// 	type: Number
+	// },
+	// term: {
+	// 	type: String
+	// },
+	// termId: {
+	// 	type: Number
+	// },
+	// subject: {
+	// 	type: String
+	// },
+	// subjectId: {
+	// 	type: Number
+	// },
+	// unit: {
+	// 	type: String
+	// },
+	// unitId: {
+	// 	type: Number
+	// },
+	// lesson: {
+	// 	type: String
+	// },
+	// lessonId: {
+	// 	type: Number
+	// },
+	// tree: {
+	// 	type: String
+	// },
+	// treeId: {
+	// 	type: Number
+	// },
+	"categeory": {
 		type: String
 	},
-	learningTypeId: {
+    "categeoryId": {
 		type: Number
 	},
-	level: {
+    "categeoryCode": {
 		type: String
 	},
-	levelId: {
-		type: Number
-	},
-	term: {
+    "learningType": {
 		type: String
 	},
-	termId: {
+    "learningTypeId": {
 		type: Number
 	},
-	subject: {
+    "learningTypeCode": {
 		type: String
 	},
-	subjectId: {
-		type: Number
-	},
-	unit: {
+    "level": {
 		type: String
 	},
-	unitId: {
+    "levelId": {
 		type: Number
 	},
-	lesson: {
+    "levelCode": {
 		type: String
 	},
-	lessonId: {
-		type: Number
-	},
-	tree: {
+    "subject": {
 		type: String
 	},
-	treeId: {
+    "subjectId": {
 		type: Number
+	},
+    "subjectCodeId": {
+		type: String
+	},
+    "subjectItemId": {
+		type: String,
+		default: null,
+	},
+    "subjectUnitID": {
+		type: String,
+		default: null,
+	},
+    "subjectChapterId": {
+		type: String,
+		default: null,
+	},
+    "subjectSubjectGroupId": {
+		type: Number
+	},
+    "subjectTeacherGuidCount": {
+		type: Number,
+	},
+    "subjectHasTeacherGuides": {
+		type: Boolean,
+	},
+    "unitId": {
+		type: Number,
+	},
+    "unit": {
+		type: String,
+	},
+    "unitParentId": {
+		type: Number,
+	},
+    "unitSubjectBook": {
+		type: Array,
+	},
+    "tree": {
+		type: String,
+	},
+    "treeId1": {
+		type: Number,
+	},
+    "treeId2": {
+		type: Number,
+	},
+    "treeLessonId": {
+		type: Number,
+	},
+    "treeCodeId":{
+		type: String,
 	},
 	Questions: [{
 		QuestionId: {
