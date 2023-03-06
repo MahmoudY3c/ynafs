@@ -31,18 +31,21 @@ router.post('/api/add-question', async function (req, res) {
 		res.json({ success: true })
 	} catch (err) {
 		console.log(err)
-		res.json(err)
+		res.json({err: err})
 	}
 });
 
 
-//npsome population examples
-// setTimeout(async() => {
-// 	let q = await Questions.findById("640467d1d01ea349308b8abf")
-// 	await q.populate("lesson");
-// 	await q.populate({ path: 'image' });
-// 	console.log(q)
-// }, 5000)
+// npsome population examples
+setTimeout(async() => {
+	let q = await Questions.find({lesson: new ObjectId("6405909f533d3944ba99b3c1")})
+	console.log('====================================');
+	//console.log(q);
+	console.log('====================================');
+	await q[0].populate("lesson");
+	await q[0].populate({ path: 'image' });
+	console.log(q)
+}, 5000)
 
 // (async() => {
 // 	let k = await Lessons.findById("63fa9f1f31156691edc75107")

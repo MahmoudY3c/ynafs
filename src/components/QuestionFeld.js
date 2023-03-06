@@ -3,9 +3,10 @@ import { Input, Form, Upload, Space, Button } from "antd"
 import { UploadOutlined } from '@ant-design/icons';
 import request from '../API/api';
 
-const UploadBtn = ({ setTextField }) => {
+const UploadBtn = (props) => {
+  const form = Form.useFormInstance();
   const handleChange = function (e) {
-    setTextField(null)
+    props.setTextField(null)
   }
   // console.log(fileList)
   const normFile = (e) => {
@@ -37,12 +38,14 @@ const UploadBtn = ({ setTextField }) => {
       size="large"
     >
 
-      <Form.Item name="image" getValueFromEvent={normFile}  >
+      <Form.Item name="image" getValueFromEvent={normFile} 
+          initialValue={props.initialValue}>
         <Upload
           listType="picture"
           maxCount={1}
           onChange={handleChange}
           customRequest={uploader}
+          // onSuccess={() => form.setFieldsValue({})}
         >
           <Button style={{ margin: '10px' }} icon={<UploadOutlined />} >قم برفع صورة</Button>
         </Upload>
@@ -62,6 +65,7 @@ function QuestionFeld(props) {
       <Input type="text" className="text-field" placeholder="اكتب السؤال هنا..." />
     </Form.Item>
   )
+  props._form.setFieldsValue({"answer": undefined});
   return (
     <section className="section-body">
       <div>

@@ -24,7 +24,7 @@ function SelectBox(props) {
             >
               {props.children}
             </Select>
-          </Form.Item>
+          </Form.Item> 
         </div>
       </div>
     </section>

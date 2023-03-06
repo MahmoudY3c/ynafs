@@ -2,6 +2,7 @@ import "../../css/style.css";
 import ChooseLesson from '../../components/ChooseLesson.js'
 import Nav from '../../components/Nav.js'
 import TextArea from '../../components/TextArea.js'
+import React from "react";
 import { Form, Alert } from "antd";
 import { useState } from 'react';
 import LoadingModal from "../../components/LoadingModal";
@@ -12,11 +13,18 @@ function PageForm(props) {
   const [alert, setAlert] = useState({display: "none"});
   const [fileId, setFileId] = useState("")
   const [form] = Form.useForm()
+  const ref = React.createRef()
   const handleSubmit = e => {
     e.preventDefault();
-    props.form?.validateFields((err, values) => {
-      console.log('Received values of form: ', values);
-    });
+    
+    console.log('====================================');
+    console.log(form);
+    console.log('====================================');
+
+    // form.validateFields((err, values) => {
+    //   console.log('Received values of form: ', err, values);
+    // });
+    // form.getFieldInstance()
   };
   const handleClick = () => {
     //
@@ -79,17 +87,15 @@ function PageForm(props) {
     })
     .then(json => {
       console.log(json)
-      if(json.err) setAlert({display: "flex", type: "error", message:json.err.message ? json.err.message : "حدث خطا اثناء حفظ السؤال برجاء المحاولة مره اخرى"}) 
+      if(json.err) setAlert({display: "flex", type: "error", message: json.err.message ? json.err.message : "حدث خطا اثناء حفظ السؤال برجاء المحاولة مره اخرى"}) 
       else if(json.success) setAlert({display: "flex", type: "success", message:"تم الحفظ بنجاح"})
       
       setTimeout(() => {
         setOpenModal(false)
-        if(!json.err) setAlert({display: "none"})
+        if(!json.err) setAlert({display: "none"});
       }, 2000)
     })
-    .catch(err => {
-      alert("حدث خطا اثناء حفظ السؤال برجاء المحاولة مره اخرى")
-    })
+    
   }
   return (
     <div className="App">
@@ -119,6 +125,8 @@ function PageForm(props) {
       <Form
         onFinish={handleFinish}
         onSubmit={handleSubmit}
+        ref={ref}
+        form={form}
         style={{
           paddingBottom: "90px"
         }}
@@ -126,15 +134,15 @@ function PageForm(props) {
           { required: true, message: ' ' },
         ]}
       >
-        <ChooseLesson />
-        <div className="sections-container">
+        <ChooseLesson _form={form} />
+        {/* <div className="sections-container">
           <TextArea name="LessonVocabulary" placeholder="مفردات الدرس...." title="مفردات الدرس" />
           <TextArea name="LessonPrepare" placeholder="اكتب تهيئة الدرس..." title="تهيئة الدرس" />
         </div>
         <div className="sections-container">
           <TextArea name="TeacherInstructions" placeholder="قم بكتابة تعليمات المعلم...." title="تعليمات المعلم" />
           <TextArea name="LessonClose" placeholder="قم بكتابة إغلاق الدرس..." title="إغلاق الدرس" />
-        </div>
+        </div> */}
         <section className="section-body">
           <button type="submit" className="submit-btn btn" onClick={handleClick}>حفظ</button>
         </section>

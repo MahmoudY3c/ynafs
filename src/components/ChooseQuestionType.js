@@ -53,14 +53,13 @@ let Question = function (props) {
   //always remeber previously choosed elements
   const elms = Archieve.UseDefaultKey("elms")
   const [Q, setQ] = useState(null);
-
   function handleChange(value) {
     let multiple = <>
-      <QuestionFeld />
+      <QuestionFeld _form={props._form}/>
       <Multiple />
     </>,
       tof = <>
-        <QuestionFeld />
+        <QuestionFeld _form={props._form} />
         <TrueOrFalse />
       </>
     if (value.length) {
@@ -82,6 +81,7 @@ let Question = function (props) {
         el: null,
         value: ''
       })
+      props._form.setFieldsValue({"image": undefined});
       setQ('')
     }
     console.log(elms(index), index)
@@ -96,6 +96,7 @@ let Question = function (props) {
         onChange={handleChange}
         mode="single"
         name="questionType"
+        required={true}
       >
         <Option key="اختار نوع السؤال" value="">
           اختار نوع السؤال.....
@@ -119,7 +120,7 @@ function ChooseQuestionType(props) {
   const QuestionTypeField = function () {
     return (
       <>
-        {NewQuestion.map((Q, i) => <Q key={i} index={i} />)}
+        {NewQuestion.map((Q, i) => <Q key={i} index={i} _form={props.f} />)}
       </>
     )
   }

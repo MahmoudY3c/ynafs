@@ -96,7 +96,9 @@ function Multiple(props) {
     opts.push(
       <div className="options-container" key={len}>
         <Radio value={"multiple" + len} name={"option" + len} />
-        <Form.Item name={item} noStyle={true}
+        <Form.Item 
+            name={item} 
+            noStyle={true}
             hasFeedback
             rules={[{ required: true, message: '' }]}
           >
@@ -119,7 +121,7 @@ function Multiple(props) {
         <Form.Item
           name="answer"
           hasFeedback
-          rules={[{ required: true, message: '' }]}
+          rules={[{ required: true, message: 'اختر اجابة' }]}
         >
           <Radio.Group onChange={onChange} value={checked} style={{ width: "100%" }}>
             {options.map(opt => {

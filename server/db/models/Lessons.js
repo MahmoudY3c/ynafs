@@ -45,86 +45,104 @@ const LessonsSchema = new Schema({
 	"categeory": {
 		type: String
 	},
-    "categeoryId": {
+	"categeoryId": {
 		type: Number
 	},
-    "categeoryCode": {
+	"categeoryCode": {
 		type: String
 	},
-    "learningType": {
+	"learningType": {
 		type: String
 	},
-    "learningTypeId": {
+	"learningTypeId": {
 		type: Number
 	},
-    "learningTypeCode": {
+	"learningTypeCode": {
 		type: String
 	},
-    "level": {
+	"level": {
 		type: String
 	},
-    "levelId": {
+	"levelId": {
 		type: Number
 	},
-    "levelCode": {
+	"levelCode": {
 		type: String
 	},
-    "subject": {
+	"subject": {
 		type: String
 	},
-    "subjectId": {
+	"subjectId": {
 		type: Number
 	},
-    "subjectCodeId": {
+	"subjectCodeId": {
 		type: String
 	},
-    "subjectItemId": {
+	"subjectItemId": {
 		type: String,
 		default: null,
 	},
-    "subjectUnitID": {
+	"subjectUnitID": {
 		type: String,
 		default: null,
 	},
-    "subjectChapterId": {
+	"subjectChapterId": {
 		type: String,
 		default: null,
 	},
-    "subjectSubjectGroupId": {
+	"subjectSubjectGroupId": {
 		type: Number
 	},
-    "subjectTeacherGuidCount": {
+	"subjectTeacherGuidCount": {
 		type: Number,
 	},
-    "subjectHasTeacherGuides": {
+	"subjectHasTeacherGuides": {
 		type: Boolean,
 	},
-    "unitId": {
+	"unitId": {
 		type: Number,
 	},
-    "unit": {
+	"unit": {
 		type: String,
 	},
-    "unitParentId": {
+	"unitParentId": {
 		type: Number,
 	},
-    "unitSubjectBook": {
+	"unitSubjectBook": {
 		type: Array,
 	},
-    "tree": {
+	"tree": {
 		type: String,
 	},
-    "treeId1": {
+	"treeId1": {
 		type: Number,
 	},
-    "treeId2": {
+	"treeId2": {
 		type: Number,
 	},
-    "treeLessonId": {
+	"treeLessonId": {
 		type: Number,
 	},
-    "treeCodeId":{
+	"treeCodeId": {
 		type: String,
+	},
+	"lesson": {
+		type: String,
+	},
+	"lessonId": {
+		type: Number,
+	},
+	"lessonParentId": {
+		type: Number,
+	},
+	"Chapter": {
+		type: String,
+	},
+	"ChapterId": {
+		type: Number,
+	},
+	"ChapterParentId": {
+		type: Number,
 	},
 	Questions: [{
 		QuestionId: {
@@ -132,5 +150,5 @@ const LessonsSchema = new Schema({
 			ref: "Questions"
 		},
 	}],
-}, {timestamps: true});
+}, { timestamps: true });
 module.exports = mongoose.model("Lessons", LessonsSchema);;

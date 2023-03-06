@@ -19,6 +19,12 @@ router.get('/api/get/lessonsId', async function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*")
   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.status(200).json(l)
+});
+
+router.post('/api/get/add-lesson', async function (req, res) {
+  let lesson = new Lessons(req.body)
+	await lesson.save()
+  res.status(200).json(lesson._id)
 })
 
 
