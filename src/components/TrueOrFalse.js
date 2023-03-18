@@ -16,7 +16,7 @@ function TrueOrFalse(props) {
         <Form.Item
           name="answer"
           hasFeedback
-          rules={[{ required: true, message: '' }]}
+          rules={[{ required: true, message: 'اختر اجابة' }]}
         >
           <Radio.Group value={checked} onChange={onChange} >
             <div className="options-container">

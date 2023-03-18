@@ -1,10 +1,10 @@
 import React from 'react';
-import "./404.css"
+import styles from "./404.css"
 import spaceMan from "./space.svg"
 function NotFound(props) {
   return (
     <>
-      <header style={
+      <header  style={
         {
           height: "100vh",
           display: "flex",

@@ -22,7 +22,7 @@ const any = require("./routes/any.js")
 //middleaware
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
-app.use(cors({origin:true}))
+app.use(cors({origin: true}))
 app.use('/', express.static(path.join(__dirname, 'public')))
 app.use('/', express.static(path.join(__dirname, 'ext')))
 
