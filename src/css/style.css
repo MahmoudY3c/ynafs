@@ -16,7 +16,10 @@ html {
 
 header {
   padding: 10px 20px;
-  background: #039d8f;
+  /* background: #039d8f; */
+  
+  
+  background-color: #0093E9;
 }
 
 nav {
@@ -169,6 +172,10 @@ select:before {
   outline: 0;
 }
 
+.ant-form-item {
+  max-width: 60% !important;
+}
+.form-item-row {}
 .sections-container {
   display: flex;
   align-items: center;
@@ -184,6 +191,9 @@ select:before {
   .container {
     width: 90% !important;
     margin: auto;
+  }
+  .ant-form-item {
+    max-width: 100% !important;
   }
 }
 
@@ -210,7 +220,10 @@ textarea {
   margin: 10px auto;
   display: table;
   min-width: 25%;
-  background: #039d8f;
+  /* background: #039d8f; */
+  
+  
+  background-color: #0093E9;
 }
 
 form {
@@ -218,10 +231,17 @@ form {
 }
 
 .submit-btn:hover {
-  background-color: dodgerblue;
+  background-color: #f0e68c;
   cursor: pointer;
+  color: #000;
 }
 
+.err-message-container {
+  text-align: center;
+  padding: 25px;
+  font-family: 'Cairo';
+  font-size: xx-large;
+}
 @media screen and (max-width: 950px) {
   .container-flex-multiple {
     width: 60%;

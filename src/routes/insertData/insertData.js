@@ -10,13 +10,12 @@ import request from "../../API/api";
 
 function PageForm(props) {
   const [openModal, setOpenModal] = useState(false);
-  const [alert, setAlert] = useState({display: "none"});
-  const [fileId, setFileId] = useState("")
+  const [alert, setAlert] = useState({ display: "none" });
   const [form] = Form.useForm()
   const ref = React.createRef()
   const handleSubmit = e => {
     e.preventDefault();
-    
+
     console.log('====================================');
     console.log(form);
     console.log('====================================');
@@ -32,9 +31,9 @@ function PageForm(props) {
   const handleFinish = (values) => {
     //processing the data
     const choices = []
-    if(values.questionType === "true-or-false") {
+    if (values.questionType === "true-or-false") {
       let obj = {};
-      if(values.answer === "true") {
+      if (values.answer === "true") {
         values.answer = 0
         choices.push({
           title: "صواب",
@@ -44,7 +43,7 @@ function PageForm(props) {
           title: "خطأ",
           isTrue: false
         })
-      } else if(values.answer === "false") {
+      } else if (values.answer === "false") {
         values.answer = 0
         choices.push({
           title: "خطأ",
@@ -55,10 +54,10 @@ function PageForm(props) {
           isTrue: false
         })
       }
-    } else if(values.questionType === 'multiple') {
+    } else if (values.questionType === 'multiple') {
       let multpleChoices = Object.keys(values).filter(e => e.match(/multiple\d+/))
       multpleChoices.forEach((choice, i) => {
-        if(choice === values.answer) {
+        if (choice === values.answer) {
           values.answer = i
           choices.push({
             title: values[choice],
@@ -75,7 +74,7 @@ function PageForm(props) {
       //console.log(multpleChoices, 'multpleChoices')
     }
     values.choices = choices;
-    if(values.image) values.image = values.image.uid
+    if (values.image) values.image = values.image.uid
     console.log('Received values of form: ', values, choices);
     setOpenModal(true);
     request('/add-question', {
@@ -85,40 +84,40 @@ function PageForm(props) {
       },
       body: JSON.stringify(values)
     })
-    .then(json => {
-      console.log(json)
-      if(json.err) setAlert({display: "flex", type: "error", message: json.err.message ? json.err.message : "حدث خطا اثناء حفظ السؤال برجاء المحاولة مره اخرى"}) 
-      else if(json.success) setAlert({display: "flex", type: "success", message:"تم الحفظ بنجاح"})
-      
-      setTimeout(() => {
-        setOpenModal(false)
-        if(!json.err) setAlert({display: "none"});
-      }, 2000)
-    })
-    
+      .then(json => {
+        console.log(json)
+        if (json.err) setAlert({ display: "flex", type: "error", message: json.err.message ? json.err.message : "حدث خطا اثناء حفظ السؤال برجاء المحاولة مره اخرى" })
+        else if (json.success) setAlert({ display: "flex", type: "success", message: "تم الحفظ بنجاح" })
+
+        setTimeout(() => {
+          setOpenModal(false)
+          if (!json.err) setAlert({ display: "none" });
+        }, 2000)
+      })
+
   }
   return (
     <div className="App">
       <header>
         <Nav />
       </header>
-      <Alert 
-      message={alert?.message}
-      type={alert?.type} 
-      style={{
-        position: 'fixed',
-        top: 0,
-        width: '100%',
-        direction: "rtl",
-        fontFamily: "'Cairo'",
-        padding: "20px",
-        alignItems: "center",
-        justifyContent: "center",
-        display:alert?.display,
-        zIndex: 10000
-      }} 
-      showIcon
-      description=""
+      <Alert
+        message={alert?.message}
+        type={alert?.type}
+        style={{
+          position: 'fixed',
+          top: 0,
+          width: '100%',
+          direction: "rtl",
+          fontFamily: "'Cairo'",
+          padding: "20px",
+          alignItems: "center",
+          justifyContent: "center",
+          display: alert?.display,
+          zIndex: 10000
+        }}
+        showIcon
+        description=""
       />
       <LoadingModal state={openModal} />
 

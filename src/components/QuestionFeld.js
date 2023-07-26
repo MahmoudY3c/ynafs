@@ -60,9 +60,13 @@ function QuestionFeld(props) {
       name="question"
       hasFeedback
       rules={[{ required: true, message: '' }]}
-      style={{ maxWidth: "40%" }}
+      // style={{ maxWidth: "40%" }}
     >
-      <Input type="text" className="text-field" placeholder="اكتب السؤال هنا..." />
+      <Input.TextArea style={{
+            minHeight: '20vh',
+            backgroundColor: '#ddd !important',
+            margin: "auto",
+          }} type="text" className="text-field" placeholder="اكتب السؤال هنا..." />
     </Form.Item>
   )
   props._form.setFieldsValue({"answer": undefined});

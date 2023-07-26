@@ -5,7 +5,7 @@ import ChooseQuestionType from './ChooseQuestionType';
 const { Option } = Select;
 
 function ChooseLevel(props) {
-  const {data, value} = props
+  const { data, value } = props
   const [QuestionType, setQuestionType] = useState(null)
   function handleChange(value) {
     if (value.length) {
@@ -14,7 +14,7 @@ function ChooseLevel(props) {
       setQuestionType(null)
     }
   }
-  console.log(props._form,'______props._form__________');
+  console.log(props._form, '______props._form__________');
   return (
     <>
       <SelectBox
@@ -27,12 +27,12 @@ function ChooseLevel(props) {
         name="lesson"
         required={true}
       >
-        {data[value].map((i)=>{
+        {data[value].map((i) => {
           let tree = i.tree ? ' - ' + i.tree : ''
           let lesson = i.lesson ? ' - ' + i.lesson : '';
-          let t =  i.subject + ' - ' + i.unit + lesson + tree;
+          let t = i.subject + ' - ' + i.unit + lesson + tree;
           return <Option key={'"' + t + '"'} value={i._id}>{t}</Option>
-        }) }
+        })}
       </SelectBox>
       {QuestionType ? <ChooseQuestionType f={props._form} /> : QuestionType}
     </>

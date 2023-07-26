@@ -10,7 +10,9 @@ html {
 
 header {
     padding: 10px 20px;
-    background: #039d8f;
+    /* background: #039d8f; */
+    
+    background-color: dodgerblue;
     color: #fff;
     display: flex;
     justify-content: space-between;
@@ -57,6 +59,7 @@ header {
 .container {
     text-align: center;
     padding: 20px;
+    background-color: dodgerblue;
 }
 
 .select-container {
