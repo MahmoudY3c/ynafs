@@ -17,8 +17,8 @@ html {
 header {
   padding: 10px 20px;
   /* background: #039d8f; */
-  
-  
+
+
   background-color: #0093E9;
 }
 
@@ -158,7 +158,7 @@ select:before {
   width: 50%;
 } */
 .ant-form-item {
-  max-width: 95%;
+  /* max-width: 95%; */
   margin: auto !important;
 }
 
@@ -172,10 +172,14 @@ select:before {
   outline: 0;
 }
 
-.ant-form-item {
-  max-width: 60% !important;
+.ant-form-item {}
+
+.ant-form-item-control-input-content {
+  text-align: center;
 }
+
 .form-item-row {}
+
 .sections-container {
   display: flex;
   align-items: center;
@@ -192,6 +196,7 @@ select:before {
     width: 90% !important;
     margin: auto;
   }
+
   .ant-form-item {
     max-width: 100% !important;
   }
@@ -221,8 +226,8 @@ textarea {
   display: table;
   min-width: 25%;
   /* background: #039d8f; */
-  
-  
+
+
   background-color: #0093E9;
 }
 
@@ -242,6 +247,7 @@ form {
   font-family: 'Cairo';
   font-size: xx-large;
 }
+
 @media screen and (max-width: 950px) {
   .container-flex-multiple {
     width: 60%;

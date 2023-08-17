@@ -1,0 +1,34 @@
+body,
+html,
+#root {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.box-astronaut {
+  position: absolute;
+  top: 50%;
+  right: 20%;
+  z-index: 1;
+  will-change: transform;
+  animation: move-astronaut 50s infinite linear both alternate
+}
+
+.box-astronaut img {
+  width: 150px;
+  animation: rotate-astronaut 200s infinite linear both alternate
+}
+
+@keyframes rotate-astronaut {
+  100% {
+    -webkit-transform: rotate(-720deg);
+    transform: rotate(-720deg)
+  }
+}
+
+@keyframes move-astronaut {
+  100% {
+    -webkit-transform: translate(-100px, -100px);
+    transform: translate(-100px, -100px)
+  }
+}

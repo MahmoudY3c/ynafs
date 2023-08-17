@@ -7,6 +7,12 @@ class Archieve {
       missingData:  "one of this parameeters {key, index} is missing please check your inputs"
     }
   }
+  get() {
+    return this._cache
+  }
+  set(value) {
+    this._cache = value
+  }
   getAll() {
     return this._cache
   }
@@ -16,17 +22,11 @@ class Archieve {
     this._cache[key] = [];
     return this._cache[key][index]
   }
-  get() {
-    return this._cache
-  }
-  set(value) {
-    this._cache = value
-  }
   save(key, index, data) {
     if (typeof index !== "number")return this.errs.NaN
-    if (key == undefined || index == undefined || data == undefined) return this.errs.all
+    if (key === undefined || index === undefined || data === undefined) return this.errs.all
     //console.log(index)
-    if(this._cache[key] == undefined) {
+    if(this._cache[key] === undefined) {
       this._cache[key] = [];
     }
     this._cache[key][index] = data
@@ -41,4 +41,5 @@ class Archieve {
     }
   }
 }
+
 export default Archieve
