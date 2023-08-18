@@ -186,6 +186,21 @@ select:before {
   justify-content: center;
 }
 
+.sections-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  margin: auto;
+}
+
+
+.sections-container .ant-form-item {
+  margin: 20px !important;
+}
+
+
+
 @media screen and (max-width: 850px) {
   .sections-container {
     flex-direction: column;

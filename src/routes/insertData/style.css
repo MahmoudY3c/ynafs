@@ -18,10 +18,6 @@ header {
   direction: rtl;
 }
 
-.first-opt {
-  background-color: red;
-  color: greenyellow
-}
 .header-title {
   text-align: center;
   padding: 0 20px;
@@ -111,6 +107,10 @@ select:before {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.sections-container textarea {
+  background-color: red;
+  width: 80% !important;
 }
 
 .sections-container section {

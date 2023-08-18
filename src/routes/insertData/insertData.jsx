@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import "../../css/style.css";
+// import "./style.css";
 import React, { useState } from "react";
 import { Form, Alert } from "antd";
 import LoadingModal from "../../components/LoadingModal";
@@ -346,14 +347,14 @@ function PageForm() {
               rules={[{ required: true, message: '' }]}
               style={styles.textarea}
             >
-              <TextArea placeholder="مفردات الدرس...." title="مفردات الدرس" style={styles.textarea} />
+              <TextArea placeholder="مفردات الدرس...." title="مفردات الدرس" />
             </Form.Item>
             <Form.Item
               name="LessonPrepare"
-              style={styles.textarea}
               rules={[{ required: true, message: '' }]}
+              style={styles.textarea}
             >
-              <TextArea placeholder="اكتب تهيئة الدرس..." title="تهيئة الدرس" style={styles.textarea} />
+              <TextArea placeholder="اكتب تهيئة الدرس..." title="تهيئة الدرس" />
             </Form.Item>
           </div>
         }
@@ -379,7 +380,7 @@ const styles = {
   },
   textarea: {
     margin: "20px",
-    width: '80%',
+    width: '95%',
   }
 };
 
