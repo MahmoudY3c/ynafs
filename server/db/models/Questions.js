@@ -1,21 +1,36 @@
-const { Schema, ObjectId } = mongoose = require("mongoose");
+
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
+
 const QuestionsSchema = new Schema({
 	image: {
-		type: Schema.Types.ObjectId, ref: 'Images' 
+		type: String
+	},
+	powerpoint: {
+		type: String
+	},
+	tree: {
+		type: Schema.Types.ObjectId, ref: 'Trees' 
 	},
 	lesson: {
-		type: Schema.Types.ObjectId, ref: 'Lessons' 
+		type: Schema.Types.ObjectId, ref: 'Trees' 
+	},
+	category: {
+		type: Schema.Types.ObjectId, ref: 'Trees' 
 	},
 	//======================= start question =================================
 	//answer index
 	answer: {
 		type: Number
 	},
+	essayAnswer: {
+		type: String
+	},
 	question: {
 		type: String
 	},
 	//Number of the option value
-	questionType: {
+	QuestionTypeValue: {
 		type: String
 	},
 	choices: [{
@@ -48,5 +63,12 @@ const QuestionsSchema = new Schema({
 	//====================== end of addtionals ===========================
 }, {timestamps: true});
 
-module.exports = mongoose.model("Questions", QuestionsSchema);;
+const Questions = mongoose.models.Questions ?
+mongoose.model('Questions') :
+mongoose.model(
+	"Questions",
+	QuestionsSchema
+);
+
+module.exports =  Questions;
 

@@ -1,64 +1,32 @@
-const express = require("express");
-const app = express();
-const cors = require('cors')
+const https = require('https');
+const http = require('http')
 const fs = require("fs");
-const dbConnection = require("./db/mongoose");
-const path = require("path")
-const env = require("dotenv")
-const {hostname, networkInterfaces} = os = require("os");
-const {lookup} = dns = require("dns");
-//configuartions
-env.config();
-const PORT = process.env.PORT
-
-const usersRoute = require("./routes/users.js")
-const questionsRoute = require("./routes/questions.js")
-const lessonsRoute = require("./routes/lessons.js")
-const images = require("./routes/images.js")
-const extension = require("./routes/extension.js")
-const any = require("./routes/any.js")
+const path = require("path");
+const app = require("./app");
+require("./db/mongoose");
+const { onServernError, onSeverListening } = require("./events/server");
+const { NODE_ENV, PORT } = require('./config/appConfig');
 
 
-//middleaware
-app.use(express.json())
-app.use(express.urlencoded({extended: false}))
-app.use(cors({origin: true}))
-app.use('/', express.static(path.join(__dirname, 'public')))
-app.use('/', express.static(path.join(__dirname, 'ext')))
+//run the http server in development / production mode but not in test mode
+if ('development' === NODE_ENV || 'production' === NODE_ENV) {
+	const httpServer = http.createServer(app)
+	httpServer.listen(PORT);
 
+	httpServer.on("error", (err) => onServernError(err, PORT))
+	httpServer.on('listening', () => onSeverListening(httpServer))
+} 
 
-//routes
-app.use(usersRoute)
-app.use(questionsRoute)
-app.use(lessonsRoute)
-app.use(images)
-app.use(extension)
+if('production' === NODE_ENV) {
+	const httpsConfig = {
+		key: fs.readFileSync(path.resolve(__dirname, '../../etc/letsencrypt/live/ynafs.com-0001/privkey.pem')),
+		cert: fs.readFileSync(path.resolve(__dirname, '../../etc/letsencrypt/live/ynafs.com-0001/fullchain.pem'))
+	}
+	//handle https server
+	const httpsServer = https.createServer(httpsConfig, app)
+	//in test mode run the https server on port 3000
+	httpsServer.listen(PORT);
 
-// (async() => {
-// 	await User.find({})
-// })()
-//routes
-
-//404 page
-app.get('*', async (req, res) => {
-	const _404 = await fs.readFileSync("./public/404/404.html")
-	res.setHeader("Content-Type", "text/html");
-	res.status(404).send(_404)
-})
-
-//getting the server ip address
-const nets = networkInterfaces(), addresses = []
-Object.keys(nets).forEach(net => {
-	nets[net].forEach(e => {
-		if(e.family.match(/ipv4/i) && e.address !== "127.0.0.1") {
-			addresses.push(e.address)
-		}
-	})
-})
-console.log(addresses)
-app.listen(PORT, addresses[0], function() {
-	console.log(`app running on http://${addresses[0]}:${PORT}`)
-})
-// app.listen(PORT, 'localhost', function() {
-// 	console.log(`app running on http://localhost:${PORT}`)
-// })
+	httpsServer.on("error", (err) => onServernError(err, PORT))
+	httpsServer.on('listening', () => onSeverListening(httpsServer))
+}

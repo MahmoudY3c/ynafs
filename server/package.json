@@ -8,13 +8,21 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "http-errors": "^2.0.0",
     "mongoose": "^6.10.0",
     "multer": "^1.4.5-lts.1",
-    "validator": "^13.9.0"
+    "uuid": "^9.0.0",
+    "validator": "^13.9.0",
+    "winston": "^3.10.0",
+    "winston-daily-rotate-file": "^4.7.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "cross-env \"NODE_ENV=development\" nodemon index.js",
+    "dev": "cross-env \"NODE_ENV=development\" nodemon index.js",
+    "prod": "pm2 start ecosystem.config.js",
+    "prod:stop": "pm2 stop ecosystem.config.js",
+    "prod:reload": "pm2 reload ecosystem.config.js",
+    "prod:restart": "pm2 restart ecosystem.config.js"
   },
   "repository": {
     "type": "git",
@@ -25,5 +33,9 @@
   "bugs": {
     "url": "https://github.com/MahmoudY3c/tplus/issues"
   },
-  "homepage": "https://github.com/MahmoudY3c/tplus#readme"
+  "homepage": "https://github.com/MahmoudY3c/tplus#readme",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "nodemon": "^3.0.1"
+  }
 }

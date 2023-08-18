@@ -1,56 +1,7 @@
-const { Schema, ObjectId } = mongoose = require("mongoose");
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
+
 const LessonsSchema = new Schema({
-	// learningType: {
-	// 	type: String
-	// },
-	// learningTypeId: {
-	// 	type: Number
-	// },
-	// level: {
-	// 	type: String
-	// },
-	// levelId: {
-	// 	type: Number
-	// },
-	// term: {
-	// 	type: String
-	// },
-	// termId: {
-	// 	type: Number
-	// },
-	// subject: {
-	// 	type: String
-	// },
-	// subjectId: {
-	// 	type: Number
-	// },
-	// unit: {
-	// 	type: String
-	// },
-	// unitId: {
-	// 	type: Number
-	// },
-	// lesson: {
-	// 	type: String
-	// },
-	// lessonId: {
-	// 	type: Number
-	// },
-	// tree: {
-	// 	type: String
-	// },
-	// treeId: {
-	// 	type: Number
-	// },
-	"categeory": {
-		type: String
-	},
-	"categeoryId": {
-		type: Number
-	},
-	"categeoryCode": {
-		type: String
-	},
 	"learningType": {
 		type: String
 	},
@@ -68,6 +19,66 @@ const LessonsSchema = new Schema({
 	},
 	"levelCode": {
 		type: String
+	},
+	"levelCodeId": {
+		type: String
+	},
+	"levelItemId": {
+		type: String,
+	},
+	"levelUnitID": {
+		type: String,
+	},
+	"levelChapterId": {
+		type: String,
+	},
+	"levelSubjectGroupId": {
+		type: Number,
+	},
+	"levelTeacherGuidCount": {
+		type: Number,
+	},
+	"levelHasTeacherGuides": {
+		type: Boolean,
+	},
+	"level1": {
+		type: String
+	},
+	"level1Id": {
+		type: Number
+	},
+	"level1Code": {
+		type: String
+	},
+	"level1CodeId": {
+		type: String
+	},
+	"level1ItemId": {
+		type: String,
+	},
+	"level1UnitID": {
+		type: String,
+	},
+	"level1ChapterId": {
+		type: String,
+	},
+	"level1SubjectGroupId": {
+		type: Number,
+	},
+	"level1TeacherGuidCount": {
+		type: Number,
+	},
+	"level1HasTeacherGuides": {
+		type: Boolean,
+	},
+	"term": {
+		type: String,
+	},
+	"termId": {
+		type: Number,
+	},
+	"termCode": {
+		type: String,
 	},
 	"subject": {
 		type: String
@@ -102,53 +113,53 @@ const LessonsSchema = new Schema({
 	"unitId": {
 		type: Number,
 	},
+	"unitCodeType": {
+		type: String,
+		default: "UNIT",
+	},
+	"unitCodeId": {
+		type: String,
+		default: "U",
+	},
 	"unit": {
 		type: String,
 	},
 	"unitParentId": {
 		type: Number,
 	},
-	"unitSubjectBook": {
+	"unitSubjectBooks": {
 		type: Array,
 	},
-	"tree": {
+	"chapter": {
 		type: String,
 	},
-	"treeId1": {
-		type: Number,
-	},
-	"treeId2": {
-		type: Number,
-	},
-	"treeLessonId": {
-		type: Number,
-	},
-	"treeCodeId": {
+	"chapterFullPath": {
 		type: String,
 	},
-	"lesson": {
-		type: String,
-	},
-	"lessonId": {
+	"chapterId": {
 		type: Number,
 	},
-	"lessonParentId": {
+	"chapterParentId": {
 		type: Number,
 	},
-	"Chapter": {
-		type: String,
-	},
-	"ChapterId": {
-		type: Number,
-	},
-	"ChapterParentId": {
-		type: Number,
-	},
-	Questions: [{
-		QuestionId: {
+	"Trees": [{
+		treeId: {
 			type: mongoose.Types.ObjectId,
-			ref: "Questions"
+			ref: "Trees"
 		},
 	}],
-}, { timestamps: true });
-module.exports = mongoose.model("Lessons", LessonsSchema);;
+	Category: {
+		type: mongoose.Types.ObjectId,
+		ref: "Categories"
+	}
+}, { timestamps: true, /* strict: 'throw' */ });
+
+const Lessons = mongoose.models.Lessons ?
+	mongoose.model('Lessons') :
+	mongoose.model(
+		"Lessons",
+		LessonsSchema
+	);
+
+module.exports = Lessons;
+

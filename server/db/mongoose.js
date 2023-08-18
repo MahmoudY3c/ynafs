@@ -1,14 +1,13 @@
 const mongoose = require("mongoose");
-const dotenv = require("dotenv")
-dotenv.config();
+const { mongoURI } = require("../config/appConfig");
 mongoose.set('strictQuery', true);
-mongoose.connect(process.env.DATABASE_URL);
-
+mongoose.connect(mongoURI);
 const connection = mongoose.connection;
 
 connection.on("error", (e) => {
   console.error(e);
 });
+
 connection.once("open", () => {
   console.log("connected to db");
 });

@@ -6,15 +6,6 @@ const { Option } = Select;
 
 function Choose(props) {
   const { item, value } = props.items || {};
-  // let { data, loading} = useFetch(props.url ? props.url : null, props.options ? props.options : null);
-  // function generateOption(res) {
-  //   if (item && typeof item === 'object') {
-  //     const optionText = item.map(e => res?.[e]).filter(e => e).join('-');
-  //     return <Option key={optionText || res} value={res?.[value] || res}>{optionText || res}</Option>;
-  //   } else {
-  //     return <Option key={res?.[item] || res} value={res?.[value] || res}>{res?.[item] || res}</Option>;
-  //   }
-  // }
   return (
     <>
       <SelectBox
@@ -22,7 +13,12 @@ function Choose(props) {
         placeholder={props.placeholder || props.title || "اختار السنة...."}
         onChange={props.onChange}
         optionFilterProp="children"
-        filterOption={(input, option) => option?.children?.toLowerCase()?.indexOf(input?.toLowerCase()) >= 0}
+        filterOption={(input, option) => {
+          console.log('====================================');
+          console.log(option);
+          console.log('====================================');
+          return option?.children?.indexOf(input?.toLowerCase()) >= 0
+        }}
         name={props.name}
         showSearch
         mode={props.mode || 'default'}

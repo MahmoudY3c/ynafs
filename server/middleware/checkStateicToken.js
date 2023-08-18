@@ -1,0 +1,3 @@
+module.exports = () => {
+  // checkStateicToken.js
+}
