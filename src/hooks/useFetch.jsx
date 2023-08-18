@@ -1,5 +1,5 @@
 import React from 'react';
-import config from '../config/appConfig';
+import request from '../API/api';
 
 function useFetch(url, options) {
   const [data, setData] = React.useState({
@@ -9,10 +9,7 @@ function useFetch(url, options) {
 
   React.useEffect(() => {
     if (url) {
-      fetch(config.BaseURL + url, {
-        ...(options || {})
-      })
-        .then(res => res.json())
+      request(url, options || {})
         .then(res => setData({
           loading: false,
           data: res,

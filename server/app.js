@@ -6,12 +6,16 @@ const path = require("path");
 const apiRoute = require("./routes");
 const createError = require('http-errors');
 const { NODE_ENV } = require("./config/appConfig");
+const checkStateicToken = require("./middleware/checkStateicToken");
 
 
 //middleaware
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cors({origin: NODE_ENV === 'development' ? true : false}))
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+app.use(checkStateicToken);
 app.use('/', express.static(path.join(__dirname, 'public')))
 // app.use('/', express.static(path.join(__dirname, 'public/reactapp')))
 
