@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const Questions = require("../db/models/Questions.js");
-const Trees = require("../db/models/Trees.js");
+const Questions = require("../../db/models/Questions.js");
+const Trees = require("../../db/models/Trees.js");
 
 
 router.post('/', async function (req, res) {

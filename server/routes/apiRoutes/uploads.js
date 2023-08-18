@@ -4,10 +4,10 @@ const createHttpError = require('http-errors');
 const fs = require("fs")
 const router = express.Router();
 const path = require("path");
-const { createTokenAndSave } = require("../handlers/utill")
-const { DOMAIN } = require('../config/appConfig');
-const { imagesStorage, filesStorage } = require('../storage/storage.js');
-const ShortTimeToken = require('../db/models/ShortTimeToken');
+const { createTokenAndSave } = require("../../handlers/utill")
+const { DOMAIN } = require('../../config/appConfig');
+const { imagesStorage, filesStorage } = require('../../storage/storage.js');
+const ShortTimeToken = require('../../db/models/ShortTimeToken');
 const uploadImages = multer({ storage: imagesStorage });
 const uploadFiles = multer({ storage: filesStorage });
 

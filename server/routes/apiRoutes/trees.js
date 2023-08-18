@@ -1,5 +1,5 @@
 const express = require("express");
-const Trees = require("../db/models/Trees");
+const Trees = require("../../db/models/Trees");
 const router = express.Router();
 
 router.get('/', async function (req, res) {
