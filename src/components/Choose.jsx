@@ -27,14 +27,13 @@ function Choose(props) {
         showSearch
         mode={props.mode || 'default'}
         value={props.value || ''}
-        // defaultValue={props.value || ''}
       >
         {(props.loading) ?
           <Option style={styles.spinnerOption} value="">
             <Spin style={styles.spinner} size="large" />
           </Option> :
           <>
-            <Option style={styles.spinnerOption} value={props.value || ''}>......</Option>
+            <Option className="first-opt" value={props.value || ''}>{props.title || "اختار السنة الدراسية"}......</Option>
             {
               // item && value ? props.data?.map(generateOption) : Object.keys(props.data || { }).map(generateOption)
               ((item && value) ? props.data : Object.keys(props.data || {}))?.map((res, i) => {

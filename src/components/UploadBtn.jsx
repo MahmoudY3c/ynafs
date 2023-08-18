@@ -6,7 +6,7 @@ import request from '../API/api';
 import { formData } from '../handlers/handlers';
 
 function UploadBtn(props) {
-  const uploadPath = props.path || '/images';
+  const uploadPath = `/uploads${props.path || '/images'}`;
 
   const normFile = (e) => {
     console.log("Upload event:", e);
@@ -20,7 +20,9 @@ function UploadBtn(props) {
         uid: e.file.uid,
       }),
       // cors: "no-cors",
-    });
+    }).then(res => {
+      e.file.filename = res.file.filename
+    })
     // console.log(file.fileId); 
     e.onSuccess();
   }
@@ -50,8 +52,6 @@ function UploadBtn(props) {
           onChange={props.onChange}
           customRequest={uploader}
           accept={props.accept || 'image/png, image/jpeg'}
-        // fileList={[]}
-        // onSuccess={() => form.setFieldsValue({})}
         >
           <Button style={{ margin: '10px' }} icon={<UploadOutlined />} >{props.title}</Button>
         </Upload>

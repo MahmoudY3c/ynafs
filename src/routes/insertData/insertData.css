@@ -18,6 +18,10 @@ header {
   direction: rtl;
 }
 
+.first-opt {
+  background-color: red;
+  color: greenyellow
+}
 .header-title {
   text-align: center;
   padding: 0 20px;
@@ -75,6 +79,7 @@ select {
   border: 0;
   outline: 0;
   background: #eee;
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;

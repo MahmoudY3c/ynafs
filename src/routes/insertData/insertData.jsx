@@ -18,10 +18,9 @@ import UploadBtn from "../../components/UploadBtn";
 import TextArea from "antd/es/input/TextArea";
 
 const questionTypes = [
-  { type: 'اختر نوع السؤال....' },
-  { type: 'صح او خطأ' },
-  { type: 'اختيار من متعدد' },
-  { type: 'سؤال مقالي' },
+  { type: 'صح او خطأ', value: "true-or-false" },
+  { type: 'اختيار من متعدد', value: "multiple" },
+  { type: 'سؤال مقالي', value: "essay" },
 ]
 
 function PageForm() {
@@ -39,9 +38,9 @@ function PageForm() {
     subjectValue: null,
     unitValue: null,
     treeValue: null,
+    QuestionTypeValue: null,
 
     displayQestionFeld: true,
-    QuestionType: null,
     trueOrFalse: null,
     multiple: null,
     essay: null,
@@ -61,6 +60,7 @@ function PageForm() {
         if (hide) {
           for (let g of hide) {
             payload[g] = null
+            form.setFieldValue(g.replace('Value', ''), '')
           }
         }
 
@@ -105,21 +105,21 @@ function PageForm() {
     form.setFieldsValue({ "image": undefined });
     setConeponentsState(prev => ({ ...prev, displayQestionFeld: true }));
 
-    if (value.includes(questionTypes[1].type)) {
+    if (value.includes(questionTypes[0].value)) {
       setConeponentsState(prev => ({
         ...prev,
         trueOrFalse: true,
         multiple: false,
         essay: false,
       }));
-    } else if (value.includes(questionTypes[2].type)) {
+    } else if (value.includes(questionTypes[1].value)) {
       setConeponentsState(prev => ({
         ...prev,
         trueOrFalse: false,
         multiple: true,
         essay: false,
       }));
-    } else if (value.includes(questionTypes[3].type)) {
+    } else if (value.includes(questionTypes[2].value)) {
       setConeponentsState(prev => ({
         ...prev,
         trueOrFalse: false,
@@ -147,12 +147,12 @@ function PageForm() {
 
   const handleFinish = (values) => {
     //processing the data
-    let choices = []
-    if (values.questionType === "true-or-false") {
+    let choices = [], answer = ''
+    if (values.QuestionTypeValue === "true-or-false") {
       const trueOrFalse = handleTrueOrFalse(values);
       values = trueOrFalse.values;
       choices = choices.concat(trueOrFalse.choices);
-    } else if (values.questionType === 'multiple') {
+    } else if (values.QuestionTypeValue === 'multiple') {
       let multpleChoices = Object.keys(values).filter(e => e.match(/multiple\d+/))
       multpleChoices.forEach((choice, i) => {
         const multiple = handleMultiple(choice, values, i);
@@ -160,16 +160,16 @@ function PageForm() {
         choices = choices.concat(multiple.choices);
         delete values[choice]
       })
+    } else if (values.QuestionTypeValue === 'essay') {
+
     }
 
-    values.choices = choices;
+    values.choices = choices.length ? choices : null;
+    if (values.image) values.image = values.image.filename
 
-    if (values.image) values.image = values.image.uid
-
-    console.log('Received values of form: ', values, choices);
     setOpenModal(true);
 
-    request('/add-question', {
+    request('/questions', {
       method: "POST",
       headers: {
         "Content-Type": "application/json; charset=utf-8"
@@ -218,28 +218,26 @@ function PageForm() {
           { required: true, message: ' ' },
         ]}
       >
-        {coneponentsState.initial &&
-          <Choose
-            data={categories}
-            value={coneponentsState.categoryValue || ''}
-            items={{ item: "category", value: "_id" }}
-            title='اختر القسم'
-            loading={categoriesLoader}
-            // mode='multiple'
-            name="category"
-            onChange={(value) => handleDisplayComponent(value, setConeponentsState, 'categoryValue', [
-              'levelValue',
-              'subjectValue',
-              'unitValue',
-              'displayQestionFeld',
-              'trueOrFalse',
-              'multiple',
-              'essay',
-              'QuestionType',
-            ])}
-          />
-        }
-
+        <Choose
+          data={categories}
+          value={coneponentsState.categoryValue || ''}
+          items={{ item: "category", value: "_id" }}
+          title='اختر القسم'
+          loading={categoriesLoader}
+          // mode='multiple'
+          name="category"
+          onChange={(value) => handleDisplayComponent(value, setConeponentsState, 'categoryValue', [
+            'treeValue',
+            'levelValue',
+            'subjectValue',
+            'unitValue',
+            'displayQestionFeld',
+            'trueOrFalse',
+            'multiple',
+            'essay',
+            'QuestionTypeValue',
+          ])}
+        />
 
         {coneponentsState.categoryValue &&
           <Choose
@@ -251,12 +249,13 @@ function PageForm() {
             onChange={(value) => handleDisplayComponent(value, setConeponentsState, 'levelValue', [
               'subjectValue',
               // 'levelValue',
+              'treeValue',
               'unitValue',
               'displayQestionFeld',
               'trueOrFalse',
               'multiple',
               'essay',
-              'QuestionType',
+              'QuestionTypeValue',
             ])}
           />
         }
@@ -267,23 +266,31 @@ function PageForm() {
             value={coneponentsState.subjectValue || ''}
             title='اختر المادة الدراسية'
             onChange={(value) => handleDisplayComponent(value, setConeponentsState, 'subjectValue', [
-              // 'subjectValue',
+              'unitValue',
+              'treeValue',
               'displayQestionFeld',
               'trueOrFalse',
               'multiple',
               'essay',
-              'QuestionType',
+              'QuestionTypeValue',
             ])}
           />
         }
         {coneponentsState.subjectValue &&
           <Choose
-            name="unit"
+            name="lesson"
             value={coneponentsState.unitValue || ''}
             data={lessonsData[coneponentsState.levelValue][coneponentsState.subjectValue]}
             items={{ item: ["unit", "chapter"], value: "_id" }}
             title='اختر الفصل / الوحدة'
-            onChange={(value) => handleDisplayComponent(value, setConeponentsState, 'unitValue')}
+            onChange={(value) => handleDisplayComponent(value, setConeponentsState, 'unitValue', [
+              'treeValue',
+              'displayQestionFeld',
+              'trueOrFalse',
+              'multiple',
+              'essay',
+              'QuestionTypeValue',
+            ])}
           />
         }
         {coneponentsState.unitValue &&
@@ -299,15 +306,15 @@ function PageForm() {
         {coneponentsState.treeValue &&
           <>
             <UploadBtn
-              required
               name="powerpoint"
               title="قم برفع ملف ال powerpoint"
               path="/powerpoint"
               accept=".ppt,.pptx,.docx,.doc,.pdf"
+              form={form}
             />
             <Choose
-              name="questionType"
-              items={{ item: "type", value: "type" }}
+              name="QuestionTypeValue"
+              items={{ item: "type", value: "value" }}
               data={questionTypes}
               title='اختر نوع السؤال'
               onChange={handleQuestionChange}
@@ -317,7 +324,16 @@ function PageForm() {
         {(coneponentsState.multiple || coneponentsState.trueOrFalse || coneponentsState.essay) &&
           <>
             <QuestionFeld form={form} display={coneponentsState.displayQestionFeld} />
-            <UploadBtn name="image" title="قم برفع صورة" onChange={handleUploadChange} />
+            {coneponentsState.essay &&
+              <QuestionFeld name="essayAnswer" title="اجابة السؤال" form={form} display={coneponentsState.displayQestionFeld} />
+            }
+            <UploadBtn
+              name="image"
+              path="/images"
+              title="قم برفع صورة"
+              onChange={handleUploadChange}
+              form={form}
+            />
           </>
         }
         {coneponentsState.multiple && <Multiple />}
@@ -327,7 +343,6 @@ function PageForm() {
           <div className="sections-container">
             <Form.Item
               name="LessonVocabulary"
-              hasFeedback
               rules={[{ required: true, message: '' }]}
               style={styles.textarea}
             >
@@ -335,7 +350,6 @@ function PageForm() {
             </Form.Item>
             <Form.Item
               name="LessonPrepare"
-              hasFeedback
               style={styles.textarea}
               rules={[{ required: true, message: '' }]}
             >

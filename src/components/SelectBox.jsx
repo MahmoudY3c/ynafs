@@ -3,9 +3,6 @@ import '../css/antd/antd.min.css'
 import { Form, Select } from "antd";
 
 function SelectBox(props) {
-  console.log('====================================');
-  console.log(props.value, props.name );
-  console.log('====================================');
   return (
     <section className="section-body">
       <div>
