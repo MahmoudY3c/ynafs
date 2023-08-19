@@ -6,6 +6,7 @@ require("../logs");
 const config = {
   PORT: process.env.PORT || 5000,
   YNAFS_KEY: process.env.YNAFS_KEY,
+  HTTPS_PORT: process.env.HTTPS_PORT || 8443,
   mongoURI: process.env.DATABASE_URL,
   // 'development' === process.env.NODE_ENV ?
   //   process.env.DEV_DATABASE :

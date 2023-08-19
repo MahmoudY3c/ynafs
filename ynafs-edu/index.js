@@ -5,7 +5,7 @@ const path = require("path");
 const app = require("./app");
 require("./db/mongoose");
 const { onServernError, onSeverListening } = require("./events/server");
-const { NODE_ENV, PORT } = require('./config/appConfig');
+const { NODE_ENV, PORT, HTTPS_PORT } = require('./config/appConfig');
 
 
 //run the http server in development / production mode but not in test mode
@@ -15,7 +15,7 @@ if ('development' === NODE_ENV || 'production' === NODE_ENV) {
 
 	httpServer.on("error", (err) => onServernError(err, PORT))
 	httpServer.on('listening', () => onSeverListening(httpServer))
-} 
+}
 
 if('production' === NODE_ENV) {
 	const httpsConfig = {
@@ -24,9 +24,9 @@ if('production' === NODE_ENV) {
 	}
 	//handle https server
 	const httpsServer = https.createServer(httpsConfig, app)
-	//in test mode run the https server on port 3000
-	httpsServer.listen(PORT);
+	//in test mode run the https server 
+	httpsServer.listen(HTTPS_PORT);
 
-	httpsServer.on("error", (err) => onServernError(err, PORT))
+	httpsServer.on("error", (err) => onServernError(err, HTTPS_PORT))
 	httpsServer.on('listening', () => onSeverListening(httpsServer))
 }

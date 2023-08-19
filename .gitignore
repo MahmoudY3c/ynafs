@@ -105,3 +105,8 @@ dist
 
 #react build
 build/
+
+
+anything/
+all.json
+all-v2.json
