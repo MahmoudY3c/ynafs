@@ -1,6 +1,6 @@
 
 const config = {
-  BaseURL: process.env.REACT_APP_BaseURL || 'http://localhost/private',
+  BaseURL: process.env.NODE_ENV === 'development' ? process.env.REACT_APP_BaseURL : '/api',
   KEY: process.env.REACT_APP_KEY,
 };
 

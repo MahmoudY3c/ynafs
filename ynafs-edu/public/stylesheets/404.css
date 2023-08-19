@@ -1,0 +1,83 @@
+* {
+  padding: 10px;
+}
+body,
+html {
+  padding: 0;
+  margin: 0;
+}
+
+header {
+  height: 100vh;
+  display: flex;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right bottom, rgb(182,244,146), #4b32a7) no-repeat ;
+  background-size:cover;
+  color: #fff;
+  font-family: Space Mono, monospace;
+}
+
+.box-astronaut {
+  position: absolute;
+  top: 50%;
+  right: 20%;
+  z-index: 1;
+  will-change: transform;
+  animation: move-astronaut 50s infinite linear both alternate
+}
+
+.box-astronaut img {
+  width: 150px;
+  animation: rotate-astronaut 200s infinite linear both alternate
+}
+
+@keyframes rotate-astronaut {
+  100% {
+    -webkit-transform: rotate(-720deg);
+    transform: rotate(-720deg)
+  }
+}
+
+@keyframes move-astronaut {
+  100% {
+    -webkit-transform: translate(-100px, -100px);
+    transform: translate(-100px, -100px)
+  }
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  letter-spacing: 1px;
+  z-index: 2
+}
+
+.message strong {
+  font-size: 10rem
+}
+
+.message p {
+  font-weight: 500;
+  text-align: center;
+  margin: 0;
+}
+
+.message .title {
+  font-size: 1.5rem;
+  color: #ffcb39;
+}
+
+.message-text {
+  max-width: 500px;
+  margin-bottom: 4rem
+}
+/*#039d72*/
+
+.stack {
+  width: 95%;
+  white-space: normal;
+}
+

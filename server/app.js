@@ -25,13 +25,6 @@ app.use('/', express.static(path.join(__dirname, 'build')))
 app.use('/api', apiRoute);
 app.use('/', indexRoute);
 
-//404 page
-app.get('*', async (req, res) => {
-  const _404 = await fs.readFileSync("./public/404/404.html")
-  res.setHeader("Content-Type", "text/html");
-  res.status(404).send(_404)
-})
-
 //========================================================
 
 // catch 404 and forward to error handler

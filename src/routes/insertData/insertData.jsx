@@ -167,6 +167,7 @@ function PageForm() {
 
     values.choices = choices.length ? choices : null;
     if (values.image) values.image = values.image.filename
+    if (values.powerpoint) values.powerpoint = values.powerpoint.filename
 
     setOpenModal(true);
 
@@ -309,7 +310,7 @@ function PageForm() {
             <UploadBtn
               name="powerpoint"
               title="قم برفع ملف ال powerpoint"
-              path="/powerpoint"
+              path="/files"
               accept=".ppt,.pptx,.docx,.doc,.pdf"
               form={form}
             />
