@@ -1,4 +1,4 @@
-const data = require('./all.json');
+const data = require('./all-v2.json');
 const { log } = require('console');
 const Categories = require('../db/models/Categories');
 const Trees = require('../db/models/Trees');
@@ -26,7 +26,7 @@ const Lessons = require('../db/models/Lessons');
 
     
 
-    await filterByCategory(data);
+    // await filterByCategory(data);
   } catch (err) {
     log(err.message)
   }
@@ -38,9 +38,9 @@ async function filterByCategory(data) {
 
     for(let _objects of data) {
       const payload = {
-        category: _objects.categeory,
-        categoryId: _objects.categeoryId,
-        categoryCode: _objects.categeoryCode,
+        category: _objects.categeory || _objects.category,
+        categoryId: _objects.categeoryId || _objects.categoryId,
+        categoryCode: _objects.categeoryCode ||  _objects.categoryCode,
       };
 
       delete _objects.categeory;
@@ -56,7 +56,7 @@ async function filterByCategory(data) {
 
     // console.log(Object.keys(obj).length, obj[Object.keys(obj)[0]].children[0]);
     const categoriesArr = Object.keys(categories);
-
+    
     for(const categoryName of categoriesArr) {
       const category = categories[categoryName];
 
