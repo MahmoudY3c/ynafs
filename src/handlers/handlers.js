@@ -17,11 +17,14 @@ export function filterResponseData(data) {
     const level = e.level
     const level1 = e.level1;
     const subject = e.subject;
+    if(learningType === 'الثانوية مقررات') continue;
+
     let key = `${(learningType || '')}${learningType ? ' - ' : ''}${level1 || level || ''}` || subject;
-    if (level1) {
-      // console.log(level);
-      // console.log(data[i], 'eeeeeeeeeeee');
-    }
+    const isHighSchool = learningType === 'الثانوية مسارات' && (level === 'السنة الثانية' || level === 'السنة الثالثة');
+    // if (learningType === 'الثانوية مسارات' && (level === 'السنة الثانية' || level === 'السنة الثالثة')) {
+    //   key += ' - ' + subject;
+    // }
+
     // if(!key) {
     //   key = subject;
     //   _continue = false
@@ -35,10 +38,10 @@ export function filterResponseData(data) {
       holder[key] = {};
     }
     // e = delTest(e, key => key.startsWith('learningType') || key.startsWith('level') || key.startsWith('subject'));
-    if (!holder[key][level1 ? level : subject]) {
-      holder[key][level1 ? level : subject] = [e];
+    if (!holder[key][level1 ? isHighSchool ? level + ' - ' + subject : level : subject]) {
+      holder[key][level1 ? isHighSchool ? level + ' - ' + subject : level : subject] = [e];
     } else {
-      holder[key][level1 ? level : subject].push(e);
+      holder[key][level1 ? isHighSchool ? level + ' - ' + subject : level : subject].push(e);
     }
   }
   console.log('====================================');

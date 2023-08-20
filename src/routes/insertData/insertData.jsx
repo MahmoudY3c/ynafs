@@ -37,7 +37,7 @@ function PageForm() {
     categoryValue: null,
     levelValue: null,
     subjectValue: null,
-    unitValue: null,
+    lessonValue: null,
     treeValue: null,
     QuestionTypeValue: null,
 
@@ -92,14 +92,14 @@ function PageForm() {
   }, [coneponentsState.categoryValue, setLessonsData])
   React.useEffect(() => {
     setLoading(true)
-    if (coneponentsState.unitValue) {
-      request(`/trees?lesson=${coneponentsState.unitValue}`)
+    if (coneponentsState.lessonValue) {
+      request(`/trees?lesson=${coneponentsState.lessonValue}`)
         .then(data => {
           setTreesData(data)
           setLoading(false)
         })
     }
-  }, [coneponentsState.unitValue, setLessonsData])
+  }, [coneponentsState.lessonValue, setLessonsData])
 
   const handleQuestionChange = value => {
     //remove any uploaded image on change
@@ -232,7 +232,8 @@ function PageForm() {
             'treeValue',
             'levelValue',
             'subjectValue',
-            'unitValue',
+            'lessonValue',
+            'lessonValue',
             'displayQestionFeld',
             'trueOrFalse',
             'multiple',
@@ -245,14 +246,14 @@ function PageForm() {
           <Choose
             name="level"
             data={lessonsData}
-            loading={loading}
+            // loading={loading}
             value={coneponentsState.levelValue || ''}
             title='اختر المرحلة'
             onChange={(value) => handleDisplayComponent(value, setConeponentsState, 'levelValue', [
               'subjectValue',
               // 'levelValue',
               'treeValue',
-              'unitValue',
+              'lessonValue',
               'displayQestionFeld',
               'trueOrFalse',
               'multiple',
@@ -268,7 +269,7 @@ function PageForm() {
             value={coneponentsState.subjectValue || ''}
             title='اختر المادة الدراسية'
             onChange={(value) => handleDisplayComponent(value, setConeponentsState, 'subjectValue', [
-              'unitValue',
+              'lessonValue',
               'treeValue',
               'displayQestionFeld',
               'trueOrFalse',
@@ -281,11 +282,11 @@ function PageForm() {
         {coneponentsState.subjectValue &&
           <Choose
             name="lesson"
-            value={coneponentsState.unitValue || ''}
+            value={coneponentsState.lessonValue || ''}
             data={lessonsData[coneponentsState.levelValue][coneponentsState.subjectValue]}
             items={{ item: ["unit", "chapter"], value: "_id" }}
             title='اختر الفصل / الوحدة'
-            onChange={(value) => handleDisplayComponent(value, setConeponentsState, 'unitValue', [
+            onChange={(value) => handleDisplayComponent(value, setConeponentsState, 'lessonValue', [
               'treeValue',
               'displayQestionFeld',
               'trueOrFalse',
@@ -295,7 +296,7 @@ function PageForm() {
             ])}
           />
         }
-        {coneponentsState.unitValue &&
+        {coneponentsState.lessonValue &&
           <Choose
             name="tree"
             data={treesData}
@@ -341,7 +342,7 @@ function PageForm() {
         {coneponentsState.multiple && <Multiple />}
         {coneponentsState.trueOrFalse && <TrueOrFalse />}
 
-        {coneponentsState.unitValue &&
+        {coneponentsState.lessonValue &&
           <div className="sections-container">
             <Form.Item
               name="LessonVocabulary"
