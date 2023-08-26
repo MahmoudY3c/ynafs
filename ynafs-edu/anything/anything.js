@@ -1,4 +1,5 @@
-const data = require('./all.json');
+/* eslint-disable no-unused-vars */
+const data = require('./all-v2.json');
 const { log } = require('console');
 const Categories = require('../db/models/Categories');
 const Trees = require('../db/models/Trees');
@@ -7,7 +8,6 @@ const Lessons = require('../db/models/Lessons');
 
 (async () => {
   try {
-    
     // const categeories = Array.from(new Set(data.map(obj => {
     //   obj.children = obj.children ? obj.children.concat([obj]) : [obj]
     //   return obj.categeory
@@ -26,7 +26,7 @@ const Lessons = require('../db/models/Lessons');
 
     
 
-    await filterByCategory(data);
+    // await filterByCategory(data);
   } catch (err) {
     log(err.message)
   }
@@ -38,9 +38,9 @@ async function filterByCategory(data) {
 
     for(let _objects of data) {
       const payload = {
-        category: _objects.categeory,
-        categoryId: _objects.categeoryId,
-        categoryCode: _objects.categeoryCode,
+        category: _objects.categeory || _objects.category,
+        categoryId: _objects.categeoryId || _objects.categoryId,
+        categoryCode: _objects.categeoryCode ||  _objects.categoryCode,
       };
 
       delete _objects.categeory;

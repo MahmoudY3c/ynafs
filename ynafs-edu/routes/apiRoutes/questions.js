@@ -2,23 +2,40 @@ const express = require("express");
 const router = express.Router();
 const Questions = require("../../db/models/Questions.js");
 const Trees = require("../../db/models/Trees.js");
+const Lessons = require("../../db/models/Lessons.js");
 
 
 router.post('/', async function (req, res) {
 	try {
-		let { image, question, tree	} = req.body
+		let { image, question, tree, subject, powerpoint, drivePowerPoint, /* lesson */ } = req.body
 		if (!image && !question) throw new Error("No image or question is presented !");
+		delete req.body.powerpoint;
+		delete req.body.drivePowerPoint;
+
 		//saving the question
 		let q = new Questions(req.body);
 		await q.save();
-		//save the question id to tree schema 
-		await Trees.findByIdAndUpdate(tree, {
+
+		//save the question id and powerpoint path to tree schema 
+		const payload = {
 			$push: {
 				Questions: { QuestionId: q._id }
 			}
-		})
+		}
+		if (powerpoint) payload.powerpoint = powerpoint;
+		await Trees.findByIdAndUpdate(tree, payload);
+
+		// save the drive powerpoint link to the subject
+		if (drivePowerPoint) {
+			const updatedLessons = await Lessons.updateMany({ subjectId: Number(subject) }, {
+				$set: { drivePowerPoint }
+			});
+			console.log(updatedLessons);
+		}
+
 		res.json({ success: true })
 	} catch (err) {
+		console.log(err.message);
 		res.json({ err: err })
 	}
 });

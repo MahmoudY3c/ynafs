@@ -1,12 +1,11 @@
 const express = require("express");
 const app = express();
 const cors = require('cors')
-const fs = require("fs");
 const path = require("path");
 const apiRoute = require("./routes/api");
 const indexRoute = require("./routes");
 const createError = require('http-errors');
-const { NODE_ENV, YNAFS_KEY } = require("./config/appConfig");
+const { NODE_ENV } = require("./config/appConfig");
 const checkStateicToken = require("./middleware/checkStateicToken");
 // require('./anything/anything')
 

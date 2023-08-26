@@ -142,6 +142,9 @@ const LessonsSchema = new Schema({
 	"chapterParentId": {
 		type: Number,
 	},
+	"drivePowerPoint": {
+		type: String,
+	},
 	"Trees": [{
 		treeId: {
 			type: mongoose.Types.ObjectId,

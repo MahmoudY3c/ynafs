@@ -17,7 +17,8 @@ export function filterResponseData(data) {
     const level = e.level
     const level1 = e.level1;
     const subject = e.subject;
-    if(learningType === 'الثانوية مقررات') continue;
+    const drivePowerPoint = e.drivePowerPoint;
+    if (learningType === 'الثانوية مقررات') continue;
 
     let key = `${(learningType || '')}${learningType ? ' - ' : ''}${level1 || level || ''}` || subject;
     const isHighSchool = learningType === 'الثانوية مسارات' && (level === 'السنة الثانية' || level === 'السنة الثالثة');
@@ -37,16 +38,18 @@ export function filterResponseData(data) {
     if (!holder[key]) {
       holder[key] = {};
     }
+    // console.log(holder[key][level1 ? isHighSchool ? level + ' - ' + subject : level : subject]?.['drivePowerPoint']);
     // e = delTest(e, key => key.startsWith('learningType') || key.startsWith('level') || key.startsWith('subject'));
     if (!holder[key][level1 ? isHighSchool ? level + ' - ' + subject : level : subject]) {
       holder[key][level1 ? isHighSchool ? level + ' - ' + subject : level : subject] = [e];
+
+      if (!holder[key][level1 ? isHighSchool ? level + ' - ' + subject : level : subject]['drivePowerPoint']) {
+        holder[key][level1 ? isHighSchool ? level + ' - ' + subject : level : subject]['drivePowerPoint'] = drivePowerPoint;
+      }
     } else {
       holder[key][level1 ? isHighSchool ? level + ' - ' + subject : level : subject].push(e);
     }
   }
-  console.log('====================================');
-  console.log(holder);
-  console.log('====================================');
   return holder;
 
   // let holder = {};

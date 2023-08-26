@@ -6,9 +6,6 @@ const QuestionsSchema = new Schema({
 	image: {
 		type: String
 	},
-	powerpoint: {
-		type: String
-	},
 	tree: {
 		type: Schema.Types.ObjectId, ref: 'Trees' 
 	},

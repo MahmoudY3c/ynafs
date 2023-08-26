@@ -31,8 +31,8 @@ const TreesSchema = new Schema({
 	"subjectGroupId": {
 		type: Number,
 	},
-	"powerPointPath": {
-		type: String,
+	"powerpoint": {
+		type: String
 	},
 	"Lesson": {
 		type: mongoose.Types.ObjectId,

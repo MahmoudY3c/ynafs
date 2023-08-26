@@ -2,7 +2,7 @@
 import "../../css/style.css";
 // import "./style.css";
 import React, { useState } from "react";
-import { Form, Alert } from "antd";
+import { Form, Alert, Input } from "antd";
 import LoadingModal from "../../components/LoadingModal";
 import Nav from '../../components/Nav';
 import useFetch from "../../hooks/useFetch";
@@ -40,6 +40,7 @@ function PageForm() {
     lessonValue: null,
     treeValue: null,
     QuestionTypeValue: null,
+    drivePowerPointValue: null,
 
     displayQestionFeld: true,
     trueOrFalse: null,
@@ -61,7 +62,8 @@ function PageForm() {
         if (hide) {
           for (let g of hide) {
             payload[g] = null
-            form.setFieldValue(g.replace('Value', ''), '')
+            form.setFieldValue(g.replace('Value', ''), '');
+            if (g === 'QuestionTypeValue') form.setFieldValue(g, '');
           }
         }
 
@@ -77,6 +79,7 @@ function PageForm() {
   const [lessonsData, setLessonsData] = useState(null);
   const [loading, setLoading] = React.useState(false)
   const [treesData, setTreesData] = useState(null);
+  const [drivePowerPointDisabled, setDrivePowerPointDisabled] = useState(false);
 
   // handle fetch lessons data
   React.useEffect(() => {
@@ -161,14 +164,17 @@ function PageForm() {
         choices = choices.concat(multiple.choices);
         delete values[choice]
       })
-    } else if (values.QuestionTypeValue === 'essay') {
-
     }
 
     values.choices = choices.length ? choices : null;
     if (values.image) values.image = values.image.filename
-    if (values.powerpoint) values.powerpoint = values.powerpoint.filename
-
+    // if (values.powerpoint) values.powerpoint = values.powerpoint.filename
+    let arr = []
+    // extract the subject id fron the subject
+    if (values.subject) {
+      arr = values.subject.split('@@');
+      values.subject = arr[arr.length - 1]
+    }
     setOpenModal(true);
 
     request('/questions', {
@@ -179,7 +185,13 @@ function PageForm() {
       body: JSON.stringify(values)
     })
       .then(json => {
-        console.log(json)
+        if (values.drivePowerPoint) {
+          setLessonsData(e => {
+            e[coneponentsState.levelValue][arr[0]].drivePowerPoint = values.drivePowerPoint;
+            return { ...lessonsData }
+          })
+        }
+
         if (json.err) setAlert({
           display: "flex",
           type: "error",
@@ -239,6 +251,7 @@ function PageForm() {
             'multiple',
             'essay',
             'QuestionTypeValue',
+            'drivePowerPointValue',
           ])}
         />
 
@@ -259,12 +272,14 @@ function PageForm() {
               'multiple',
               'essay',
               'QuestionTypeValue',
+              'drivePowerPointValue',
             ])}
           />
         }
         {coneponentsState.levelValue &&
           <Choose
             name="subject"
+            items={{ value: "subjectId" }}
             data={lessonsData[coneponentsState.levelValue]}
             value={coneponentsState.subjectValue || ''}
             title='اختر المادة الدراسية'
@@ -276,45 +291,73 @@ function PageForm() {
               'multiple',
               'essay',
               'QuestionTypeValue',
+              'drivePowerPointValue',
             ])}
           />
         }
         {coneponentsState.subjectValue &&
-          <Choose
-            name="lesson"
-            value={coneponentsState.lessonValue || ''}
-            data={lessonsData[coneponentsState.levelValue][coneponentsState.subjectValue]}
-            items={{ item: ["unit", "chapter"], value: "_id" }}
-            title='اختر الفصل / الوحدة'
-            onChange={(value) => handleDisplayComponent(value, setConeponentsState, 'lessonValue', [
-              'treeValue',
-              'displayQestionFeld',
-              'trueOrFalse',
-              'multiple',
-              'essay',
-              'QuestionTypeValue',
-            ])}
-          />
+          <>
+            {
+              (
+                !lessonsData[coneponentsState.levelValue]
+                  ?.[coneponentsState.subjectValue.split('@@')[0]]
+                  ?.drivePowerPoint
+              ) &&
+              <section className="section-body">
+                <div className="container">
+                  <div className="select-container">
+                    <Form.Item
+                      name="drivePowerPoint"
+                      rules={[{ required: true, message: '' }]}
+                    >
+                      <Input
+                        style={{ direction: 'ltr' }}
+                        type="text"
+                        className="text-field"
+                        placeholder='قم بإضافة رابط جوجل درايف'
+                      />
+                    </Form.Item>
+                  </div>
+                </div>
+              </section>
+            }
+            <Choose
+              name="lesson"
+              value={coneponentsState.lessonValue || ''}
+              data={lessonsData[coneponentsState.levelValue][coneponentsState.subjectValue.split('@@')[0]]}
+              items={{ item: ["unit", "chapter"], value: "_id" }}
+              title='اختر الفصل / الوحدة'
+              onChange={(value) => handleDisplayComponent(value, setConeponentsState, 'lessonValue', [
+                'treeValue',
+                'displayQestionFeld',
+                'trueOrFalse',
+                'multiple',
+                'essay',
+                'QuestionTypeValue',
+              ])}
+            />
+          </>
         }
         {coneponentsState.lessonValue &&
-          <Choose
-            name="tree"
-            data={treesData}
-            value={coneponentsState.treeValue || ''}
-            items={{ item: 'title', value: "_id" }}
-            title='اختر الدرس'
-            onChange={(value) => handleDisplayComponent(value, setConeponentsState, 'treeValue')}
-          />
+          <>
+            <Choose
+              name="tree"
+              data={treesData}
+              value={coneponentsState.treeValue || ''}
+              items={{ item: 'title', value: "_id" }}
+              title='اختر الدرس'
+              onChange={(value) => handleDisplayComponent(value, setConeponentsState, 'treeValue', [
+                'QuestionTypeValue',
+                'displayQestionFeld',
+                'trueOrFalse',
+                'multiple',
+                'essay',
+              ])}
+            />
+          </>
         }
         {coneponentsState.treeValue &&
           <>
-            <UploadBtn
-              name="powerpoint"
-              title="قم برفع ملف ال powerpoint"
-              path="/files"
-              accept=".ppt,.pptx,.docx,.doc,.pdf"
-              form={form}
-            />
             <Choose
               name="QuestionTypeValue"
               items={{ item: "type", value: "value" }}
