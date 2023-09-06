@@ -40,7 +40,7 @@ router.post('/', async function (req, res) {
 	}
 });
 
-router.get('/questions', async function (req, res) {
+router.get('/', async function (req, res) {
 	try {
 		let { id, question, populate } = req.query
 		let Question

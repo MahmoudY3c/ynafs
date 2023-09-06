@@ -7,6 +7,7 @@ import {
 import NotFound from './routes/NotFound/NotFound.jsx';
 import ErrMessage from './components/ErrMessage.jsx';
 import PageForm from './routes/insertData/insertData.jsx';
+import PowerPointPage from './routes/PowerPointPage/PowerPointPage.jsx';
 
 const routes = [
   {
@@ -17,6 +18,11 @@ const routes = [
     path: '/',
     element: <PageForm />,
     errorElement: <ErrMessage />
+  },
+  {
+    path: '/powerpoint',
+    element: <PowerPointPage />,
+    errorElement: <ErrMessage path="/powerpoint" />
   },
 ]
 

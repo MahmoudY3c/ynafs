@@ -7,7 +7,7 @@ const indexRoute = require("./routes");
 const createError = require('http-errors');
 const { NODE_ENV } = require("./config/appConfig");
 const checkStateicToken = require("./middleware/checkStateicToken");
-// require('./anything/anything')
+require('./anything/anything')
 
 //middleaware
 app.use(express.json())

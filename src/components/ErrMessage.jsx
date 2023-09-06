@@ -8,7 +8,7 @@ function ErrMessage(props) {
         برجاء الانتظار حتى يتم الانتهاء من تحميل البيانات
       </div>
       
-      <Link type="submit" className="submit-btn btn" to="/" style={{
+      <Link type="submit" className="submit-btn btn" to={props.path || "/"} style={{
         fontSize: "20px",
         width: '125px'
       }}>اضغط للرجوع</Link>

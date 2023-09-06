@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 function delTest(obj, callback) {
   for (let key of Object.keys(obj)) {
     if (callback(key)) {
@@ -7,7 +8,7 @@ function delTest(obj, callback) {
   return obj;
 }
 
-export function filterResponseData(data) {
+export function filterResponseData(data, useForSubjects) {
   const holder = {};
   let _continue = false;
 
@@ -41,6 +42,9 @@ export function filterResponseData(data) {
     // console.log(holder[key][level1 ? isHighSchool ? level + ' - ' + subject : level : subject]?.['drivePowerPoint']);
     // e = delTest(e, key => key.startsWith('learningType') || key.startsWith('level') || key.startsWith('subject'));
     if (!holder[key][level1 ? isHighSchool ? level + ' - ' + subject : level : subject]) {
+      // an option to remove subjects that already have a powerpoint file used for PowerPointPage
+      if (useForSubjects && drivePowerPoint)  continue;
+
       holder[key][level1 ? isHighSchool ? level + ' - ' + subject : level : subject] = [e];
 
       if (!holder[key][level1 ? isHighSchool ? level + ' - ' + subject : level : subject]['drivePowerPoint']) {

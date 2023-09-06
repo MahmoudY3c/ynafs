@@ -6,31 +6,80 @@ const Trees = require('../db/models/Trees');
 const Lessons = require('../db/models/Lessons');
 
 
-(async () => {
-  try {
-    // const categeories = Array.from(new Set(data.map(obj => {
-    //   obj.children = obj.children ? obj.children.concat([obj]) : [obj]
-    //   return obj.categeory
-    // })));
-    // .map(category => {
-    //   const firstObject = data.find(obj => obj.categeory === category);
-    //   return {
-    //     category,
-    //     categoryId: firstObject.categeoryId,
-    //     categoryCode: firstObject.categeoryCode,
-    //   };
-    // });
+// (async () => {
+//   // const raw = {
+//   //   learningType: 'المرحلة المتوسطة',
+//   //   level: 'الصف  الثالث المتوسط',
+//   //   term: 'الفصل الدراسي الأول',
+//   //   subject: 'المهارات الرقمية'
+//   // }
+//   // const data = await Lessons
+//   //   .find(raw)
+//   //   .populate({
+//   //     path: 'Trees.treeId',
+//   //     populate: {
+//   //       strictPopulate: false,
+//   //       path: 'Questions',
+//   //       populate: {
+//   //         path: 'QuestionId',
+//   //       }
+//   //     }
+//   //   })
+//     // .exec()
+//     // .aggregate([
+//     //   { $match: raw },
+//     //   {
+//     //     $lookup: {
+//     //       from: 'Trees',
+//     //       localField: 'Trees.treeId',
+//     //       foreignField: 'treeId',
+//     //       as: 'Trees.populatedTree',
+//     //     },
+//     //   },
+//     // ]);
+//   // {
+//   //   $lookup: {
+//   //     from: 'referencemodels',
+//   //     localField: 'referenceField2.treeId',
+//   //     foreignField: 'treeId',
+//   //     as: 'referenceField2.populatedTree',
+//   //   },
+//   // },
+
+//   // populate({
+//   // path: 'Trees.treeId'
+//   // })
+
+//   // console.log(data);
+//   // console.log(data.length);
+//   // console.log(data?.[0]?.Trees[0].treeId.Questions);
+// })();
+
+// (async () => {
+//   try {
+//     // const categeories = Array.from(new Set(data.map(obj => {
+//     //   obj.children = obj.children ? obj.children.concat([obj]) : [obj]
+//     //   return obj.categeory
+//     // })));
+//     // .map(category => {
+//     //   const firstObject = data.find(obj => obj.categeory === category);
+//     //   return {
+//     //     category,
+//     //     categoryId: firstObject.categeoryId,
+//     //     categoryCode: firstObject.categeoryCode,
+//     //   };
+//     // });
     
-    // console.log(categeories[0].children.length);
+//     // console.log(categeories[0].children.length);
 
 
     
 
-    // await filterByCategory(data);
-  } catch (err) {
-    log(err.message)
-  }
-})();
+//     // await filterByCategory(data);
+//   } catch (err) {
+//     log(err.message)
+//   }
+// })();
 
 
 async function filterByCategory(data) {
