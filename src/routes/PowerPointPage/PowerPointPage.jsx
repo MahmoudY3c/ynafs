@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import "../../css/style.css";
 import React, { useState } from "react";
-import { Form, Alert, Input } from "antd";
+import { Form, Alert, Input, Typography } from "antd";
 import LoadingModal from "../../components/LoadingModal";
 import Nav from '../../components/Nav';
 import useFetch from "../../hooks/useFetch";
@@ -116,7 +116,7 @@ function PowerPointPage() {
       <header>
         <Nav />
       </header>
-
+        <h1 className="container">PowerPoint Page</h1>
       <Alert
         message={alert?.message}
         type={alert?.type}
