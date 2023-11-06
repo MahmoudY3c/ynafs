@@ -21,5 +21,25 @@ router.post('/', async function (req, res) {
 	}
 });
 
+router.post('/data', async function (req, res) {
+	try {
+		const { subject } = req.body
+		const subjects = await Lessons.find({ subjectId: Number(subject) }).populate({
+			path: 'Trees.treeId',
+			populate: {
+				strictPopulate: false,
+				path: 'Questions',
+				populate: {
+					path: 'QuestionId',
+				}
+			}
+		});
+
+		res.json(subjects);
+	} catch (err) {
+		console.log(err.message);
+		res.json({ err: err })
+	}
+});
 
 module.exports = router

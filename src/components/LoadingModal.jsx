@@ -1,11 +1,11 @@
 import React from 'react';
 import { Modal, Spin } from 'antd';
 // console.log(Input)
-const LoadingModal = ({ state }) => {
+const LoadingModal = ({ state, title }) => {
   return (
     <>
       <Modal
-        title="جارى حفظ السؤال برجاءء الانتظار...."
+        title={title || "جارى حفظ السؤال برجاءء الانتظار...."}
         open={state}
         style={{ textAlign: "rtl" }}
         closable={false}

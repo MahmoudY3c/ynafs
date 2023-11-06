@@ -38,12 +38,30 @@ const TreesSchema = new Schema({
 		type: mongoose.Types.ObjectId,
 		ref: "Lessons"
 	},
+	"Category": {
+		type: mongoose.Types.ObjectId,
+		ref: "Categories"
+	},
 	"Questions": [{
 		"QuestionId": {
 			type: mongoose.Types.ObjectId,
 			ref: "Questions"
 		},
 	}],
+
+	//======================= start of addtionals ==========================
+	"LessonVocabulary": {
+		type: String
+	},
+	"LessonPrepare": {
+		type: String
+	},
+	"TeacherInstructions": {
+		type: String
+	},
+	"LessonClose": {
+		type: String
+	},
 
 }, { timestamps: true });
 

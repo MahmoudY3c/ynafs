@@ -6,8 +6,9 @@ import {
 } from "react-router-dom";
 import NotFound from './routes/NotFound/NotFound.jsx';
 import ErrMessage from './components/ErrMessage.jsx';
-import PageForm from './routes/insertData/insertData.jsx';
+import MainForm from './routes/MainForm/MainForm.jsx';
 import PowerPointPage from './routes/PowerPointPage/PowerPointPage.jsx';
+import DisplayPage from './routes/Display/DisplayPage.jsx';
 
 const routes = [
   {
@@ -16,13 +17,18 @@ const routes = [
   },
   {
     path: '/',
-    element: <PageForm />,
+    element: <MainForm />,
     errorElement: <ErrMessage />
   },
   {
     path: '/powerpoint',
     element: <PowerPointPage />,
     errorElement: <ErrMessage path="/powerpoint" />
+  },
+  {
+    path: '/display',
+    element: <DisplayPage />,
+    errorElement: <ErrMessage path="/display" />
   },
 ]
 

@@ -20,6 +20,7 @@ function Choose(props) {
         showSearch
         mode={props.mode || 'default'}
         value={props.value || ''}
+        required={props.required}
       >
         {(props.loading) ?
           <Option style={styles.spinnerOption} value="">

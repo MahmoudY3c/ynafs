@@ -11,4 +11,27 @@ router.get('/', async function (req, res) {
   }
 });
 
+router.post('/', async function (req, res) {
+  try {
+    const { category } = req.body;
+    const cat = await Categories.find({ _id: category }).populate({
+      path: 'Lessons.LessonId',
+      populate: {
+        strictPopulate: false,
+        path: 'Trees.treeId',
+        populate: {
+          strictPopulate: false,
+          path: 'Questions',
+          populate: {
+            path: 'QuestionId',
+          }
+        }
+      }
+    });
+    res.status(200).json(cat);
+  } catch (err) {
+    res.status(500).json({ error: { message: err.message } })
+  }
+});
+
 module.exports = router;

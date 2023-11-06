@@ -79,6 +79,11 @@ nav {
   border: 0;
 }
 
+.ant-card-head-title {
+  overflow: initial !important;
+  white-space: normal !important;
+}
+
 .container {
   text-align: center;
   padding: 20px;

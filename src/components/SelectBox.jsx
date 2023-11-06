@@ -15,7 +15,7 @@ function SelectBox(props) {
           <Form.Item
             name={props.name}
             hasFeedback
-            rules={[{ required: true, message: '' }]}
+            rules={props.required ? props.required : [{ required: true, message: '' }]}
             value={props.value || ''}
             // initialValue={props.value || ''}
           >

@@ -22,6 +22,7 @@ function Nav(props) {
     <nav>
       <div className="icons-container">
         <Icon icon="file-powerpoint" id="edit" to="/powerpoint" />
+        <Icon icon="eye" id="edit" to="/display" />
         <Icon icon="user" id="admin-login" onClick={() => alert("سيتم تفعيله...")} />
         <Icon icon="edit" id="edit" onClick={() => alert("سيتم تفعيله...")} />
       </div>
