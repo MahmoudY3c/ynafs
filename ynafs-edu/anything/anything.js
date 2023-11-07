@@ -99,6 +99,12 @@ const Questions = require('../db/models/Questions');
   //   "term": "الفصل الدراسي الثاني",
   //   "termCode": "SM2",
   // }))
+  
+  // الطفولة المبكرة
+  // console.log(await pushAvaiableTermToCategory('64e29947c99afd3dfa9a0134', {
+  //   "term": "الفصل الدراسي الثاني",
+  //   "termCode": "SM2",
+  // }))
 
   // const trees = await Trees.find()
   // .populate({

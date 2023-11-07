@@ -103,7 +103,7 @@ function MainForm() {
                   <div className="select-container">
                     <Form.Item
                       name="drivePowerPoint"
-                      rules={[{ required: true, message: '' }]}
+                      rules={[{ required: false, message: '' }]}
                     >
                       <Input
                         style={{ direction: 'ltr' }}
