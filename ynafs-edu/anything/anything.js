@@ -85,6 +85,21 @@ const Questions = require('../db/models/Questions');
   // log(d)
 
 
+  // const categeories = await Categories.find();
+
+  // for(let categeory of categeories) {
+  //   console.log(await pushAvaiableTermToCategory(categeory._id, {
+  //     "term": "الفصل الدراسي الأول",
+  //     "termCode": "SM1",
+  //   }))
+  // }
+
+  //   // العليم العام
+  // console.log(await pushAvaiableTermToCategory('64e29933c99afd3dfa994f77', {
+  //   "term": "الفصل الدراسي الثاني",
+  //   "termCode": "SM2",
+  // }))
+
   // const trees = await Trees.find()
   // .populate({
   //   path: 'Lesson'
@@ -96,7 +111,22 @@ const Questions = require('../db/models/Questions');
   // await moveDataToTrees(trees);
   // await setCategoriesToTrees(trees);
   // await filterByExistsData(data);
+
+  // console.log(await Categories.find({'availableTermData.termCode': 'SM2'}, {category: 1}))
+  // console.log(await Categories.findOneAndUpdate({'availableTermData.termCode': 'dassds'}, {
+  //   "availableTermData.$.termCode": 'SM2'
+  // }))
 })();
+
+async function pushAvaiableTermToCategory(_id, data) {
+  const categeory = await Categories.findByIdAndUpdate(_id, {
+      $push: {
+        availableTermData: data
+      }
+  });
+  
+  return categeory;
+}
 
 async function filterByExistsData(data) {
   const categories = {}

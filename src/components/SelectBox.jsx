@@ -17,7 +17,7 @@ function SelectBox(props) {
             hasFeedback
             rules={props.required ? props.required : [{ required: true, message: '' }]}
             value={props.value || ''}
-            // initialValue={props.value || ''}
+            initialValue={props.value || ''}
           >
             <Select
               style={{ width: '100%' }}

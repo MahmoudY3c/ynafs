@@ -11,6 +11,9 @@ const CategoriesSchema = new Schema({
 	"categoryCode": {
 		type: String
 	},
+	"availableTermData": {
+		type: Array,
+	},
 	"Lessons": [{
 		LessonId: {
 			type: mongoose.Types.ObjectId,

@@ -54,6 +54,7 @@ export function filterResponseData(data, useForSubjects) {
       holder[key][level1 ? isHighSchool ? level + ' - ' + subject : level : subject].push(e);
     }
   }
+
   return holder;
 
   // let holder = {};

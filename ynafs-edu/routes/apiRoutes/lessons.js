@@ -5,9 +5,9 @@ const router = express.Router();
 
 router.get('/', async function (req, res) {
   try {
-    const { category } = req.query;
+    const { category, termCode } = req.query;
     if (!category) throw new Error('category not exists');
-    const lessons = await Lessons.find({ Category: category }, { __v: 0, Category: 0, Trees: 0 });
+    const lessons = await Lessons.find({ Category: category, termCode }, { __v: 0, Category: 0, Trees: 0 });
 
     res.status(200).json(lessons);
   } catch (err) {

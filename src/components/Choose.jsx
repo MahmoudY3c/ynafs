@@ -27,6 +27,7 @@ function Choose(props) {
             <Spin style={styles.spinner} size="large" />
           </Option> :
           <>
+            {/* {console.log([props.value])} */}
             <Option className="first-opt" value={props.value || ''}>{props.title || "اختار السنة الدراسية"}......</Option>
             {
               (
@@ -36,6 +37,8 @@ function Choose(props) {
                   : Object.keys(props.data || {})
               )?.map(
                 (res, i) => {
+
+                  // {console.log([res])}
 
                   return <Option
                     key={

@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { darwerReducer } from '../features/data/slice';
+import { itemsReducer } from '../features/items/slice';
 
 const store = configureStore({
   reducer: {
-    data: darwerReducer
+    data: darwerReducer,
+    items: itemsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

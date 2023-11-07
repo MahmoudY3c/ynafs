@@ -4,8 +4,9 @@ const router = express.Router();
 
 router.get('/', async function (req, res) {
   try {
-    let cat = await Categories.find({}, { Lessons: 0, __v: 0 });
-    res.status(200).json(cat);
+    const { termCode } = req.query;
+    const categories = await Categories.find({'availableTermData.termCode': termCode}, { Lessons: 0, __v: 0 });
+    res.status(200).json(categories);
   } catch (err) {
     res.status(500).json({ error: { message: err.message } })
   }

@@ -1,0 +1,14 @@
+[
+  {
+    "type": "صح او خطأ",
+    "value": "true-or-false"
+  },
+  {
+    "type": "اختيار من متعدد",
+    "value": "multiple"
+  },
+  {
+    "type": "سؤال مقالي",
+    "value": "essay"
+  }
+]

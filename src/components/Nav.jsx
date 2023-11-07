@@ -21,14 +21,17 @@ function Nav(props) {
   return (
     <nav>
       <div className="icons-container">
-        <Icon icon="file-powerpoint" id="edit" to="/powerpoint" />
-        <Icon icon="eye" id="edit" to="/display" />
-        <Icon icon="user" id="admin-login" onClick={() => alert("سيتم تفعيله...")} />
-        <Icon icon="edit" id="edit" onClick={() => alert("سيتم تفعيله...")} />
+        <Icon icon="file-powerpoint" id="powerpoint" to="/powerpoint" />
+        <Icon icon="eye" id="display" to="/display" />
+        <Icon icon="home" id="home" to="/" />
+        {/* <Icon icon="user" id="admin-login" onClick={() => alert("سيتم تفعيله...")} />
+        <Icon icon="edit" id="edit" onClick={() => alert("سيتم تفعيله...")} /> */}
       </div>
-      <h1 className="header-title">
-        تحضير بلس+
-      </h1>
+      <Link className="link" id="home" to="/">
+        <h1 className="header-title">
+          تحضير بلس+
+        </h1>
+      </Link>
     </nav>
   );
 }
