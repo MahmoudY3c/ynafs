@@ -1,6 +1,7 @@
 import request from "../../API/api";
+import { updateSelectedTreeData } from "../../Redux/features/items/slice";
 
-export const renderHandleMainFormFinish = ({ handleTrueOrFalse, handleMultiple, setOpenModal, dispatch, setDrivePowerPointValue, setAlert }) => {
+export const renderHandleMainFormFinish = ({ handleTrueOrFalse, handleMultiple, setOpenModal, dispatch, setDrivePowerPointValue, setAlert, treesData }) => {
 
   const handleMainFormFinish = (values) => {
     //processing the data
@@ -38,6 +39,19 @@ export const renderHandleMainFormFinish = ({ handleTrueOrFalse, handleMultiple, 
       body: JSON.stringify(values)
     })
       .then(json => {
+        if(values.LessonPrepare || values.LessonVocabulary) {
+          const targetTree = treesData.find(e => e._id === values.tree);
+          const treeIndex = treesData.indexOf(targetTree);
+
+          dispatch(
+            updateSelectedTreeData({
+              treeIndex,
+              LessonPrepare: values.LessonPrepare,
+              LessonVocabulary: values.LessonVocabulary,
+            })
+          )
+        }
+
         if (values.drivePowerPoint) {
           dispatch(setDrivePowerPointValue(values.drivePowerPoint))
         }

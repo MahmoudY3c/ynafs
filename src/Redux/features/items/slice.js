@@ -63,12 +63,17 @@ const Slice = createSlice({
     },
     setDrivePowerPointValue(state, action) {
       state.items.drivePowerPointValue = action.payload;
+    },
+    updateSelectedTreeData(state, action) {
+      const { treeIndex, LessonVocabulary, LessonPrepare } = action.payload;
+      state.treesData[treeIndex].LessonVocabulary = LessonVocabulary;
+      state.treesData[treeIndex].LessonPrepare = LessonPrepare;
     }
   },
 });
 
 export const { reducer: itemsReducer } = Slice;
-export const { setItems, setItem, setLoading, setError, setCategories, setLessons, setTrees, setDrivePowerPointValue } = Slice.actions;
+export const { setItems, setItem, setLoading, setError, setCategories, setLessons, setTrees, setDrivePowerPointValue, updateSelectedTreeData } = Slice.actions;
 export const setItemsActions = Slice.actions;
 
 // console.log('====================================');

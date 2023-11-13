@@ -7,10 +7,13 @@ const Lessons = require("../../db/models/Lessons.js");
 
 router.post('/', async function (req, res) {
 	try {
-		let { image, question, tree, subject, powerpoint, drivePowerPoint, /* lesson */ } = req.body
+		let { image, question, tree, subject, powerpoint, drivePowerPoint, LessonVocabulary, LessonPrepare, /* lesson */ } = req.body
 		if (!image && !question) throw new Error("No image or question is presented !");
+		
 		delete req.body.powerpoint;
 		delete req.body.drivePowerPoint;
+		delete req.body.LessonVocabulary;
+		delete req.body.LessonPrepare;
 
 		//saving the question
 		let q = new Questions(req.body);
@@ -18,10 +21,13 @@ router.post('/', async function (req, res) {
 
 		//save the question id and powerpoint path to tree schema 
 		const payload = {
+			LessonVocabulary,
+			LessonPrepare,
 			$push: {
 				Questions: { QuestionId: q._id }
 			}
 		}
+
 		if (powerpoint) payload.powerpoint = powerpoint;
 		await Trees.findByIdAndUpdate(tree, payload);
 
@@ -30,6 +36,7 @@ router.post('/', async function (req, res) {
 			const updatedLessons = await Lessons.updateMany({ subjectId: Number(subject) }, {
 				$set: { drivePowerPoint }
 			});
+
 			console.log(updatedLessons);
 		}
 
@@ -44,11 +51,13 @@ router.get('/', async function (req, res) {
 	try {
 		let { id, question, populate } = req.query
 		let Question
+
 		if (id) {
 			Question = await Questions.findById(id)
 		} else if (question) {
 			Question = await Questions.find({ question: question })
 		}
+
 		if (populate === 'true') {
 			if (Question.constructor === Object) {
 				//get questions
@@ -63,6 +72,7 @@ router.get('/', async function (req, res) {
 		} else if (populate === "lesson") {
 			await Question.populate("lesson");
 		}
+		
 		res.status(200).json(Question)
 	} catch (err) {
 		res.status(500).json({ err: err })

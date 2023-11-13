@@ -36,7 +36,7 @@ function MainForm() {
   const dispatch = useDispatch();
   const { items: componentsState, loading, error, lessonsData, treesData } = useSelector(state => state.items);
   const handleDisplayComponent = renderHandleDisplayComponent({ componentsState, form, dispatch });
-  const handleMainFormFinish = renderHandleMainFormFinish({ handleTrueOrFalse, handleMultiple, setOpenModal, dispatch, setDrivePowerPointValue, setAlert })
+  const handleMainFormFinish = renderHandleMainFormFinish({ handleTrueOrFalse, handleMultiple, setOpenModal, dispatch, setDrivePowerPointValue, setAlert, treesData })
   const handleQuestionChange = renderHandleQuestionsChange({ dispatch, form, setItems, componentsState, questionTypes });
   const handleUploadChange = () => dispatch(setItems({ ...componentsState, displayQestionFeld: false }));
   const { LessonPrepare, LessonVocabulary } = treesData?.find(e => e._id === componentsState.treeValue) || {};
