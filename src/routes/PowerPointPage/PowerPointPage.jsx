@@ -20,10 +20,36 @@ function PowerPointPage() {
   // conponents states
   const dispatch = useDispatch();
   const { items: componentsState, loading, loadingItem, error, errorArea, categories, lessonsData, treesData } = useSelector(state => state.items);
-
-
   const handleSubmit = e => e.preventDefault();
-  const handleFinish = handlePowerPointFinish({ setAlert, setOpenModal, dispatch, form, setDrivePowerPointValue })
+  // const [drivePowerPoint, setDrivePowerPoint] = React.useState([]);
+  // const drive = {
+  //   value: lessonsData
+  //     ?.[componentsState?.levelValue]
+  //     ?.[componentsState?.subjectValue?.split('@@')?.[0]]
+  //     ?.drivePowerPoint
+  // };
+
+  // const isDriveAvailable = drivePowerPoint.length > 0 ?
+  //   drivePowerPoint.find(e => {
+  //     if (
+  //       e.level === componentsState?.levelValue
+  //       && e.subject === componentsState?.subjectValue?.split('@@')?.[0]
+  //     ) {
+  //       return e;
+  //     }
+
+  //     return lessonsData
+  //       ?.[componentsState?.levelValue]
+  //       ?.[componentsState?.subjectValue?.split('@@')?.[0]]
+  //       ?.drivePowerPoint;
+  //   })
+  //   : drive;
+
+  console.log(lessonsData?.[componentsState?.levelValue]
+    ?.[componentsState?.subjectValue?.split('@@')?.[0]]
+    ?.drivePowerPoint)
+  const handleFinish = handlePowerPointFinish({ setAlert, setOpenModal, dispatch, form, selectedSubject: componentsState?.subjectValue?.split('@@')?.[0], setDrivePowerPoint: value => dispatch(setDrivePowerPointValue(value)) });
+
 
   return (
     <>
@@ -56,11 +82,11 @@ function PowerPointPage() {
         {componentsState.subjectValue &&
           <>
             {
-              (
-                !lessonsData[componentsState.levelValue]
-                  ?.[componentsState.subjectValue.split('@@')[0]]
-                  ?.drivePowerPoint
-              ) &&
+              /* !isDriveAvailable?.value */
+              !lessonsData[componentsState.levelValue]
+                ?.[componentsState.subjectValue.split('@@')[0]]
+                ?.drivePowerPoint
+              &&
               <section className="section-body">
                 <div className="container">
                   <div className="select-container">

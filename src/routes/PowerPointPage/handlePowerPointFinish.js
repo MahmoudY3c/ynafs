@@ -1,6 +1,6 @@
 import request from "../../API/api";
 
-export const handlePowerPointFinish = ({ setAlert, setOpenModal, dispatch, form, setDrivePowerPointValue }) => {
+export const handlePowerPointFinish = ({ setAlert, setOpenModal, selectedSubject, form, setDrivePowerPoint }) => {
   const handleFinish = (values) => {
     let arr = []
     // extract the subject id from the subject
@@ -29,8 +29,19 @@ export const handlePowerPointFinish = ({ setAlert, setOpenModal, dispatch, form,
       body: JSON.stringify(values)
     })
       .then(json => {
-        if (values.drivePowerPoint) {
-          dispatch(setDrivePowerPointValue(values.drivePowerPoint))
+        // if (values.drivePowerPoint && selectedSubject && values.level) {
+        //   setDrivePowerPoint(prev => [...prev, {
+        //     value: values.drivePowerPoint,
+        //     level: values.level,
+        //     subject: selectedSubject,
+        //   }])
+        // }
+        if (values.drivePowerPoint && selectedSubject && values.level) {
+          setDrivePowerPoint({
+            drivePowerPoint: values.drivePowerPoint,
+            level: values.level,
+            subject: selectedSubject,
+          })
         }
 
         form.setFieldValue('drivePowerPoint', '');

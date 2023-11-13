@@ -1,7 +1,8 @@
 import request from "../../API/api";
+// import store from "../../Redux/app/store";
 import { updateSelectedTreeData } from "../../Redux/features/items/slice";
 
-export const renderHandleMainFormFinish = ({ handleTrueOrFalse, handleMultiple, setOpenModal, dispatch, setDrivePowerPointValue, setAlert, treesData }) => {
+export const renderHandleMainFormFinish = ({ handleTrueOrFalse, handleMultiple, setOpenModal, dispatch, setDrivePowerPoint, lessonsData, setAlert, treesData, selectedSubject }) => {
 
   const handleMainFormFinish = (values) => {
     //processing the data
@@ -39,7 +40,8 @@ export const renderHandleMainFormFinish = ({ handleTrueOrFalse, handleMultiple, 
       body: JSON.stringify(values)
     })
       .then(json => {
-        if(values.LessonPrepare || values.LessonVocabulary) {
+
+        if (values.LessonPrepare || values.LessonVocabulary) {
           const targetTree = treesData.find(e => e._id === values.tree);
           const treeIndex = treesData.indexOf(targetTree);
 
@@ -52,8 +54,13 @@ export const renderHandleMainFormFinish = ({ handleTrueOrFalse, handleMultiple, 
           )
         }
 
-        if (values.drivePowerPoint) {
-          dispatch(setDrivePowerPointValue(values.drivePowerPoint))
+
+        if (values.drivePowerPoint && selectedSubject && values.level) {
+          setDrivePowerPoint({
+            drivePowerPoint: values.drivePowerPoint,
+            level: values.level,
+            subject: selectedSubject,
+          })
         }
 
         if (json.err) setAlert({

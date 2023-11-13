@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   categories: null,
   lessonsData: null,
+  selectedSubject: null,
+  selectedLevel: null,
   treesData: null,
   loading: {
     status: false,
@@ -61,8 +63,31 @@ const Slice = createSlice({
     setTrees(state, action) {
       state.treesData = action.payload;
     },
+    setSelectedSubject(state, action) {
+      state.selectedSubject = action.payload;
+    },
+    setSelectedLevel(state, action) {
+      state.selectedLevel = action.payload;
+    },
     setDrivePowerPointValue(state, action) {
-      state.items.drivePowerPointValue = action.payload;
+      const { level, subject, drivePowerPoint } = action.payload || {};
+      if (level && subject && drivePowerPoint) {
+        const __subject = [
+          ...state.lessonsData[level][subject],
+        ];
+        __subject.drivePowerPoint = drivePowerPoint;
+
+        state.lessonsData = {
+          ...state.lessonsData,
+          [level]: {
+            ...state.lessonsData[level],
+            [subject]: __subject,
+          }
+        };
+
+      } else {
+        state.items.drivePowerPointValue = action.payload;
+      }
     },
     updateSelectedTreeData(state, action) {
       const { treeIndex, LessonVocabulary, LessonPrepare } = action.payload;
@@ -73,7 +98,7 @@ const Slice = createSlice({
 });
 
 export const { reducer: itemsReducer } = Slice;
-export const { setItems, setItem, setLoading, setError, setCategories, setLessons, setTrees, setDrivePowerPointValue, updateSelectedTreeData } = Slice.actions;
+export const { setItems, setItem, setLoading, setError, setCategories, setLessons, setTrees, setSelectedSubject, setSelectedLevel, setDrivePowerPointValue, updateSelectedTreeData } = Slice.actions;
 export const setItemsActions = Slice.actions;
 
 // console.log('====================================');

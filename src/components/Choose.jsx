@@ -6,6 +6,7 @@ const { Option } = Select;
 
 function Choose(props) {
   const { item, value } = props.items || {};
+
   return (
     <>
       <SelectBox
@@ -51,6 +52,8 @@ function Choose(props) {
                       || res + i
                     }
                     // if if there's just a value and there's no item to use the object key as name and the required object property as a value
+                    // value={
+                    //   `${res?.[value] || res}${(value && !item) ? '@@' + props.data?.[res]?.[Object.keys(props.data?.[res] || {})[0]]?.[value] : ''}`
                     value={
                       `${res?.[value] || res}${(value && !item) ? '@@' + props.data?.[res]?.[0]?.[value] : ''}`
 
