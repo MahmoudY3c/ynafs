@@ -6,6 +6,7 @@ const app = require("./app");
 require("./db/mongoose");
 const { onServernError, onSeverListening } = require("./events/server");
 const { NODE_ENV, PORT, HTTPS_PORT } = require('./config/appConfig');
+const { createToken } = require('./handlers/utill');
 
 
 //run the http server in development / production mode but not in test mode
@@ -30,3 +31,5 @@ if('production' === NODE_ENV) {
 	httpsServer.on("error", (err) => onServernError(err, HTTPS_PORT))
 	httpsServer.on('listening', () => onSeverListening(httpsServer))
 }
+
+// console.log(createToken());

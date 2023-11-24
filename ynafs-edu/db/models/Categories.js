@@ -12,7 +12,17 @@ const CategoriesSchema = new Schema({
 		type: String
 	},
 	"availableTermData": {
-		type: Array,
+		type: new Schema(
+			{
+				term: {
+					type: String,
+				},
+				termCode: {
+					type: String,
+				},
+			},
+			{ timestamps: true }
+		)
 	},
 	"Lessons": [{
 		LessonId: {

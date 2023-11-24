@@ -84,6 +84,16 @@ const Questions = require('../db/models/Questions');
   // const d = await filterByExistsData(data);
   // log(d)
 
+  
+    // Categories.findByIdAndUpdate(categeory._id, {
+    //   $unset: {
+    //     availableTermData: 1,
+    //   }
+    // }).then(res => {
+    //   console.log(res)
+    // })
+    // .catch(Err => console.error(Err))
+
 
   // const categeories = await Categories.find();
 
@@ -94,13 +104,13 @@ const Questions = require('../db/models/Questions');
   //   }))
   // }
 
-  //   // العليم العام
+    // العليم العام
   // console.log(await pushAvaiableTermToCategory('64e29933c99afd3dfa994f77', {
   //   "term": "الفصل الدراسي الثاني",
   //   "termCode": "SM2",
   // }))
   
-  // الطفولة المبكرة
+  // // الطفولة المبكرة
   // console.log(await pushAvaiableTermToCategory('64e29947c99afd3dfa9a0134', {
   //   "term": "الفصل الدراسي الثاني",
   //   "termCode": "SM2",
@@ -122,8 +132,18 @@ const Questions = require('../db/models/Questions');
   // console.log(await Categories.findOneAndUpdate({'availableTermData.termCode': 'dassds'}, {
   //   "availableTermData.$.termCode": 'SM2'
   // }))
+
+  // for(let item of data) {
+  //   await updateMissingLevel2(item, true)
+  // }
 })();
 
+/**
+ * adding the term to the category
+ * @param {String} _id category id
+ * @param {object} data object contains 2 props {"term","termCode"}
+ * @returns object (updated category)
+ */
 async function pushAvaiableTermToCategory(_id, data) {
   const categeory = await Categories.findByIdAndUpdate(_id, {
       $push: {
@@ -134,6 +154,49 @@ async function pushAvaiableTermToCategory(_id, data) {
   return categeory;
 }
 
+async function updateMissingLevel2(item, removeLevel2) {
+  if(item.level2) {
+    const query = {
+      levelId: item.levelId,
+      termCode: item.termCode,
+      termId: item.termId,
+      unitId: item.unitId,
+      subjectId: item.subjectId,
+      unitParentId: item.unitParentId
+    };
+
+    let _item = await Lessons.findOne(query);
+
+    if(_item) {
+      if(removeLevel2) {
+        _item = await Lessons.findByIdAndUpdate(_item._id, {
+          $unset: {
+            level2: 1,
+            level2Id: 1,
+            level2Code: 1,
+          }
+        });
+      } else {
+        _item = await Lessons.findByIdAndUpdate(_item._id, {
+          level1: item.level2,
+          level1Id: item.level2Id,
+          level1Code: item.level2Code,
+        }, { 
+          new: true 
+        });
+      }
+
+      console.log('====================================');
+      console.log(_item);
+      console.log('====================================');
+    }
+  }
+}
+
+/**
+ * a function to add new data to the target category and if the category isn't exists it's will create it 
+ * @param {Array} data scrapped data array of objects 
+ */
 async function filterByExistsData(data) {
   const categories = {}
 
@@ -234,6 +297,11 @@ async function filterByExistsData(data) {
     }
 }
 
+/**
+ * a function to add new property to the trees called category to define the category related to that tree
+ * @param {Array} trees 
+ */
+
 async function setCategoriesToTrees(trees) {
   for(let i = 0; i <  trees.length; i++) {
     const tree = trees[i];
@@ -247,6 +315,10 @@ async function setCategoriesToTrees(trees) {
   console.log('done !!!!!!!!!!!');
 }
 
+/**
+ * a function to move {LessonVocabulary, LessonPrepare} data to fix the mass of setting them to questions so it's will move them from questions to trees instead
+ * @param {Array} trees 
+ */
 async function moveDataToTrees(trees) {
 
   for(let tree of trees) {
@@ -300,6 +372,11 @@ async function moveDataToTrees(trees) {
   console.log('moveDataToTrees', 'done !!!!!!!!!!!');
 }
 
+
+/**
+ * the default function to insert the scrapped data
+ * @param {Array} data 
+ */
 async function filterByCategory(data) {
   const categories = {}
 
@@ -360,29 +437,30 @@ async function filterByCategory(data) {
     }
 }
 
-async function isolateTrees(data) {
-    for(let i =0; i < data.length; i++) {
-      let d = data[i];
-      const trees = d.trees;
-      delete d.trees;
-      const newLesson = new Lessons(d);
-        // handling getting the trees id
-        if (trees) {
-          const treesHolder = []
-          for (let tr of trees) {
-            tr.Lesson = newLesson._id;
-            const tree = new Trees(tr);
-            await tree.save();
-            log(tree._id, i);
-            treesHolder.push({treeId: tree._id})
-          }
-          newLesson.trees = treesHolder;
-        }
+
+// async function isolateTrees(data) {
+//     for(let i =0; i < data.length; i++) {
+//       let d = data[i];
+//       const trees = d.trees;
+//       delete d.trees;
+//       const newLesson = new Lessons(d);
+//         // handling getting the trees id
+//         if (trees) {
+//           const treesHolder = []
+//           for (let tr of trees) {
+//             tr.Lesson = newLesson._id;
+//             const tree = new Trees(tr);
+//             await tree.save();
+//             log(tree._id, i);
+//             treesHolder.push({treeId: tree._id})
+//           }
+//           newLesson.trees = treesHolder;
+//         }
         
-        await newLesson.save()
-        // log(s)
-    }
-}
+//         await newLesson.save()
+//         // log(s)
+//     }
+// }
 
 
 // console.log('====================================');
