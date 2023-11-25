@@ -72,7 +72,7 @@ function DisplayPage() {
       <Space direction="horizontal" wrap={true} align="center" style={{ justifyContent: 'center', padding: '20px', marginTop: '-95px' }}>
         {
           questions?.length && questions.map((q, index) => {
-            const cardProps = q.question ? { title: q.question || '' } : q.image ? { cover: <img src={`/api/uploads/images/${q.image}?token=7YTf8jWTViAnTQCZkSr9SY0Cb0Vn8VyPF8NCE9wgnBQ=`} alt="" /> } : {};
+            const cardProps = q.question ? { title: q.question || '' } : q.image ? { cover: <img src={`/api/uploads/images/${q.image}?token=nH0t58dcuqjmQs2TSe8EqG12rz/9MZ4CFvFcXtyyAe8=`} alt="" /> } : {};
             return (
               <Space direction="vertical" size={16} key={`${index}`}>
                 <Card {...cardProps} style={{ direction: 'rtl', unicodeBidi: 'plaintext', width: '250px', height: '100%' }} bodyStyle={{ height: "100%" }}>
