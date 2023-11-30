@@ -3,8 +3,9 @@ import 'quill/dist/quill.snow.css';
 import ToolBar from './ToolBar.jsx';
 import Quill from "quill";
 import MathField from './Math/MathField.jsx';
-import { handleEditorState, uniqueId } from '../../handlers/textEditor.js';
+import { handleEditorState } from '../../handlers/textEditor.js';
 import TldrawWrapper from '../TldrawWrapper/TldrawWrapper.jsx';
+import { latexToSvg, renderByMathJax, renderByMathLive } from '../../handlers/handlers.js';
 
 const options = {
   // debug: 'info',
@@ -29,6 +30,8 @@ function TextEditor({ id, onChange, toolbar }) {
   const [displayMathField, setDisplayMathField] = React.useState(false);
   const [quill, setQuill] = React.useState(null);
 
+
+
   React.useEffect(() => {
     if (quillRef?.current && !quill?.isSet) {
       options.modules.toolbar.container = '#toolbar-' + (id || 'editor')
@@ -36,12 +39,7 @@ function TextEditor({ id, onChange, toolbar }) {
       // define the math renderer by using custom render function instead of adding katex library who is required for quilljs to handle formula {replace katex.render with MathLive render methods}
       if (!window.katex) {
         window.katex = {
-          render(value, node, options) {
-            console.log(node, value);
-            node.insertAdjacentHTML('beforeEnd', window.MathLive.convertLatexToMarkup(value));
-            window.MathLive.autoRenderMathInElement(node)
-            return node;
-          }
+          render: renderByMathJax,
         }
       }
 

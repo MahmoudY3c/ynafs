@@ -36,12 +36,6 @@ function ToolBar({ displayDrawer, setDisplayDrawer, displayMath, setDisplayMath,
       <button type="button" className="ql-align" value=""></button>
       <button type="button" className="ql-align" value="center"></button>
       <button type="button" className="ql-align" value="right" ref={alignRightRef}></button>
-
-      {/* <select className="ql-align">
-        <option value=""></option>
-        <option value="center"></option>
-        <option value="right" defaultValue={true}></option>
-      </select> */}
       <button type="button" className="ql-direction" value="rtl" ref={directionRef}></button>
       <button type="button" className="ql-script" value="sub"></button>
       <button type="button" className="ql-script" value="super"></button>

@@ -6,8 +6,8 @@ import enKeyboard from "./EN";
 const keyboradLayout = [
   basicKeyboard,
   arKeyboard,
-  enKeyboard,
-  advancedKeyboard,
+  // enKeyboard,
+  // advancedKeyboard,
 ]
 
 export default keyboradLayout;

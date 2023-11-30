@@ -43,7 +43,7 @@ export function filterResponseData(data, useForSubjects) {
     // e = delTest(e, key => key.startsWith('learningType') || key.startsWith('level') || key.startsWith('subject'));
     if (!holder[key][level1 ? isHighSchool ? level + ' - ' + subject : level : subject]) {
       // an option to remove subjects that already have a powerpoint file used for PowerPointPage
-      if (useForSubjects && drivePowerPoint)  continue;
+      if (useForSubjects && drivePowerPoint) continue;
 
       holder[key][level1 ? isHighSchool ? level + ' - ' + subject : level : subject] = [e];
 
@@ -142,3 +142,132 @@ export function handleNewData(obj, container) {
 }
 export const formData = (obj, fd) => handleNewData(obj, fd ? fd : new FormData())
 export const createHeaders = (obj, h) => handleNewData(obj, h ? h : new Headers())
+
+// scale 5 for high quality 
+export const htmlSnapShot = (selector, options = { backgroundColor: '#fff', quality: 1, scale: 5 }) => {
+  const node = document.querySelector(selector)
+  //.cloneNode(true);
+
+  // node.style.height = 'auto';
+  // node.style.width = 600 + 'px';
+
+  // document.querySelector('#root').append(node);
+  return window.htmlToImage.toCanvas(node, options)
+    .then(function (canvas) {
+      // node.remove()
+      const url = canvas.toDataURL();
+      return { url, canvas }
+    })
+    .catch(function (error) {
+      console.error('oops, something went wrong!', error);
+      return { error }
+    });
+}
+
+export const downloadBase64 = ({ name = 'file', ext = 'png', base64 }) => {
+  let link = Object.assign(document.createElement('a'), {
+    href: base64,
+    //add the file extension at the end of the file name to avoid download attribute conflict between the real file type and file name for example if the file name contains (.com) it's will use it as the file extention so use the file extension eveytime
+    download: name + '.' + ext
+  });
+
+  link.click();
+  link.remove();
+  return link
+}
+
+//a function to download arrayBuffer to user device
+export const downloadByteArray = ({ byte, name, ext, type }) => {
+  let link = Object.assign(document.createElement('a'), {
+    href: "data:" + type + ";base64," + arrayBufferToBase64(byte),
+    //add the file extension at the end of the file name to avoid download attribute conflict between the real file type and file name for example if the file name contains (.com) it's will use it as the file extention so use the file extension eveytime
+    download: name + '.' + ext
+  });
+
+  // link.addEventListener('click', function (e) {
+  //   e.preventDefault();
+  //   window.open(this.getAttribute('href'))
+  // });
+
+  link.click();
+  link.remove();
+  return link
+}
+
+export const latexToSvg = function (formula) {
+  let wrapper = window.MathJax.tex2svg(`${formula}`, { em: 10, ex: 5, display: true })
+  let svg = wrapper.getElementsByTagName("svg")[0];
+  svg.setAttribute("xmlns", "http://www.w3.org/2000/svg")
+  return {
+    buffer: new TextEncoder().encode(svg.outerHTML),
+    svg,
+  };
+}
+
+export const latexToMathml = (formula) => {
+  const mathmlText = window.MathJax.tex2mml(`${formula}`, { display: true }).replace('display="block"', '');
+  return {
+    mathml: mathmlText,
+  }
+}
+export function SvgToPng(svgArrayBuffer, download) {
+  return new Promise((resolve, reject) => {
+    const image = new Image(); // create <img> element
+    image.onload = function () {
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+      canvas.width = image.clientWidth;
+      canvas.height = image.clientHeight;
+      context.drawImage(image, 0, 0, image.clientWidth, image.clientHeight);
+      const imgData = canvas.toDataURL('image/png');
+
+      if (download) {
+        downloadBase64({ name: "image", 'ext': 'png', base64: imgData })
+      }
+
+      resolve(imgData)
+    }
+
+    image.onerror = function (e) {
+      reject(e);
+    }
+
+    // btoa — binary string to ASCII (Base64-encoded)
+    // image.src = 'data:image/svg+xml;base64,' + btoa(svgString);
+    image.src = 'data:image/svg+xml;base64,' + arrayBufferToBase64(svgArrayBuffer);
+
+    document.body.appendChild(image)
+  })
+}
+
+//parse arrayBuffer as base64 str
+export const arrayBufferToBase64 = (buffer) => {
+  let binary = '';
+  let bytes = new Uint8Array(buffer);
+  let len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
+}
+
+
+
+
+// that method causing error when take a screenshot by html to img that why i used mathjax as svg instead
+export const renderByMathLive = (value, node, options) => {
+  node.insertAdjacentHTML('beforeEnd', window.MathLive.convertLatexToMarkup(value));
+  window.MathLive.renderMathInElement(node);
+  return node;
+}
+
+
+export const renderByMathJax = (value, node, options) => {
+  // const { svg } = latexToSvg(value);
+  // node.insertAdjacentElement('beforeEnd', svg);
+  const { mathml } = latexToMathml(value);
+  node.insertAdjacentHTML('beforeEnd', mathml);
+  return node
+}
+
+

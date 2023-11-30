@@ -1,12 +1,12 @@
 import React from 'react';
-import { Tldraw, useEditor } from '@tldraw/tldraw';
-import '@tldraw/tldraw/tldraw.css';
+import { Tldraw, /* useEditor */ } from '@tldraw/tldraw';
 import tldrawOverrides from './tldrawOverrides';
 import './styles.css';
+import '@tldraw/tldraw/tldraw.css';
 
 function TldrawWrapper({ setDisplay, display }) {
   // eslint-disable-next-line no-unused-vars
-  const editor = useEditor();
+  // const editor = useEditor();
   const editorRef = React.useRef();
   const hideEditor = () => {
     setDisplay('none')

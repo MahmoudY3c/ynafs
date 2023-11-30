@@ -7,18 +7,34 @@ const QuestionsSchema = new Schema({
 		type: String
 	},
 	tree: {
-		type: Schema.Types.ObjectId, ref: 'Trees' 
+		type: Schema.Types.ObjectId, ref: 'Trees'
 	},
 	lesson: {
-		type: Schema.Types.ObjectId, ref: 'Trees' 
+		type: Schema.Types.ObjectId, ref: 'Trees'
 	},
 	category: {
-		type: Schema.Types.ObjectId, ref: 'Trees' 
+		type: Schema.Types.ObjectId, ref: 'Trees'
 	},
 
 	// ======================== some props for maths =======================
-
-	
+	mathQuestion: {
+		type: Array
+	},
+	mathEssayAnswer: {
+		type: Array
+	},
+	mathChoices: [{
+		id: {
+			type: Number,
+			default: 0
+		},
+		title: {
+			type: Array,
+		},
+		isTrue: {
+			type: Boolean,
+		},
+	}],
 	//======================= end of maths props =================================
 	//======================= start question =================================
 	//answer index
@@ -63,14 +79,14 @@ const QuestionsSchema = new Schema({
 		type: String
 	},
 	//====================== end of addtionals ===========================
-}, {timestamps: true});
+}, { timestamps: true });
 
 const Questions = mongoose.models.Questions ?
-mongoose.model('Questions') :
-mongoose.model(
-	"Questions",
-	QuestionsSchema
-);
+	mongoose.model('Questions') :
+	mongoose.model(
+		"Questions",
+		QuestionsSchema
+	);
 
-module.exports =  Questions;
+module.exports = Questions;
 

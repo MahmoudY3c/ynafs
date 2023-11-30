@@ -1,10 +1,11 @@
 import request from "../../API/api";
 // import store from "../../Redux/app/store";
 import { updateSelectedTreeData } from "../../Redux/features/items/slice";
+import { downloadBase64, downloadByteArray, htmlSnapShot } from "../../handlers/handlers";
 
 export const renderHandleMainFormFinish = ({ handleTrueOrFalse, handleMultiple, setOpenModal, dispatch, setDrivePowerPoint, lessonsData, setAlert, treesData, selectedSubject }) => {
 
-  const handleMainFormFinish = (values) => {
+  const handleMainFormFinish = async (values) => {
     //processing the data
     let choices = [];
     if (values.QuestionTypeValue === "true-or-false") {
@@ -29,6 +30,14 @@ export const renderHandleMainFormFinish = ({ handleTrueOrFalse, handleMultiple, 
       } else {
         values.mathChoices = choices.length ? choices : null;
       }
+
+      // capture screenshot to the math question
+      const { url, canvas } = await htmlSnapShot('#question-editor');
+      // const buffer = new TextEncoder().encode(document.querySelector('#question-editor').outerHTML);
+      // downloadByteArray({ byte: buffer, name: 'file', type: 'text/html', ext: 'html' })
+      // document.body.appendChild(canvas)
+      downloadBase64({ base64: url, ext: 'png', name: 'image' })
+      console.log(url, canvas)
     } else {
       values.choices = choices.length ? choices : null;
     }
