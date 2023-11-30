@@ -12,6 +12,7 @@ function UploadBtn(props) {
     console.log("Upload event:", e);
     return e.file
   };
+  
   const uploader = async function (e) {
     await request(uploadPath, {
       method: "POST",

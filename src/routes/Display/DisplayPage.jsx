@@ -61,7 +61,6 @@ function DisplayPage() {
         ]}
       >
         <Stepy form={form} />
-
         <section className="section-body">
           <button type="submit" className="submit-btn btn">بحـث</button>
         </section>

@@ -136,7 +136,100 @@ const Questions = require('../db/models/Questions');
   // for(let item of data) {
   //   await updateMissingLevel2(item, true)
   // }
+
+  // const levels = [
+  //   {termCode: "SM2", level: "الصف الأول الابتدائي", subject: "WE CAN"},
+  //   {termCode: "SM2", level: "الصف الأول الابتدائي", subject: "WE CAN"},
+  //   {termCode: "SM2", level: "الصف الأول الابتدائي", subject: "WE CAN"},
+  // ]
+  // Lessons.find({termCode: "SM2"})
+
+  // await deleteQuestions({
+  //   collection: Lessons,
+  //   populate: "Trees.treeId",
+  //   populatedItem: "Trees",
+  //   action: async (tree) => await deleteAllQuestions(tree),
+  //   query: {
+  //     "termCode": "SM2",
+  //     level: {
+  //       $in: [
+  //         "الصف الأول الابتدائي",
+  //         "الصف الثاني الابتدائي",
+  //         "الصف  الثالث الابتدائي",
+  //         "الصف الرابع الابتدائي",
+  //         "الصف  الخامس الابتدائي",
+  //         "الصف السادس الابتدائي"
+  //       ],
+  //     },
+  //     subject: {
+  //       "$regex": /we can/i
+  //     }
+  //   },
+  // });
+
+  // const dataToDelete = await Lessons.find({
+  //   "termCode": "SM2",
+  //   "level": {
+  //     "$in": [
+  //       "الصف الأول الابتدائي",
+  //       "الصف الثاني الابتدائي",
+  //       "الصف  الثالث الابتدائي",
+  //       "الصف الرابع الابتدائي",
+  //       "الصف  الخامس الابتدائي",
+  //       "الصف السادس الابتدائي"
+  //     ]
+  //   },
+  //   "subject": {
+  //     "$regex": /we can/i
+  //   }
+  // }).populate("Trees.treeId");
+
+  // dataToDelete.forEach(async (d, i) => {
+  //   const trees = d.Trees;
+  //   for(const tr of trees) {
+  //     const tree = tr.treeId;
+  //     if(tree.Questions?.length) {
+  //       // console.log(await deleteAllQuestions(tree));
+  //       console.log('====================================');
+  //       console.log(tree);
+  //       console.log('====================================');
+  //     } else {
+  //       console.log('no questions')
+  //     }
+  //   }
+    
+  //   // percentage counter
+  //   console.log(Math.floor(Math.round((i / (dataToDelete.length - 1)) * 100)))
+  // })
+
+  // const testTree = await Trees.findById('6552b5100d0d84ee9a810225');
+  // console.log(await deleteAllQuestions(testTree));
+  // 65602fd2b593d8b8d461c17e, 656031f3b593d8b8d461c18d
 })();
+
+
+async function deleteQuestions({collection, query, populate, populatedItem, action}) {
+  const dataToDelete = await collection.find(query).populate(populate || "");
+  dataToDelete.forEach(async (d, i) => {
+    const populatedField = d[populatedItem];
+    for(const tr of populatedField) {
+      console.log(await action(tr));
+    }
+    
+    // percentage counter
+    console.log(Math.floor(Math.round((i / dataToDelete.length) * 100)))
+  })
+}
+
+async function deleteAllQuestions(tree) {
+  const questions = tree.Questions.map(e => e.QuestionId);
+  await Questions.deleteMany({_id: { $in: questions } });
+  const updatedTree = Trees.findByIdAndUpdate(tree._id, {
+    Questions: [],
+  });
+
+  return updatedTree;
+}
 
 /**
  * adding the term to the category

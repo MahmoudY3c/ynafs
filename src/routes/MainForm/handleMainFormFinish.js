@@ -5,6 +5,8 @@ import { updateSelectedTreeData } from "../../Redux/features/items/slice";
 export const renderHandleMainFormFinish = ({ handleTrueOrFalse, handleMultiple, setOpenModal, dispatch, setDrivePowerPoint, lessonsData, setAlert, treesData, selectedSubject }) => {
 
   const handleMainFormFinish = (values) => {
+
+    return console.log(values, '............... values ................')
     //processing the data
     let choices = [];
     if (values.QuestionTypeValue === "true-or-false") {

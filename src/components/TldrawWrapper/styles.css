@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+.tldraw-nav {
+  background: rgb(249, 250, 251);
+  /* background-color: red; */
+}
+
+.tldraw-nav-container {
+  padding: 5px 10px;
+  background-color: hsl(204, 16%, 94%);
+  display: table;
+}
+
+/* .tldraw-nav:hover .tldraw-nav-btn-shape {
+  fill: rgba(0, 0, 0, 0.042);
+} */
+
+.tldraw-nav:hover .tldraw-nav-btn-shape {
+  fill: dodgerblue;
+}
+
+.tldraw-nav-btn {
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+}
+
+.tldraw-nav-btn-shape:hover {
+  fill: dodgerblue;
+}

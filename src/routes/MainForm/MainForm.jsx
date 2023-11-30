@@ -63,6 +63,7 @@ function MainForm() {
     },
   });
 
+  console.log()
 
   return (
     <>
@@ -165,9 +166,20 @@ function MainForm() {
 
         {(componentsState.multiple || componentsState.trueOrFalse || componentsState.essay) &&
           <>
-            <QuestionFeld form={form} display={componentsState.displayQestionFeld} />
+            <QuestionFeld
+              form={form}
+              display={componentsState.displayQestionFeld}
+              subject={componentsState.subjectValue.split('@@')[0]}
+              id="question-editor"
+            />
             {componentsState.essay &&
-              <QuestionFeld name="essayAnswer" title="اجابة السؤال" form={form} display={componentsState.displayQestionFeld} />
+              <QuestionFeld
+                name="essayAnswer"
+                title="اجابة السؤال"
+                form={form} display={componentsState.displayQestionFeld}
+                subject={componentsState.subjectValue.split('@@')[0]}
+                id="answer-editor"
+              />
             }
             <UploadBtn
               name="image"

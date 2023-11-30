@@ -15,6 +15,11 @@ const QuestionsSchema = new Schema({
 	category: {
 		type: Schema.Types.ObjectId, ref: 'Trees' 
 	},
+
+	// ======================== some props for maths =======================
+
+	
+	//======================= end of maths props =================================
 	//======================= start question =================================
 	//answer index
 	answer: {

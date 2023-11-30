@@ -6,7 +6,8 @@ const app = require("./app");
 require("./db/mongoose");
 const { onServernError, onSeverListening } = require("./events/server");
 const { NODE_ENV, PORT, HTTPS_PORT } = require('./config/appConfig');
-const { createToken } = require('./handlers/utill');
+// const { createToken } = require('./handlers/utill');
+const EventEmitter = require("events");
 
 
 //run the http server in development / production mode but not in test mode
@@ -31,5 +32,8 @@ if('production' === NODE_ENV) {
 	httpsServer.on("error", (err) => onServernError(err, HTTPS_PORT))
 	httpsServer.on('listening', () => onSeverListening(httpsServer))
 }
+
+// setting max listeners to 0 to prevent the memory leak error 
+EventEmitter.defaultMaxListeners = 0;
 
 // console.log(createToken());
