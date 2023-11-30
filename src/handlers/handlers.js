@@ -1,3 +1,5 @@
+import request from "../API/api";
+
 /* eslint-disable no-unused-vars */
 function delTest(obj, callback) {
   for (let key of Object.keys(obj)) {
@@ -153,10 +155,11 @@ export const htmlSnapShot = (selector, options = { backgroundColor: '#fff', qual
 
   // document.querySelector('#root').append(node);
   return window.htmlToImage.toCanvas(node, options)
-    .then(function (canvas) {
+    .then(async function (canvas) {
       // node.remove()
       const url = canvas.toDataURL();
-      return { url, canvas }
+      const file = await canvasToFile(canvas);
+      return { url, canvas, file }
     })
     .catch(function (error) {
       console.error('oops, something went wrong!', error);
@@ -270,4 +273,53 @@ export const renderByMathJax = (value, node, options) => {
   return node
 }
 
+
+export const uploadData = async ({ file, uid }, path) => {
+  const uploadPath = `/uploads${path || '/images'}`;
+  const res = await request(uploadPath, {
+    method: "POST",
+    body: formData({ file, uid }),
+  });
+
+  return res.file.filename;
+}
+
+export const base64ToFile = async (url, type) => {
+  const res = await fetch(url);
+  const blob = await res.blob();
+  const file = new File([blob], "File name", { type: type || "image/png" });
+  return file;
+}
+
+export const canvasToarrayBuffer = (canvas) => {
+  return new Promise(resolve => {
+    canvas.toBlob(function (blob) {
+      // Create a FileReader
+      const reader = new FileReader();
+
+      // Read the Blob as ArrayBuffer
+      reader.onloadend = function () {
+        const arrayBuffer = reader.result;
+
+        // Use the ArrayBuffer as needed
+        console.log(arrayBuffer);
+        resolve(arrayBuffer)
+      };
+
+      reader.readAsArrayBuffer(blob);
+    });
+  })
+}
+
+
+export const canvasToFile = (canvas) => {
+  return new Promise(resolve => {
+    canvas.toBlob(function (blob) {
+      console.log(blob)
+      const file = new File([blob], "File name.png", { type: "image/png" });
+      console.log(file)
+      resolve(file);
+    });
+  })
+};
 

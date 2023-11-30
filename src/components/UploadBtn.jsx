@@ -2,28 +2,17 @@
 import React from 'react';
 import { Form, Upload, Button } from "antd"
 import { UploadOutlined } from '@ant-design/icons';
-import request from '../API/api';
-import { formData } from '../handlers/handlers';
+import { uploadData } from '../handlers/handlers';
 
 function UploadBtn(props) {
-  const uploadPath = `/uploads${props.path || '/images'}`;
-
   const normFile = (e) => {
     console.log("Upload event:", e);
     return e.file
   };
-  
+
   const uploader = async function (e) {
-    await request(uploadPath, {
-      method: "POST",
-      body: formData({
-        file: e.file,
-        uid: e.file.uid,
-      }),
-      // cors: "no-cors",
-    }).then(res => {
-      e.file.filename = res.file.filename
-    })
+    const filename = await uploadData({ file: e.file, uid: e.file.uid }, props.path);
+    e.file.filename = filename;
     // console.log(file.fileId); 
     e.onSuccess();
   }

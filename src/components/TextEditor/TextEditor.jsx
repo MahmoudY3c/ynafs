@@ -46,7 +46,7 @@ function TextEditor({ id, onChange, toolbar }) {
       setQuill(_quill);
 
       // handle save / restore quill user inputs history from localStorage
-      const handleBeforeUnload = handleEditorState(_quill);
+      const handleBeforeUnload = handleEditorState(_quill, id || 'editor');
       const quillContents = _quill.getContents()?.ops;
 
       // update the field value

@@ -125,12 +125,12 @@ export function getLatexMathml(equation = '\\displaystyle\\sum_{i=1}^5') {
 
 
 
-export function handleEditorState(quill) {
+export function handleEditorState(quill, itemName) {
   // getting and display saved user entered data drom localStorage
-  const data = JSON.parse(localStorage.getItem('delta') || '[]');
+  const data = JSON.parse(localStorage.getItem(itemName || 'delta') || '[]');
   quill.setContents(data);
   const handleBeforeUnload = function (e) {
-    localStorage.setItem('delta', JSON.stringify(quill.getContents()))
+    localStorage.setItem(itemName || 'delta', JSON.stringify(quill.getContents()))
   };
 
   return handleBeforeUnload;
