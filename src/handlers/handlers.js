@@ -117,6 +117,9 @@ export function handleTrueOrFalse(values) {
 }
 
 export function handleMultiple(choice, values, answerIndex) {
+  console.log('====================================');
+  console.log(choice);
+  console.log('====================================');
   const choices = [];
   if (choice === values.answer) {
     values.answer = answerIndex

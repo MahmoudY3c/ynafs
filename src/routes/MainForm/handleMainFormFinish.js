@@ -5,8 +5,6 @@ import { updateSelectedTreeData } from "../../Redux/features/items/slice";
 export const renderHandleMainFormFinish = ({ handleTrueOrFalse, handleMultiple, setOpenModal, dispatch, setDrivePowerPoint, lessonsData, setAlert, treesData, selectedSubject }) => {
 
   const handleMainFormFinish = (values) => {
-
-    return console.log(values, '............... values ................')
     //processing the data
     let choices = [];
     if (values.QuestionTypeValue === "true-or-false") {
@@ -23,7 +21,18 @@ export const renderHandleMainFormFinish = ({ handleTrueOrFalse, handleMultiple, 
       })
     }
 
-    values.choices = choices.length ? choices : null;
+    if (values?.question?.constructor === Array) {
+      values.mathQuestion = values.question;
+      delete values.question;
+      if (values.essayAnswer) {
+        values.mathEssayAnswer = values.essayAnswer;
+      } else {
+        values.mathChoices = choices.length ? choices : null;
+      }
+    } else {
+      values.choices = choices.length ? choices : null;
+    }
+
     if (values.image) values.image = values.image.filename
     // if (values.powerpoint) values.powerpoint = values.powerpoint.filename
     let arr = []
@@ -32,6 +41,10 @@ export const renderHandleMainFormFinish = ({ handleTrueOrFalse, handleMultiple, 
       arr = values.subject.split('@@');
       values.subject = arr[arr.length - 1]
     }
+
+
+    return console.log(values, '............... values ................')
+
     setOpenModal(true);
 
     request('/questions', {

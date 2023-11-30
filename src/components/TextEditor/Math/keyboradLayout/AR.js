@@ -16,10 +16,11 @@ const keyboardItems = [
   [
     ...arNumbers.slice(0, 3),
     '[/]', { label: '[separator]', width: 0.5 },
-    '[', ']', '\\gt', '\\ge',
+    '[', ']', '^\\placeholder{}', '\\placeholder{}',
     ...arLetters.slice(0, 6).reverse(),
     { label: '[backspace]', width: 2 },
   ],
+
   [
     ...arNumbers.slice(3, 6),
     '[-]', { label: '[separator]', width: 0.5 },

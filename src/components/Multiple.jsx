@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { Form, Radio, Input, Button } from 'antd';
 import Archieve from '../classes/Archieve';
+import TextEditor, { handleGetQuillValue } from './TextEditor/TextEditor';
+import { uniqueId } from '../handlers/textEditor';
 //initializing the archive to remeber user inputs
 const archieve = new Archieve();
 
 function Multiple(props) {
   let [options, setOptions] = useState([]);
   let [checked, setChecked] = useState("");
+  const isMath = props.subject ? props.subject.match(/رياضيات/i) : null;
+
+  console.log(isMath, props.subject);
 
   const radioValues = archieve.UseDefaultKey("radioValues");
   const inputValues = archieve.UseDefaultKey("inputValues", "createObject");
@@ -25,14 +30,21 @@ function Multiple(props) {
       radioValues("option" + i, false);
       numberOfInputs(0, i + 1)
       options.push(
-        <div className="options-container" key={i}>
-          <Radio value={"multiple" + i} name={"option" + i} />
-          <Form.Item name={item} noStyle={true}
-            hasFeedback
-            rules={[{ required: true, message: '' }]}
-          >
-            <Input placeholder="اكتب الاجابة ..." onChange={onTextChange} value={inputValues(item)} />
-          </Form.Item>
+        <div className="options-container" key={'options-' + i}>
+          <div key={'div-' + i}>
+            <Form.Item name={item} noStyle={true}
+              hasFeedback
+              rules={[{ required: true, message: 'please fill input' }]}
+              getValueFromEvent={isMath ? (ev) => handleGetQuillValue(ev) : (ev) => ev.target.value}
+              key={'Item-' + i}
+            >
+              {isMath
+                ? <TextEditor key={'key-' + i} id={props.id + '-' + i} toolbar={{ align: 'right' }} />
+                : <Input key={'Item-' + i} placeholder="اكتب الاجابة ..." onChange={onTextChange} value={inputValues(item)} />
+              }
+            </Form.Item>
+          </div>
+          <Radio value={"multiple" + i} name={"option" + i} key={'multiple-' + i} />
         </div>
       )
     }
@@ -51,15 +63,19 @@ function Multiple(props) {
     numberOfInputs(0, len)
     opts.push(
       <div className="options-container" key={len}>
-        <Radio value={"multiple" + len} name={"option" + len} />
-        <Form.Item 
-            name={item} 
-            noStyle={true}
-            hasFeedback
-            rules={[{ required: true, message: '' }]}
-          >
-        <Input placeholder="اكتب الاجابة ..." name={item} onChange={onTextChange} value={inputValues(item)} />
+        <Form.Item
+          name={item}
+          noStyle={true}
+          hasFeedback
+          rules={[{ required: true, message: 'please fill input' }]}
+          getValueFromEvent={isMath ? (ev) => handleGetQuillValue(ev) : (ev) => ev.target.value}
+        >
+          {isMath
+            ? <TextEditor id={props.id + '-' + uniqueId()} toolbar={{ align: 'right' }} />
+            : <Input placeholder="اكتب الاجابة ..." name={item} onChange={onTextChange} value={inputValues(item)} />
+          }
         </Form.Item>
+        <Radio value={"multiple" + len} name={"option" + len} />
       </div>
     )
     setOptions(opts)
@@ -71,9 +87,11 @@ function Multiple(props) {
         اختيار من متعدد
       </h1>
       <div className="container-flex-multiple">
-        <Button type='primary' onClick={AddOne}>
-          +
-        </Button>
+        <div style={{ direction: 'rtl' }}>
+          <Button type='primary' onClick={AddOne}>
+            +
+          </Button>
+        </div>
         <Form.Item
           name="answer"
           hasFeedback
@@ -81,6 +99,7 @@ function Multiple(props) {
         >
           <Radio.Group onChange={onChange} value={checked} style={{ width: "100%" }}>
             {options.map(opt => {
+              // console.log(opt)
               return opt
             })}
           </Radio.Group>

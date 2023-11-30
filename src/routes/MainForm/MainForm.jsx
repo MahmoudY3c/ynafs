@@ -190,7 +190,10 @@ function MainForm() {
             />
           </>
         }
-        {componentsState.multiple && <Multiple />}
+        {componentsState.multiple && <Multiple
+          subject={componentsState.subjectValue.split('@@')[0]}
+          id="multiple"
+        />}
         {componentsState.trueOrFalse && <TrueOrFalse />}
 
         {(componentsState.treeValue && (!LessonPrepare || !LessonVocabulary)) &&

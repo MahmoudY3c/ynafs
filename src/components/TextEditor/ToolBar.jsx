@@ -10,7 +10,17 @@ const handleBtnClicked = (ev, state, setState) => {
   }
 };
 
-function ToolBar({ displayDrawer, setDisplayDrawer, displayMath, setDisplayMath, id }) {
+function ToolBar({ displayDrawer, setDisplayDrawer, displayMath, setDisplayMath, id, options }) {
+  const alignRightRef = React.useRef();
+  const directionRef = React.useRef();
+  React.useEffect(() => {
+    console.log(directionRef);
+    if (alignRightRef?.current) {
+      alignRightRef.current.click();
+      directionRef.current.click();
+    }
+  }, []);
+
   return (
     <div id={id}>
       <select className="ql-size">
@@ -25,8 +35,14 @@ function ToolBar({ displayDrawer, setDisplayDrawer, displayMath, setDisplayMath,
       <button type="button" className="ql-strike"></button>
       <button type="button" className="ql-align" value=""></button>
       <button type="button" className="ql-align" value="center"></button>
-      <button type="button" className="ql-align" value="right"></button>
-      <button type="button" className="ql-direction" value="rtl"></button>
+      <button type="button" className="ql-align" value="right" ref={alignRightRef}></button>
+
+      {/* <select className="ql-align">
+        <option value=""></option>
+        <option value="center"></option>
+        <option value="right" defaultValue={true}></option>
+      </select> */}
+      <button type="button" className="ql-direction" value="rtl" ref={directionRef}></button>
       <button type="button" className="ql-script" value="sub"></button>
       <button type="button" className="ql-script" value="super"></button>
       <button type="button" className="ql-header" value="1"></button>

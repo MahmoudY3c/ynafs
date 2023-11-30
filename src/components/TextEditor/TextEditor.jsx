@@ -3,12 +3,12 @@ import 'quill/dist/quill.snow.css';
 import ToolBar from './ToolBar.jsx';
 import Quill from "quill";
 import MathField from './Math/MathField.jsx';
-import { handleEditorState } from '../../handlers/textEditor.js';
+import { handleEditorState, uniqueId } from '../../handlers/textEditor.js';
 import TldrawWrapper from '../TldrawWrapper/TldrawWrapper.jsx';
 
 const options = {
   // debug: 'info',
-  placeholder: 'Write something ..............',
+  // placeholder: 'اكتب هنا ..............',
   theme: 'snow',
   modules: {
     toolbar: {
@@ -23,10 +23,11 @@ const options = {
   }
 };
 
-function TextEditor({ setQuill, quill, id, onChange }) {
+function TextEditor({ id, onChange, toolbar }) {
   const quillRef = React.useRef();
   const [displayEditor, setDisplayEditor] = React.useState('none');
   const [displayMathField, setDisplayMathField] = React.useState(false);
+  const [quill, setQuill] = React.useState(null);
 
   React.useEffect(() => {
     if (quillRef?.current && !quill?.isSet) {
@@ -44,7 +45,6 @@ function TextEditor({ setQuill, quill, id, onChange }) {
         }
       }
 
-      console.log(_quill, id);
       setQuill(_quill);
 
       // handle save / restore quill user inputs history from localStorage
@@ -64,7 +64,6 @@ function TextEditor({ setQuill, quill, id, onChange }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log((options.modules.toolbar.container + '-' + (id || 'editor')).replace("#", ''));
   return (
     <div>
       <TldrawWrapper display={displayEditor} setDisplay={setDisplayEditor} />
@@ -75,17 +74,31 @@ function TextEditor({ setQuill, quill, id, onChange }) {
         displayMath={displayMathField}
         setDisplayMath={setDisplayMathField}
         id={'toolbar-' + (id || 'editor')}
+        options={toolbar}
       />
-      <div id={id || "editor"} ref={quillRef} style={{ position: 'static' }} onKeyUp={onChange} />
+      {/** passing quill.getContents value as the event when keyup to the Form.Item to make it his value */}
+      <div
+        id={id || "editor"}
+        ref={quillRef}
+        style={{ position: 'relative', direction: 'inherit !important' }}
+        onKeyUp={(ev) => onChange(quill.getContents()?.ops)}
+      />
     </div>
   )
 }
 
 export const handleGetQuillValue = (ev, quill) => {
-  let value = quill ? quill?.getContents()?.ops : null;
+  let value = ev.constructor === Array
+    ? ev
+    : quill
+      ? quill?.getContents()?.ops
+      : null;
+
   if (value?.length === 1 && value?.[0]?.insert === '\n') {
     value = null;
   }
+
+  // console.log(value, ev);
   return value;
 }
 

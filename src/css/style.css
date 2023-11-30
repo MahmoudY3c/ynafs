@@ -100,16 +100,31 @@ nav {
   padding: 5px 0;
   width: 90%;
   margin: 0 auto;
-  direction: rtl;
+  /* direction: rtl;   */
 }
+
+/* .ql-blank {
+  direction: rtl !important;
+  text-align: right !important;
+} */
+
+/* .container-flex-multiple .ql-container {
+  direction: ltr;
+} */
 
 .options-container {
   padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  direction: rtl;
+  /* direction: rtl; */
 }
+
+
+.ant-radio-group {
+  font-size: inherit !important;
+}
+
 
 .options-container input,
 .options-container label {

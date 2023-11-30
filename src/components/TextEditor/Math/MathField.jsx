@@ -46,7 +46,7 @@ function MathField({ display, quill }) {
         onFocus={handleShowKeyboard}
         onBlur={handleHideKeyboard}
       />
-      <button type='button' className="btn" id="save-formula" onClick={handleSaveFormula}>Add</button>
+      <button type='button' className="btn" id="save-formula" onClick={handleSaveFormula}>اضافة</button>
     </div>
   );
 }
