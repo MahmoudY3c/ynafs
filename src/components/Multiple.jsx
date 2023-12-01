@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Form, Radio, Input, Button } from 'antd';
+import { Form, Radio, Button } from 'antd';
 import Archieve from '../classes/Archieve';
 import TextEditor, { handleGetQuillValue } from './TextEditor/TextEditor';
 import { uniqueId } from '../handlers/textEditor';
+import TextArea from "antd/es/input/TextArea";
 //initializing the archive to remeber user inputs
 const archieve = new Archieve();
 
@@ -40,7 +41,7 @@ function Multiple(props) {
             >
               {isMath
                 ? <TextEditor key={'key-' + i} id={props.id + '-' + i} toolbar={{ align: 'right' }} />
-                : <Input key={'Item-' + i} placeholder="اكتب الاجابة ..." onChange={onTextChange} value={inputValues(item)} />
+                : <TextArea key={'Item-' + i} placeholder="اكتب الاجابة ..." onChange={onTextChange} value={inputValues(item)} />
               }
             </Form.Item>
           </div>
@@ -72,7 +73,7 @@ function Multiple(props) {
         >
           {isMath
             ? <TextEditor id={props.id + '-' + uniqueId()} toolbar={{ align: 'right' }} />
-            : <Input placeholder="اكتب الاجابة ..." name={item} onChange={onTextChange} value={inputValues(item)} />
+            : <TextArea placeholder="اكتب الاجابة ..." name={item} onChange={onTextChange} value={inputValues(item)} />
           }
         </Form.Item>
         <Radio value={"multiple" + len} name={"option" + len} />

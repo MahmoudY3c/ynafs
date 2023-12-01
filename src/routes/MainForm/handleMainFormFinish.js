@@ -2,7 +2,7 @@ import { uniqueId } from "@tldraw/tldraw";
 import request from "../../API/api";
 // import store from "../../Redux/app/store";
 import { updateSelectedTreeData } from "../../Redux/features/items/slice";
-import { canvasToFile, downloadBase64, downloadByteArray, htmlSnapShot, uploadData } from "../../handlers/handlers";
+import { htmlSnapShot, uploadData } from "../../handlers/handlers";
 
 export const renderHandleMainFormFinish = ({ handleTrueOrFalse, handleMultiple, setOpenModal, dispatch, setDrivePowerPoint, lessonsData, setAlert, treesData, selectedSubject }) => {
 

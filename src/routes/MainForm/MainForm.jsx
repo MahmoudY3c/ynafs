@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import "../../css/style.css";
+// import "../../css/style.css";
 import React from "react";
 import { Form, Alert, Input } from "antd";
 import LoadingModal from "../../components/LoadingModal";
@@ -23,6 +23,7 @@ import { renderHandleMainFormFinish } from "./handleMainFormFinish";
 import { handleSubmit } from "../../global/events/handleSubmit";
 import { renderHandleDisplayComponent } from "../../global/events/handleDisplayComponent";
 import { renderHandleQuestionsChange } from "./handleQuestionChange";
+import TldrawWrapper from "../../components/TldrawWrapper/TldrawWrapper";
 
 
 function MainForm() {
@@ -76,6 +77,7 @@ function MainForm() {
         description=""
       />
       <LoadingModal state={openModal} />
+      <TldrawWrapper />
 
       <Form
         onFinish={handleMainFormFinish}

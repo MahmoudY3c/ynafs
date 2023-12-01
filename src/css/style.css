@@ -30,6 +30,10 @@ nav {
   color: #fff;
 }
 
+.link {
+  text-decoration: none;
+}
+
 /* cn .css-dev-only-do-not-override-10ed4xt .ant-select-dropdown-placement-bottomRight{
   .ant-select-dropdown {
   left: 0 !important; 
@@ -120,6 +124,9 @@ nav {
   /* direction: rtl; */
 }
 
+.options-container > div {
+  width: 80%;
+}
 
 .ant-radio-group {
   font-size: inherit !important;
@@ -307,4 +314,10 @@ form {
     min-width: 35%;
     max-width: 100%;
   }
+}
+
+#math-field /* .ML__mathlive, .ML__selectionl, .ML__strut, .ML__base */ {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: plaintext !important;
 }

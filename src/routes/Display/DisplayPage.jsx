@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-import "../../css/style.css";
 import React from "react";
 import { Form, Card, Space, Button } from "antd";
 import Nav from '../../components/Nav';

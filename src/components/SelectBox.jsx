@@ -1,5 +1,4 @@
 import React from 'react';
-import '../css/antd/antd.min.css'
 import { Form, Select } from "antd";
 
 function SelectBox(props) {

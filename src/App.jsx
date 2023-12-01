@@ -9,6 +9,8 @@ import ErrMessage from './components/ErrMessage.jsx';
 import MainForm from './routes/MainForm/MainForm.jsx';
 import PowerPointPage from './routes/PowerPointPage/PowerPointPage.jsx';
 import DisplayPage from './routes/Display/DisplayPage.jsx';
+import "./css/style.css";
+// import './css/antd/antd.min.css'
 
 const routes = [
   {

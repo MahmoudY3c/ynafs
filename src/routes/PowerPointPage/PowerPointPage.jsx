@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import "../../css/style.css";
+// import "../../css/style.css";
 import React from "react";
 import { Form, Alert, Input } from "antd";
 import LoadingModal from "../../components/LoadingModal";
