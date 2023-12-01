@@ -39,7 +39,11 @@ function MainForm() {
   const handleDisplayComponent = renderHandleDisplayComponent({ componentsState, form, dispatch });
   const handleMainFormFinish = renderHandleMainFormFinish({ handleTrueOrFalse, handleMultiple, setOpenModal, dispatch, setDrivePowerPoint: value => dispatch(setDrivePowerPointValue(value)), setAlert, treesData, selectedSubject: componentsState?.subjectValue?.split('@@')?.[0], lessonsData })
   const handleQuestionChange = renderHandleQuestionsChange({ dispatch, form, setItems, componentsState, questionTypes });
-  const handleUploadChange = () => dispatch(setItems({ ...componentsState, displayQestionFeld: false }));
+  const handleUploadChange = (ev) => {
+    if(ev.fileList.length) {
+      dispatch(setItems({ ...componentsState, displayQestionFeld: false }))
+    }
+  };
   const { LessonPrepare, LessonVocabulary } = treesData?.find(e => e._id === componentsState.treeValue) || {};
 
 
@@ -64,7 +68,7 @@ function MainForm() {
     },
   });
 
-  console.log()
+  // console.log(componentsState)
 
   return (
     <>
@@ -174,15 +178,6 @@ function MainForm() {
               subject={componentsState.subjectValue.split('@@')[0]}
               id="question-editor"
             />
-            {componentsState.essay &&
-              <QuestionFeld
-                name="essayAnswer"
-                title="اجابة السؤال"
-                form={form} display={componentsState.displayQestionFeld}
-                subject={componentsState.subjectValue.split('@@')[0]}
-                id="answer-editor"
-              />
-            }
             <UploadBtn
               name="image"
               path="/images"
@@ -190,6 +185,16 @@ function MainForm() {
               onChange={handleUploadChange}
               form={form}
             />
+            {componentsState.essay &&
+              <QuestionFeld
+                name="essayAnswer"
+                title="اجابة السؤال"
+                form={form}
+                display={true}
+                subject={componentsState.subjectValue.split('@@')[0]}
+                id="answer-editor"
+              />
+            }
           </>
         }
         {componentsState.multiple && <Multiple

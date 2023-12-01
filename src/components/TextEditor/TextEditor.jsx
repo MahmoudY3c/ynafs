@@ -122,10 +122,6 @@ function TextEditor({ id, onChange }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log('====================================');
-  console.log(isTldrawOpen, '............ isTldrawOpen ...........');
-  console.log('====================================');
-
   return (
     <div>
       {/* <TldrawWrapper display={displayEditor} setDisplay={setDisplayEditor} /> */}

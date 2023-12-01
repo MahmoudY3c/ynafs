@@ -42,6 +42,7 @@ const Slice = createSlice({
       state.items[action.payload.item] = action.payload.value;
     },
     setItems(state, action) {
+      console.log(action.payload, '............. action.payload .........');
       state.items = action.payload;
     },
     setLoading(state, action) {
