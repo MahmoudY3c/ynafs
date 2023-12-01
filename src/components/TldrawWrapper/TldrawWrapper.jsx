@@ -1,9 +1,9 @@
 import React from 'react';
 import { Tldraw, findMenuItem, menuItem, useEditor } from '@tldraw/tldraw';
-import './styles.css';
-import '@tldraw/tldraw/tldraw.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { openTldraw } from '../../Redux/features/tldraw/slice';
+import './styles.css';
+import '@tldraw/tldraw/tldraw.css';
 
 function TldrawWrapper() {
   const editor = useEditor();

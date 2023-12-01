@@ -1,6 +1,5 @@
 import React from 'react';
 import keyboradLayout from './keyboradLayout';
-import "//unpkg.com/mathlive";
 
 function MathField({ display, quill }) {
   const mathFieldRef = React.useRef();

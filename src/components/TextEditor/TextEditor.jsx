@@ -21,7 +21,6 @@ const changeDirectionToRight = (container) => {
   const ltr = document.querySelector(container).querySelector('.ql-align[value=""]');
   const rtl = document.querySelector(container).querySelector('.ql-align[value="right"]');
   const rd = document.querySelector(container).querySelector('.ql-direction[value="rtl"]');
-  console.log(rtl, rd);
   if (ltr.classList.contains('ql-active')) {
     rtl && rtl.click();
     rd && rd.click();
@@ -32,7 +31,6 @@ const changeDirectionToLeft = (container) => {
   const rtl = document.querySelector(container).querySelector('.ql-align[value="right"]');
   const ltr = document.querySelector(container).querySelector('.ql-align[value=""]');
   const ld = document.querySelector(container).querySelector('.ql-direction[value="rtl"]');
-  console.log(ltr, ld);
   if (rtl.classList.contains('ql-active')) {
     ltr && ltr.click();
     ld && ld.click();
@@ -94,7 +92,7 @@ function TextEditor({ id, onChange }) {
       // setting right direction automatically while initialize
       // _quill.format('align', 'right');
       // _quill.format('direction', 'rtl');
-      
+
       // define the math renderer by using custom render function instead of adding katex library who is required for quilljs to handle formula {replace katex.render with MathLive render methods}
       if (!window.katex) {
         window.katex = {

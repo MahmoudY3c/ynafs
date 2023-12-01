@@ -1,9 +1,8 @@
 import React from 'react';
 
-const changeDirectionToRight = (container, directClick) => {
+const changeDirectionToRight = (container) => {
   const rtl = container.querySelector('.ql-align[value="right"]');
   const rd = container.querySelector('.ql-direction[value="rtl"]');
-  console.log(rtl, rd);
   rtl.click();
   rd.click();
 }
