@@ -7,7 +7,8 @@ import { htmlSnapShot, uploadData } from "../../handlers/handlers";
 export const renderHandleMainFormFinish = ({ handleTrueOrFalse, handleMultiple, setOpenModal, dispatch, setDrivePowerPoint, lessonsData, setAlert, treesData, selectedSubject }) => {
 
   const handleMainFormFinish = async (values) => {
-
+    // show loading modal before start proccessing
+    setOpenModal(true);
 
     if (values.image) values.image = values.image.filename;
 
@@ -61,8 +62,6 @@ export const renderHandleMainFormFinish = ({ handleTrueOrFalse, handleMultiple, 
 
 
     // return console.log(values, '............... values ................')
-
-    setOpenModal(true);
 
     request('/questions', {
       method: "POST",

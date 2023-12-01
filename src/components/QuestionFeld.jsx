@@ -28,7 +28,7 @@ function QuestionFeld(props) {
               >
                 {isMath
                   ? <TextEditor id={props.id} quill={quill} setQuill={setQuill} />
-                  : <Input.TextArea style={styles.textarea} type="text" className="text-field" placeholder="اكتب السؤال هنا..." />
+                  : <Input.TextArea style={styles.textarea} type="text" className="text-field" placeholder={props.placeholder || "اكتب السؤال هنا..."} />
                 }
               </Form.Item>
             </>

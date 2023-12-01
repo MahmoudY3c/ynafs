@@ -189,6 +189,7 @@ function MainForm() {
               <QuestionFeld
                 name="essayAnswer"
                 title="اجابة السؤال"
+                placeholder={"اكتب الاجابة هنا..."}
                 form={form}
                 display={true}
                 subject={componentsState.subjectValue.split('@@')[0]}
