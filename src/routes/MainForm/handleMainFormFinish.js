@@ -33,6 +33,7 @@ export const renderHandleMainFormFinish = ({ handleTrueOrFalse, handleMultiple, 
       delete values.question;
       if (values.essayAnswer) {
         values.mathEssayAnswer = values.essayAnswer;
+        delete values.essayAnswer;
       } else {
         values.mathChoices = choices.length ? choices : null;
       }
