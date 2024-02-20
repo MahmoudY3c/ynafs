@@ -1,17 +1,40 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useFetch from '../hooks/useFetch';
-import { setCategories, setError, setItemsActions, setLessons, setLoading } from '../Redux/features/items/slice';
+import { setCategories, setError, setItemsActions, setLessons, setLoading, setSemesters } from '../Redux/features/items/slice';
 import { filterResponseData } from '../handlers/handlers';
 import Choose from './Choose';
-import { terms } from '../JSON';
 import { renderHandleDisplayComponent } from '../global/events/handleDisplayComponent';
 
 function Stepy(props) {
   const dispatch = useDispatch();
   // eslint-disable-next-line no-unused-vars
-  const { items: componentsState, loading, error, categories, lessonsData } = useSelector(state => state.items);
+  const { items: componentsState, loading, semesters, error, categories, lessonsData } = useSelector(state => state.items);
   const handleDisplayComponent = renderHandleDisplayComponent({ componentsState, form: props.form, dispatch });
+
+  useFetch({
+    url: `/semesters`,
+    dependancy: [componentsState.termValue],
+    options: {
+      beforeStart: () => dispatch(setLoading({ status: true, item: 'semesters' })),
+      afterend: () => dispatch(setLoading({ status: false, item: 'semesters' })),
+    },
+    callback({ data, error }) {
+
+      if (error) {
+        return dispatch(setError({
+          error,
+          area: 'semesters'
+        }))
+      }
+      if (data?.length) {
+        dispatch(setSemesters(data))
+      } else {
+        dispatch(setItemsActions.setItems({ ...componentsState, termValue: null }));
+      }
+    },
+  });
+
 
   useFetch({
     url: `/categories?termCode=${componentsState.termValue}`,
@@ -58,10 +81,11 @@ function Stepy(props) {
 
   return (
     <>
-      <Choose
-        data={terms}
+      {semesters && <Choose
+        data={semesters.length}
         value={componentsState.termValue || ''}
         items={{ item: "title", value: "value" }}
+        loading={loading.item === 'semesters' ? loading.status : null}
         title={'اختر الفصل الدراسي'}
         // mode='multiple'
         name="termCode"
@@ -79,7 +103,7 @@ function Stepy(props) {
           'QuestionTypeValue',
           'drivePowerPointValue',
         ])}
-      />
+      />}
 
 
       {componentsState.termValue && <Choose

@@ -20,6 +20,9 @@ const CategoriesSchema = new Schema({
 				termCode: {
 					type: String,
 				},
+				termId: {
+					type: Number,
+				},
 			},
 			{ timestamps: true }
 		)

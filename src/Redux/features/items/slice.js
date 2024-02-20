@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  semesters: null,
   categories: null,
   lessonsData: null,
   selectedSubject: null,
@@ -58,6 +59,9 @@ const Slice = createSlice({
     setCategories(state, action) {
       state.categories = action.payload;
     },
+    setSemesters(state, action) {
+      state.semesters = action.payload;
+    },
     setLessons(state, action) {
       state.lessonsData = action.payload;
     },
@@ -99,7 +103,7 @@ const Slice = createSlice({
 });
 
 export const { reducer: itemsReducer } = Slice;
-export const { setItems, setItem, setLoading, setError, setCategories, setLessons, setTrees, setSelectedSubject, setSelectedLevel, setDrivePowerPointValue, updateSelectedTreeData } = Slice.actions;
+export const { setItems, setItem, setLoading, setError, setCategories, setLessons, setTrees, setSelectedSubject, setSelectedLevel, setDrivePowerPointValue, updateSelectedTreeData, setSemesters } = Slice.actions;
 export const setItemsActions = Slice.actions;
 
 // console.log('====================================');

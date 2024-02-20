@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const data = require('./term2.json');
+const data = require('./term3.json');
 const { log } = require('console');
 const Categories = require('../db/models/Categories');
 const Trees = require('../db/models/Trees');
@@ -81,8 +81,10 @@ const Questions = require('../db/models/Questions');
 //     log(err.message)
 //   }
 
-  // const d = await filterByExistsData(data);
+  // const d = await filterByExistsData(data.data);
   // log(d)
+
+  // console.log(filterByExistsAndAddTermsToCategories(data.data));
 
   
     // Categories.findByIdAndUpdate(categeory._id, {
@@ -171,16 +173,16 @@ const Questions = require('../db/models/Questions');
   //   "termCode": "SM2",
   //   "level": {
   //     "$in": [
-  //       "الصف الأول الابتدائي",
-  //       "الصف الثاني الابتدائي",
-  //       "الصف  الثالث الابتدائي",
-  //       "الصف الرابع الابتدائي",
-  //       "الصف  الخامس الابتدائي",
-  //       "الصف السادس الابتدائي"
+  //       "الصف  الثالث المتوسط",
+  //       // "الصف الثاني الابتدائي",
+  //       // "الصف  الثالث الابتدائي",
+  //       // "الصف الرابع الابتدائي",
+  //       // "الصف  الخامس الابتدائي",
+  //       // "الصف السادس الابتدائي"
   //     ]
   //   },
   //   "subject": {
-  //     "$regex": /we can/i
+  //     "$regex": /رياضيات/i
   //   }
   // }).populate("Trees.treeId");
 
@@ -189,7 +191,7 @@ const Questions = require('../db/models/Questions');
   //   for(const tr of trees) {
   //     const tree = tr.treeId;
   //     if(tree.Questions?.length) {
-  //       // console.log(await deleteAllQuestions(tree));
+  //       console.log(await deleteAllQuestions(tree));
   //       console.log('====================================');
   //       console.log(tree);
   //       console.log('====================================');
@@ -207,6 +209,27 @@ const Questions = require('../db/models/Questions');
   // 65602fd2b593d8b8d461c17e, 656031f3b593d8b8d461c18d
 })();
 
+
+async function filterByExistsAndAddTermsToCategories(data) {
+  // await filterByExistsData(data.data);
+  const {categories, terms} = sortDataByCategories(data);
+  console.log(terms);
+  const categoriesNames = Object.keys(categories);
+  const termsNames = Object.keys(terms);
+  for(const categoryName of categoriesNames) {
+    const category = categories[categoryName];
+    const categoryData = await Categories.findOne({categoryId: category.categoryId});
+
+    for(const termName of termsNames) {
+      const term = terms[termName];
+      await pushAvaiableTermToCategory(categoryData._id, term)
+    }
+
+    console.log(categoryData)
+  }
+
+  return categories
+}
 
 async function deleteQuestions({collection, query, populate, populatedItem, action}) {
   const dataToDelete = await collection.find(query).populate(populate || "");
@@ -238,11 +261,17 @@ async function deleteAllQuestions(tree) {
  * @returns object (updated category)
  */
 async function pushAvaiableTermToCategory(_id, data) {
-  const categeory = await Categories.findByIdAndUpdate(_id, {
+  const query = {_id};
+  if(data.id) query.availableTermData = {$nin: [data]};
+  const categeory = await Categories.findOneAndUpdate({ _id }, {
       $push: {
         availableTermData: data
       }
   });
+
+  if(!categeory) {
+    console.log('sorry data already exists => {pushAvaiableTermToCategory}');
+  }
   
   return categeory;
 }
@@ -284,6 +313,53 @@ async function updateMissingLevel2(item, removeLevel2) {
       console.log('====================================');
     }
   }
+}
+
+function sortDataByCategories(data) {
+  const categories = {}
+  const terms = {};
+
+    for(let lessonData of data) {
+      const payload = {
+        // there was a spelling mass in here that's way compare between (categ{e}ory, category)
+        category: lessonData.categeory || lessonData.category,
+        categoryId: lessonData.categeoryId || lessonData.categoryId,
+        categoryCode: lessonData.categeoryCode ||  lessonData.categoryCode,
+      };
+
+      const termPayload = {
+        term: lessonData.term,
+        termCode: lessonData.termCode,
+        termId: lessonData.termId, 
+      }
+
+      // if the spelling mass exists remove it to leave only lesson Data
+      delete lessonData.categeory;
+      delete lessonData.categeoryId;
+      delete lessonData.categeoryCode;
+
+      const categoryName = payload.category;
+      const termName = termPayload.term;
+      // check if the cateory already exists or not to get only unique categories without any repetition
+      if(!categories[categoryName]) {
+        // define the first lesson as children
+        categories[categoryName] = {...payload, children: [lessonData]};
+      } else {
+        // push the children related to that category
+        categories[categoryName] = {...categories[categoryName], children: categories[categoryName].children.concat([lessonData])};
+      }
+
+      // check if the term already exists or not to get only unique categories without any repetition
+      if(!terms[termName]) {
+        // define the first lesson as children
+        terms[termName] = {...termPayload/* , children: [lessonData] */};
+      } else {
+        // push the children related to that category
+        terms[termName] = {...terms[termName]/* , children: terms[termName].children.concat([lessonData]) */};
+      }
+    }
+
+    return {categories, terms};
 }
 
 /**
@@ -388,6 +464,8 @@ async function filterByExistsData(data) {
       }
 
     }
+
+    return categories;
 }
 
 /**

@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { Form, Radio, Button } from 'antd';
+import { Form, Radio, Button, Input } from 'antd';
 import Archieve from '../classes/Archieve';
 import TextEditor, { handleGetQuillValue } from './TextEditor/TextEditor';
 import { uniqueId } from '../handlers/textEditor';
-import TextArea from "antd/es/input/TextArea";
+import Area from "antd/es/input/TextArea";
 //initializing the archive to remeber user inputs
 const archieve = new Archieve();
+
 
 function Multiple(props) {
   let [options, setOptions] = useState([]);
   let [checked, setChecked] = useState("");
+  const TextArea = props.fullWidth ? Input : Area;
   const isMath = props.subject ? props.subject.match(/رياضيات/i) : null;
 
-  console.log(isMath, props.subject);
+  console.log(isMath);
 
   const radioValues = archieve.UseDefaultKey("radioValues");
   const inputValues = archieve.UseDefaultKey("inputValues", "createObject");
@@ -87,7 +89,7 @@ function Multiple(props) {
       <h1 className="sections-title">
         اختيار من متعدد
       </h1>
-      <div className="container-flex-multiple">
+      <div style={{ width: props.fullWidth ? '100%' : '60%' }}>
         <div style={{ direction: 'rtl' }}>
           <Button type='primary' onClick={AddOne}>
             +
