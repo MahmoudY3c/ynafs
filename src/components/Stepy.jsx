@@ -5,6 +5,7 @@ import { setCategories, setError, setItemsActions, setLessons, setLoading, setSe
 import { filterResponseData } from '../handlers/handlers';
 import Choose from './Choose';
 import { renderHandleDisplayComponent } from '../global/events/handleDisplayComponent';
+import { terms } from '../JSON';
 
 function Stepy(props) {
   const dispatch = useDispatch();
@@ -30,7 +31,8 @@ function Stepy(props) {
       if (data?.length) {
         dispatch(setSemesters(data))
       } else {
-        dispatch(setItemsActions.setItems({ ...componentsState, termValue: null }));
+        // dispatch(setItemsActions.setItems({ ...componentsState, termValue: null }));
+        dispatch(setSemesters(terms))
       }
     },
   });
@@ -82,7 +84,7 @@ function Stepy(props) {
   return (
     <>
       {semesters && <Choose
-        data={semesters.length}
+        data={semesters}
         value={componentsState.termValue || ''}
         items={{ item: "title", value: "value" }}
         loading={loading.item === 'semesters' ? loading.status : null}

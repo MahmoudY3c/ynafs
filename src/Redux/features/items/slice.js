@@ -19,7 +19,7 @@ const initialState = {
   },
   items: {
     initial: true,
-    termValue: 'SM2',
+    termValue: 'SM3',
     categoryValue: null,
     levelValue: null,
     subjectValue: null,
