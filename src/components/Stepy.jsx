@@ -29,7 +29,7 @@ function Stepy(props) {
         }))
       }
       if (data?.length) {
-        dispatch(setSemesters(data))
+        dispatch(setSemesters(data.sort((a, b) => a.termCode.localeCompare(b.termCode))))
       } else {
         // dispatch(setItemsActions.setItems({ ...componentsState, termValue: null }));
         dispatch(setSemesters(terms))
@@ -86,7 +86,7 @@ function Stepy(props) {
       {semesters && <Choose
         data={semesters}
         value={componentsState.termValue || ''}
-        items={{ item: "title", value: "value" }}
+        items={{ item: "term", value: "termCode" }}
         loading={loading.item === 'semesters' ? loading.status : null}
         title={'اختر الفصل الدراسي'}
         // mode='multiple'

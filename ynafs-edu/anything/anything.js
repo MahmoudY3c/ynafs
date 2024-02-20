@@ -5,6 +5,8 @@ const Categories = require('../db/models/Categories');
 const Trees = require('../db/models/Trees');
 const Lessons = require('../db/models/Lessons');
 const Questions = require('../db/models/Questions');
+const Semesters = require('../db/models/Semesters');
+const { default: mongoose } = require('mongoose');
 
 
 (async () => {
@@ -81,6 +83,7 @@ const Questions = require('../db/models/Questions');
 //     log(err.message)
 //   }
 
+  // await filterByExistsAndAddTermsToCategories(data.data);
   // const d = await filterByExistsData(data.data);
   // log(d)
 
@@ -209,27 +212,65 @@ const Questions = require('../db/models/Questions');
   // 65602fd2b593d8b8d461c17e, 656031f3b593d8b8d461c18d
 })();
 
-
+/**
+ * ==============================================================================================
+ * use the following function when adding a new data as it's the latest functions to handle data 
+ * checkout from line 218 - 375 => the main function is the next one the start point
+ * ===============================================================================================
+ */
 async function filterByExistsAndAddTermsToCategories(data) {
-  // await filterByExistsData(data.data);
-  const {categories, terms} = sortDataByCategories(data);
-  console.log(terms);
-  const categoriesNames = Object.keys(categories);
-  const termsNames = Object.keys(terms);
-  for(const categoryName of categoriesNames) {
-    const category = categories[categoryName];
-    const categoryData = await Categories.findOne({categoryId: category.categoryId});
-
-    for(const termName of termsNames) {
-      const term = terms[termName];
-      await pushAvaiableTermToCategory(categoryData._id, term)
-    }
-
-    console.log(categoryData)
-  }
-
-  return categories
+  await moveSemestersFromCategoryToSemestersCollection();
+  const {categories, semesters} = sortDataByCategoriesAndTerm(data);
+  await filterByExistsData(data);
+  return {categories, semesters}
 }
+
+// for one time use function to update some data in DB
+async function moveSemestersFromCategoryToSemestersCollection(data) {
+  // wait untill db connection is done
+  mongoose.connection.once('open', async function() {
+    const semestersMap = {};
+    data = await mongoose.connection.collections.categories.find({}, { availableTermData: 1 }).toArray();
+    // filtering data
+    data.forEach(category => category.availableTermData.forEach(term => {
+      if(!term.termCode) return;
+      delete term._id;
+      delete term.termId;
+      if(!semestersMap[term.termCode]) {
+        semestersMap[term.termCode] = {...term, categories: [category._id.toString()]};
+      } else {
+        semestersMap[term.termCode] = {...term, categories: semestersMap[term.termCode].categories.concat([category._id.toString()])};
+      }
+    }));
+  
+    const semesters = Object.values(semestersMap);
+
+    if(semesters.length) {
+      // create semesters
+      const semestersSavedData = await Semesters.create(semesters);
+      console.log('.............. move semesters done ...............');
+  
+      // fist make any {availableTermData} empty
+      await Categories.updateMany({}, {availableTermData: []});
+      
+      // assign termId to category data
+      for(const term of semestersSavedData) {
+        for(const categoryId of term.categories) {
+          await pushAvaiableTermToCategory(categoryId.toString(), term._id.toString());
+        }
+      }
+  
+      console.log('.............. update categories semesters done ...............');
+    } else {
+      console.log('semesters not found in categories collection you may find them exists now in semesters category .................')
+    }
+  });
+}
+
+
+
+
+// ================================================ end of latest =====================================================
 
 async function deleteQuestions({collection, query, populate, populatedItem, action}) {
   const dataToDelete = await collection.find(query).populate(populate || "");
@@ -315,9 +356,9 @@ async function updateMissingLevel2(item, removeLevel2) {
   }
 }
 
-function sortDataByCategories(data) {
+function sortDataByCategoriesAndTerm(data) {
   const categories = {}
-  const terms = {};
+  const semesters = {};
 
     for(let lessonData of data) {
       const payload = {
@@ -330,7 +371,7 @@ function sortDataByCategories(data) {
       const termPayload = {
         term: lessonData.term,
         termCode: lessonData.termCode,
-        termId: lessonData.termId, 
+        // termId: lessonData.termId, 
       }
 
       // if the spelling mass exists remove it to leave only lesson Data
@@ -350,16 +391,16 @@ function sortDataByCategories(data) {
       }
 
       // check if the term already exists or not to get only unique categories without any repetition
-      if(!terms[termName]) {
+      if(!semesters[termName]) {
         // define the first lesson as children
-        terms[termName] = {...termPayload/* , children: [lessonData] */};
+        semesters[termName] = {...termPayload/* , children: [lessonData] */};
       } else {
         // push the children related to that category
-        terms[termName] = {...terms[termName]/* , children: terms[termName].children.concat([lessonData]) */};
+        semesters[termName] = {...semesters[termName]/* , children: terms[termName].children.concat([lessonData]) */};
       }
     }
 
-    return {categories, terms};
+    return {categories, semesters};
 }
 
 /**
@@ -367,33 +408,10 @@ function sortDataByCategories(data) {
  * @param {Array} data scrapped data array of objects 
  */
 async function filterByExistsData(data) {
-  const categories = {}
-
-    for(let lessonData of data) {
-      const payload = {
-        // there was a spelling mass in here that's way compare between (categ{e}ory, category)
-        category: lessonData.categeory || lessonData.category,
-        categoryId: lessonData.categeoryId || lessonData.categoryId,
-        categoryCode: lessonData.categeoryCode ||  lessonData.categoryCode,
-      };
-
-      // if the spelling mass exists remove it to leave only lesson Data
-      delete lessonData.categeory;
-      delete lessonData.categeoryId;
-      delete lessonData.categeoryCode;
-
-      const categoryName = payload.category;
-      // check if the cateory already exists or not to get only unique categories without any repetition
-      if(!categories[categoryName]) {
-        // define the first lesson as children
-        categories[categoryName] = {...payload, children: [lessonData]};
-      } else {
-        // push the children related to that category
-        categories[categoryName] = {...categories[categoryName], children: categories[categoryName].children.concat([lessonData])};
-      }
-    }
+  const {categories, semesters} = sortDataByCategoriesAndTerm(data);
 
     const categoriesArr = Object.keys(categories);
+    const semestersArr = Object.keys(semesters);
 
     for(const categoryName of categoriesArr) {
       const category = categories[categoryName];
@@ -459,10 +477,23 @@ async function filterByExistsData(data) {
         await lessonDocument.save();
       }
 
+      
       if(categeoryNotExists) {
         await categoryDocument.save();
       }
 
+      if(semestersArr.length) {
+        for(const termName of semestersArr) {
+          const term = semesters[termName];
+          term.categories = [].concat((term.categories || []), [categoryDocument._id.toString()])
+          const doc = await Semesters.create(term);
+          const category = await Categories.findByIdAndUpdate(categoryDocument._id.toString(), {
+            $push: {
+              availableTermData: doc._id.toString()
+            }
+          });
+        }
+      }
     }
 
     return categories;

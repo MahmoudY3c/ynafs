@@ -1,12 +1,13 @@
 const express = require("express");
 const Categories = require("../../db/models/Categories");
+const Semesters = require("../../db/models/Semesters");
 const router = express.Router();
 
 router.get('/', async function (req, res) {
   try {
     const { termCode } = req.query;
-    const categories = await Categories.find({'availableTermData.termCode': termCode}, { Lessons: 0, __v: 0 });
-    res.status(200).json(categories);
+    const _semesters = await Semesters.findOne({ termCode }, { Lessons: 0, __v: 0 }).populate('categories');
+    res.status(200).json(_semesters.categories);
   } catch (err) {
     res.status(500).json({ error: { message: err.message } })
   }

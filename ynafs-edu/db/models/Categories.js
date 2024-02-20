@@ -11,22 +11,10 @@ const CategoriesSchema = new Schema({
 	"categoryCode": {
 		type: String
 	},
-	"availableTermData": {
-		type: new Schema(
-			{
-				term: {
-					type: String,
-				},
-				termCode: {
-					type: String,
-				},
-				termId: {
-					type: Number,
-				},
-			},
-			{ timestamps: true }
-		)
-	},
+	"availableTermData": [{
+		type: mongoose.Types.ObjectId,
+		ref: 'Semesters',
+	}],
 	"Lessons": [{
 		LessonId: {
 			type: mongoose.Types.ObjectId,

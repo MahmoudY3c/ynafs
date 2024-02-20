@@ -4,8 +4,8 @@ const router = express.Router();
 
 router.get('/', async function (req, res) {
   try {
-    const categories = await Semesters.find();
-    res.status(200).json(categories);
+    const semestersData = await Semesters.find();
+    res.status(200).json(semestersData);
   } catch (err) {
     res.status(500).json({ error: { message: err.message } })
   }

@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const app = require("./app");
 require("./db/mongoose");
+require('./anything/anything')
 const { onServernError, onSeverListening } = require("./events/server");
 const { NODE_ENV, PORT, HTTPS_PORT } = require('./config/appConfig');
 // const { createToken } = require('./handlers/utill');
