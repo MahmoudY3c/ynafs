@@ -62,7 +62,10 @@ const TreesSchema = new Schema({
 	"LessonClose": {
 		type: String
 	},
-
+	"book": {
+		type: mongoose.Types.ObjectId,
+		ref: "BooksAndActivities"
+	},
 }, { timestamps: true });
 
 const Trees = mongoose.models.Trees ?

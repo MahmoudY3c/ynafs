@@ -7,6 +7,7 @@ const Lessons = require('../db/models/Lessons');
 const Questions = require('../db/models/Questions');
 const Semesters = require('../db/models/Semesters');
 const { default: mongoose } = require('mongoose');
+const BooksAndActivities = require('../db/models/BooksAndActivities');
 
 
 (async () => {
@@ -83,7 +84,8 @@ const { default: mongoose } = require('mongoose');
 //     log(err.message)
 //   }
 
-  // await filterByExistsAndAddTermsToCategories(data.data);
+  // await filterByExistsAndAddTermsToCategories(data.data, data.books);
+  // await saveBooksToTrees(data.books)
   // const d = await filterByExistsData(data.data);
   // log(d)
 
@@ -218,10 +220,11 @@ const { default: mongoose } = require('mongoose');
  * checkout from line 218 - 375 => the main function is the next one the start point
  * ===============================================================================================
  */
-async function filterByExistsAndAddTermsToCategories(data) {
+async function filterByExistsAndAddTermsToCategories(data, books) {
   await moveSemestersFromCategoryToSemestersCollection();
   const {categories, semesters} = sortDataByCategoriesAndTerm(data);
   await filterByExistsData(data);
+  if(books) await saveBooksToTrees(books)
   return {categories, semesters}
 }
 
@@ -267,6 +270,35 @@ async function moveSemestersFromCategoryToSemestersCollection(data) {
   });
 }
 
+
+async function saveBooksToTrees(books) {
+  books = Object.values(books);
+
+  for(let i = 0; i < books.length; i++) {
+    const book = books[i];
+    const data = new BooksAndActivities({
+      book: book.pdf,
+      title: book.title,
+      isActive: book.isActive,
+      fullPath: book.completeTitle.split('-').map(e => e.trim()),
+      activities: book.activities,
+    });
+
+    // console.log(book)
+    const tree = await Trees.findOneAndUpdate({ id: book.id }, { book: data._id.toString() });
+
+    data.tree = tree._id.toString(); 
+    await data.save();
+
+    
+    console.log('====================================');
+    console.log(
+      `finished ${(Math.floor(Math.round(((i+1) / books.length) * 100)))}% of books`, 
+      new Date().toLocaleString()
+    );
+    console.log('====================================');
+  }
+}
 
 
 
