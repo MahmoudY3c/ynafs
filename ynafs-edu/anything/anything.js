@@ -8,6 +8,9 @@ const Questions = require('../db/models/Questions');
 const Semesters = require('../db/models/Semesters');
 const { default: mongoose } = require('mongoose');
 const BooksAndActivities = require('../db/models/BooksAndActivities');
+const crypto = require("crypto");
+
+console.log(crypto.pseudoRandomBytes(32).toString("base64"));
 
 
 (async () => {
